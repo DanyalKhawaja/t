@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+    <title>HRA | Dashboard</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pagetitle">
+        <i class="icon ion-ios-plan"></i>
+        <div>
+          <h4>Schedule of Completion of Services</h4>
+          <p class="mg-b-0" id="labelRegion">PHASE – ONE (APPROX SIX MONTHS)</p>
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+
+        <div class="row row-sm mg-t-20">
+          <div class="col-lg-12">
+            <div class="card shadow-base bd-0 pd-10 mg-t-5">
+              <div id="chart_div"></div>
+
+            </div><!-- card -->
+          </div><!-- col-8 -->
+
+        </div><!-- row -->
+
+
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/d3/d3.js"></script>
+    <script src="theme/lib/rickshaw/rickshaw.min.js"></script>
+    <script src="theme/lib/Flot/jquery.flot.js"></script>
+    <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
+    <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
+    <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+    <script src="theme/lib/echarts/echarts.min.js"></script>
+    <script src="theme/lib/select2/js/select2.full.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDw_FHu8ftIuC-35k9ViKlnp63L2vnGiLU"></script>
+
+    <script src="theme/lib/gmaps/gmaps.js"></script>
+
+    <script type="text/javascript" src="tehsil-jhal-jao-sub.js"></script>
+    <script type="text/javascript" src="tehsil-mashkai.js"></script>
+    <script type="text/javascript" src="tehsil-jhal-jhao.js"></script>
+    <script type="text/javascript" src="teshil-gishkore.js"></script>
+    <script type="text/javascript" src="tehsil-awaran.js"></script>
+    <script type="text/javascript" src="tehsil-hoshab.js"></script>
+    <script src="theme/js/bracket.js"></script>
+    <script src="theme/js/map.shiftworker.js"></script>
+    <script src="theme/js/ResizeSensor.js"></script>
+    <script src="theme/js/dashboard.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+      $(function(){
+        'use strict'
+
+        // FOR DEMO ONLY
+        // menu collapsed by default during first page load or refresh with screen
+        // having a size between 992px and 1299px. This is intended on this page only
+        // for better viewing of widgets demo.
+        $(window).resize(function(){
+          minimizeMenu();
+        });
+
+        minimizeMenu();
+
+        function minimizeMenu() {
+          if(window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
+            // show only the icons and hide left menu label by default
+            $('.menu-item-label,.menu-item-arrow').addClass('op-lg-0-force d-lg-none');
+            $('body').addClass('collapsed-menu');
+            $('.show-sub + .br-menu-sub').slideUp();
+          } else if(window.matchMedia('(min-width: 1300px)').matches && !$('body').hasClass('collapsed-menu')) {
+            $('.menu-item-label,.menu-item-arrow').removeClass('op-lg-0-force d-lg-none');
+            $('body').removeClass('collapsed-menu');
+            $('.show-sub + .br-menu-sub').slideDown();
+          }
+        }
+
+      });
+    </script>
+    <script>
+      (function(document, window, $) {
+        google.charts.load('current', {'packages':['gantt']});
+        google.charts.setOnLoadCallback(drawChart);
+        function daysToMilliseconds(days) {
+          return days * 24 * 60 * 60 * 1000;
+        }
+
+        function drawChart() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Task ID');
+          data.addColumn('string', 'Task Name');
+          data.addColumn('string', 'Resource');
+          data.addColumn('date', 'Start Date');
+          data.addColumn('date', 'End Date');
+          data.addColumn('number', 'Duration');
+          data.addColumn('number', 'Percent Complete');
+          data.addColumn('string', 'Dependencies');
+
+          data.addRows([
+            ['1', 'Signing of Agreement', 'SFD',
+              new Date('2018-09-20'), new Date('2018-09-26'), 5, 100, null
+            ],
+            ['2', 'Field Teams Setup', 'Cyberstate',
+              new Date('2018-10-08'), new Date('2018-10-12'), 5, 100, '1'
+            ],
+            ['3', 'Field Teams Training', 'Cyberstate',
+              new Date('2018-10-15'), new Date('2018-10-19'), 5, 100, '2'
+            ],
+            ['4', 'Field Data Collection (First Trip to Reg A,B,C)', 'Cyberstate',
+              new Date('2018-10-22'), new Date('2018-11-11'), 16, 100, '3'
+            ],
+            ['5', 'PMS Server Setup', '',
+              new Date('2018-09-04'), new Date('2018-09-17'), 10, 100, null
+            ],
+            ['6', 'First report to SFD for release of Ist Instalment', 'Cyberstate',
+              new Date('2018-11-12'), new Date('2018-11-13'), 1, 100, '4'
+            ],
+            ['7', 'Preparation and call for bids for construction of government buildings', 'Cyberstate',
+              new Date('2019-01-01'), new Date('2019-03-15'), 54, 0, '1'
+            ],
+            ['8', 'Field Data Collection and validation for monitoring of Ist Instalment Disbursement', 'Cyberstate',
+              new Date('2019-02-18'), new Date('2019-02-22'), 5, 0, '1'
+            ],
+            ['9', 'Report to SFD for confirmation of Ist Instalment & Reconciliation with bank', 'Cyberstate',
+              new Date('2019-02-25'), new Date('2019-02-28'), 4, 0, '8'
+            ],
+            ['10', 'Field Data Collection for monitoring of 8,000 houses construction after Ist Instalment', 'Cyberstate',
+              new Date('2019-03-01'), new Date('2019-05-31'), 82, 0, '9'
+            ],
+
+
+          ]);
+
+          var options = {
+            height: 800,
+            width: 1500,
+
+            gantt: {
+              defaultStartDate: new Date(2018, 09, 01),
+              labelMaxWidth: 550,
+              colors: ['#5D2584',  '#00C1B5', '#E45A19', '#DB4848', '#9B1D20', '#80AA2B'],
+              trackHeight: 30,
+              criticalPathEnabled: true,
+              criticalPathStyle: {
+                stroke: '#e64a19',
+                strokeWidth: 5
+              }
+            }
+          };
+
+          var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+          chart.draw(data, options);
+        }
+
+      })(document, window, jQuery);
+    </script>
+  </body>
+</html>

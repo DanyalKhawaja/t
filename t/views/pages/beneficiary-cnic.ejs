@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>HRA - Beneficiaries</title>
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/highlightjs/github.css" rel="stylesheet">
+    <link href="theme/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link href="theme/css/cropper.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+
+  </head>
+
+  <body>
+    <div id="loading" style="display:none;">
+      <img id="loading-image" src='ajax-loader.gif'/>
+    </div>
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pageheader">
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+          <a class="breadcrumb-item" href="/">Dashboard</a>
+          <span class="breadcrumb-item active">Beneficiaries - CNIC Crop & Update</span>
+        </nav>
+      </div><!-- br-pageheader -->
+      <div class="br-pagetitle">
+        <i class="icon icon ion-ios-bookmarks-outline"></i>
+        <div>
+          <h4>Beneficiaries' CNIC Crop & Update</h4>
+          <p class="mg-b-0">View, Edit and Update CNICs of beneficiaries</p>
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+        <div class="br-section-wrapper">
+          <div class="row mg-t-0">
+            <div class="col-sm-7">
+              <div class="form-layout form-layout-4">
+                <div class="row mg-t-5">
+                  <div class="col-sm-12 mg-t-5 mg-sm-t-0">
+                    <table id="dtBeneficiary" class=" ui celled table hover" style="width:100%"></table>
+                  </div>
+                </div><!-- row -->
+                <div class="form-layout-footer mg-t-30">
+                  <a href="" id="BeneficiaryDetailButton" class="btn btn-primary tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium" data-toggle="modal" >VIEW DETAILS</a>
+                </div><!-- form-layout-footer -->
+              </div><!-- form-layout -->
+            </div>
+            <div class="col-sm-5">
+              <div class="form-layout">
+                <h4>CNIC FRONT</h4>
+                <div class="row" >
+                  <div class="card" style="height:350px;">
+                    <% if (CNICImageFront != "") { %>
+                      <img src="data:image/jpeg;base64, <%= CNICImageFront %>" id="" class="img-fluid" alt=""
+                        style="width:400px;height:auto;border:5px solid black">
+                        <div class="btn-group btn-group-crop">
+
+                        </div>
+                    <% } else { %>
+                      <img src="theme/img/img11.jpg" id="CNICFront" class="img-fluid img-thumbnail" alt="" style="height:300px;width:auto;max-width: 100%; ">
+                      <div class="btn-group btn-group-crop">
+                        <button type="button" class="btn btn-primary" id="saveCNICFront" data-option="">
+                            Save Cropped Image
+                        </button>
+                        <button type="button" class="btn btn-warning" id="rotateCNICFront" data-option="">
+                            Rotate
+                        </button>
+                        <button type="button" class="btn btn-warning" id="resetCNICFront" data-option="">
+                            Reset
+                        </button>
+                        <button type="button" class="btn btn-warning" id="clearCNICFront" data-option="">
+                            Clear
+                        </button>
+                      </div>
+                    <% } %>
+                  </div>
+                </div><!-- row -->
+                <h4>CNIC BACK</h4>
+                <div class="row mg-t-5">
+                  <div class="card" style="height:350px">
+                    <% if (CNICImageBack != "") { %>
+                      <img src="data:image/jpeg;base64, <%= CNICImageFront %>" class="img-fluid" alt=""
+                        style="width:350px;height:auto;border:5px solid black">
+                    <% } else { %>
+                      <img src="theme/img/img11.jpg" id="CNICBack" class="img-fluid img-thumbnail" alt="" style="height:300px;width:auto;max-width: 100%;">
+                      <div class="btn-group btn-group-crop">
+                        <button type="button" class="btn btn-primary" id="saveCNICBack" data-option="">
+                            Save Cropped Image
+                        </button>
+                        <button type="button" class="btn btn-warning" id="rotateCNICBack" data-option="">
+                            Rotate
+                        </button>
+                        <button type="button" class="btn btn-warning" id="resetCNICBack" data-option="">
+                            Reset
+                        </button>
+                        <button type="button" class="btn btn-warning" id="clearCNICBack" data-option="">
+                            Clear
+                        </button>
+                      </div>
+                    <% } %>
+                  </div>
+                </div><!-- row -->
+
+              </div><!-- form-layout -->
+            </div>
+
+          </div>
+          
+        </div><!-- br-section-wrapper -->
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+    
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/highlightjs/highlight.pack.js"></script>
+    <script src="theme/lib/datatables/jquery.dataTables.js"></script>
+    <script src="theme/lib/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script src="theme/lib/select2/js/select2.min.js"></script>
+
+    <script src="theme/js/bracket.js"></script>
+    <script src="theme/js/cropper.js"></script>
+    <script src="theme/js/jquery-cropper.js"></script>
+
+    <script>
+      var cropper1;
+      var selectedCNIC = "";
+      $(function(){
+
+        $(document).ready(function() {
+          document.getElementById("li-beneficiary").classList.add('active');
+          document.getElementById("ben-cnic-crop").classList.add('active');
+
+
+        $('#rotateCNICFront').on('click', function(){
+          $('#CNICFront').cropper("rotate", 45);
+        });
+        $('#resetCNICFront').on('click', function(){
+          $('#CNICFront').cropper("reset");
+        });
+        $('#clearCNICFront').on('click', function(){
+          $('#CNICFront').cropper("clear");
+        });
+        $('#saveCNICFront').on('click', function(){
+          var canvas1 = $('#CNICFront').cropper('getCroppedCanvas', {
+            maxWidth: 4096,
+            maxHeight: 4096,
+            imageSmoothingEnabled: false,
+            imageSmoothingQuality: 'high',
+          });
+          var canvasURL = canvas1.toDataURL('image/jpeg');
+
+          $('#CNICFront').cropper("destroy");
+          $('#CNICFront').attr('src', canvasURL);
+
+            $.ajax('/beneficiary/updateCNICFront', {
+              method: "POST",
+              data: { 'CNICFront': canvasURL, 'CNIC': selectedCNIC },
+              success(data) {
+                if (data.Changed == 1){
+                  $("#modalSaveSuccess").modal('show');
+                }
+
+
+              },
+              error() {
+                console.log('Upload error');
+              },
+            });
+        });
+
+        $('#rotateCNICBack').on('click', function(){
+          $('#CNICBack').cropper("rotate", 45);
+        });
+        $('#resetCNICBack').on('click', function(){
+          $('#CNICBack').cropper("reset");
+        });
+        $('#clearCNICBack').on('click', function(){
+          $('#CNICBack').cropper("clear");
+        });
+        $('#saveCNICBack').on('click', function(){
+          var canvas2 = $('#CNICBack').cropper('getCroppedCanvas', {
+            maxWidth: 4096,
+            maxHeight: 4096,
+            imageSmoothingEnabled: false,
+            imageSmoothingQuality: 'high',
+          });
+          var canvasURL = canvas2.toDataURL('image/jpeg');
+
+          $('#CNICBack').cropper("destroy");
+          $('#CNICBack').attr('src', canvasURL);
+
+            $.ajax('/beneficiary/updateCNICBack', {
+              method: "POST",
+              data: { 'CNICBack': canvasURL, 'CNIC': selectedCNIC },
+              success() {
+                console.log('Upload success');
+              },
+              error() {
+                console.log('Upload error');
+              },
+            });
+
+
+        });
+          var url = "/beneficiary/getListForCNICs";
+      		$('#dtBeneficiary').DataTable({
+
+            "paging":         	true,
+            "processing":       false,
+            "serverSide":       false,
+            "orderCellsTop":    false,
+            "ordering":         false,
+
+            "fixedHeader":      true,
+    					"ajax": {
+    						"url": 							url,
+    						"dataSrc": 					""
+    					},
+    					"columns": [
+    						{"data": "CNIC", "title":"CNIC"},
+    						{ "data": "BeneficiaryName", "title":"Name" },
+                { "data": "UC", "title":"UC" }
+
+
+    					]
+
+    			});
+
+          var table = $('#dtBeneficiary').DataTable();
+          var d='';
+
+
+    			$('#dtBeneficiary tbody').on( 'click', 'tr', function () {
+            $('#loadingmessage').show();
+    				if ( $(this).hasClass('selected') ) {
+    					$(this).removeClass('selected');
+              $('#CNICFront').cropper("destroy");
+              $('#CNICBack').cropper("destroy");
+              selectedCNIC = '';
+    					d='';
+    				}
+    				else {
+    					table.$('tr.selected').removeClass('selected');
+    					$(this).addClass('selected');
+    					d = table.row( this ).data();
+              selectedCNIC = d.CNIC;
+              //$('#CNICFront').cropper("clear");
+              $('#loading').show();
+              $.ajax({
+                url: "/beneficiary/getCNICpics",
+                type: "get", //send it through get method
+                data:{CNIC:d.CNIC},
+                success: function(response) {
+                  console.log(response);
+
+                  if (response == 0){
+                    console.log(response);
+                    console.log('Could not fetch CNIC pictures');
+                  } else {
+                    console.log(response);
+                    //$('#CNICFront').cropper("reset");
+                    $('#CNICFront').cropper("destroy");
+                    $('#CNICBack').cropper("destroy");
+
+                    $('#CNICFront').attr('src', "data:image/jpeg;base64,"+response[0].CNICFront);
+                    $('#CNICBack').attr('src', "data:image/jpeg;base64,"+response[0].CNICBack);
+                    $('#loading').hide();
+                    cropper1 = $('#CNICFront').cropper({
+                      viewMode: 1,
+                      crop: function(event) {
+                        console.log(event.detail.x);
+                        console.log(event.detail.y);
+                        console.log(event.detail.width);
+                        console.log(event.detail.height);
+                        console.log(event.detail.rotate);
+                        console.log(event.detail.scaleX);
+                        console.log(event.detail.scaleY);
+                      }
+                    });
+                    $('#CNICBack').cropper({
+                      viewMode: 0,
+                      crop: function(event) {
+
+                      }
+                    });
+
+                  }
+                },
+                error: function(xhr) {
+                  //alert(xhr);
+                }
+              });
+    				}
+    			});
+          $('#BeneficiaryDetailButton').click( function () {
+
+            if (d==''){
+              return;
+    				} else {
+              document.location = "/beneficiary/detail?CNIC="+d.CNIC;
+            }
+          });
+
+        });
+
+
+      });
+    </script>
+  </body>
+</html>

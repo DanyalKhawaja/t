@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+    <title>HRA | Dashboard</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pagetitle">
+        <i class="icon ion-ios-home-outline"></i>
+        <div>
+          <h4>Dashboard | Verification Phase</h4>
+          <p class="mg-b-0" id="labelRegion">All Regions</p>
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+        <div class="row row-sm">
+          <div class="col-sm-6 col-xl-2">
+            <div class="bg-info rounded overflow-hidden">
+              <p class="tx-20 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">TOTAL COUNT</p>
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-android-people tx-60 lh-0 tx-white op-7"></i>
+                <div class="mg-l-20">
+                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelTotalCount"><%= TotalBeneficiaries %></p>
+                </div>
+              </div>
+              <div class="mg-l-20">
+                <span class="tx-11 tx-roboto tx-white-8">including the new registrations</span>
+              </div>
+
+            </div>
+          </div><!-- col-3 -->
+          <div class="col-sm-6 col-xl-2 mg-t-20 mg-sm-t-0">
+            <div class="bg-primary rounded overflow-hidden">
+              <p class="tx-20 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">UN-VERIFIED</p>
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-search tx-60 lh-0 tx-white op-7"></i>
+                <div class="mg-l-20">
+                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelUnverifiedCount"><%= TotalUnverified %></p>
+                </div>
+              </div>
+              <div class="mg-l-20">
+                <span class="tx-11 tx-roboto tx-white-8">Record not captured yet</span>
+              </div>
+            </div>
+          </div><!-- col-3 -->
+          <div class="col-sm-6 col-xl-2 mg-t-20 mg-xl-t-0">
+            <div class="bg-orange rounded overflow-hidden">
+              <p class="tx-20 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">VERIFIED</p>
+              <div class="pd-x-10  d-flex align-items-center">
+                <i class="ion ion-android-locate tx-60 lh-0 tx-white op-7"></i>
+                <div class="mg-l-20">
+                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelPendingCount"><%= TotalPending %></p>
+                </div>
+              </div>
+              <div class="mg-l-20">
+                <span class="tx-11 tx-roboto tx-white-8">SFD approval required</span>
+              </div>
+            </div>
+          </div><!-- col-3 -->
+          <div class="col-sm-6 col-xl-2 mg-t-20 mg-xl-t-0">
+            <div class="bg-danger rounded overflow-hidden">
+              <p class="tx-20 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">REJECTED</p>
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-android-remove-circle tx-60 lh-0 tx-white op-7"></i>
+                <div class="mg-l-20">
+                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelRejectedCount"><%= TotalRejected %></p>
+                </div>
+              </div>
+              <div class="mg-l-20">
+                <span class="tx-11 tx-roboto tx-white-8">Rejected </span>
+              </div>
+            </div>
+          </div><!-- col-3 -->
+          <div class="col-sm-6 col-xl-2 mg-t-20 mg-xl-t-0">
+            <div class="bg-warning rounded overflow-hidden">
+              <p class="tx-20 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">DUBIOUS</p>
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-help tx-60 lh-0 tx-white op-7"></i>
+                <div class="mg-l-20">
+                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelDubiousCount"><%= TotalDubious %></p>
+                </div>
+              </div>
+              <div class="mg-l-20">
+                <span class="tx-11 tx-roboto tx-white-8">SFD to approve </span>
+              </div>
+            </div>
+          </div><!-- col-3 -->
+          <div class="col-sm-6 col-xl-2 mg-t-20 mg-xl-t-0">
+            <div class="bg-success rounded overflow-hidden">
+              <p class="tx-20 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">APPROVED</p>
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-android-checkmark-circle tx-60 lh-0 tx-white op-7"></i>
+                <div class="mg-l-20">
+                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelApprovedCount"><%= TotalApproved %></p>
+                </div>
+              </div>
+              <div class="mg-l-20">
+                <span class="tx-11 tx-roboto tx-white-8">Approved from SFD </span>
+              </div>
+            </div>
+          </div><!-- col-3 -->
+        </div><!-- row -->
+
+        <div class="row row-sm mg-t-20">
+          <div class="col-lg-6">
+
+            <div class="card shadow-base bd-0 pd-10 mg-t-5">
+              <div id="map" style="height:575px;"></div>
+            </div><!-- card -->
+          </div><!-- col-8 -->
+          <div class="col-lg-6">
+            <div class="card shadow-base bd-0 pd-10 mg-t-5">
+              <div id="roseUC" style="width: 550px;height:575px;"></div>
+            </div>
+          </div><!-- col-8 -->
+        </div><!-- row -->
+        <div class="row row-sm mg-t-20">
+          <div class="col-lg-4">
+            <div class="card shadow-base bd-0 pd-10 mg-t-5">
+              <div id="pieGender" style="width: 340px;height:400px;"></div>
+            </div><!-- card -->
+          </div><!-- col-8 -->
+          <div class="col-lg-8">
+            <div class="card shadow-base bd-0 pd-10 mg-t-5">
+
+              <div id="BenStatusByUCChart" style="width: 770px;height:400px;"></div>
+            </div>
+          </div><!-- col-8 -->
+        </div><!-- row -->
+
+
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/d3/d3.js"></script>
+    <script src="theme/lib/rickshaw/rickshaw.min.js"></script>
+    <script src="theme/lib/Flot/jquery.flot.js"></script>
+    <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
+    <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
+    <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+    <script src="theme/lib/echarts/echarts.min.js"></script>
+    <script src="theme/lib/select2/js/select2.full.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDw_FHu8ftIuC-35k9ViKlnp63L2vnGiLU"></script>
+
+    <script src="theme/lib/gmaps/gmaps.js"></script>
+
+    <script type="text/javascript" src="tehsil-jhal-jao-sub.js"></script>
+    <script type="text/javascript" src="tehsil-mashkai.js"></script>
+    <script type="text/javascript" src="tehsil-jhal-jhao.js"></script>
+    <script type="text/javascript" src="teshil-gishkore.js"></script>
+    <script type="text/javascript" src="tehsil-awaran.js"></script>
+    <script type="text/javascript" src="tehsil-hoshab.js"></script>
+    <script src="theme/js/bracket.js"></script>
+    <script src="theme/js/map.shiftworker.js"></script>
+    <script src="theme/js/ResizeSensor.js"></script>
+    <script src="theme/js/dashboard.js"></script>
+    <script src="theme/js/chart.echarts.js"></script>
+    <script>
+      $(function(){
+        'use strict'
+
+        // FOR DEMO ONLY
+        // menu collapsed by default during first page load or refresh with screen
+        // having a size between 992px and 1299px. This is intended on this page only
+        // for better viewing of widgets demo.
+        $(window).resize(function(){
+          minimizeMenu();
+        });
+
+        minimizeMenu();
+
+        function minimizeMenu() {
+          if(window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
+            // show only the icons and hide left menu label by default
+            $('.menu-item-label,.menu-item-arrow').addClass('op-lg-0-force d-lg-none');
+            $('body').addClass('collapsed-menu');
+            $('.show-sub + .br-menu-sub').slideUp();
+          } else if(window.matchMedia('(min-width: 1300px)').matches && !$('body').hasClass('collapsed-menu')) {
+            $('.menu-item-label,.menu-item-arrow').removeClass('op-lg-0-force d-lg-none');
+            $('body').removeClass('collapsed-menu');
+            $('.show-sub + .br-menu-sub').slideDown();
+          }
+        }
+
+      });
+    </script>
+    <script>
+    (function(document, window, $) {
+      document.getElementById("li-dashboard").classList.add('active');
+      function htmlDecode(input){
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+      }
+
+      var BenGenderChart = echarts.init(document.getElementById('pieGender'));
+
+options = {
+  title : {
+      text: 'BENEFICIARIES GENDER COUNT',
+      subtext: 'UC WISE',
+      x:'left'
+  },
+  color: ['#064789',  '#A5BE00'],
+    angleAxis: {
+        type: 'category',
+        data: ['Awaran','Dandar','Gajjar','Gishkore','Nok Jo','Parwar','Teertaje'],
+        z: 10
+    },
+    radiusAxis: {
+    },
+    polar: {
+    },
+    series: [{
+        type: 'bar',
+        data: [2001,235,465,25,1181,597,379],
+        coordinateSystem: 'polar',
+        name: 'Male',
+        stack: 'a'
+    }, {
+        type: 'bar',
+        data: [311,180,114,4,194,118,94],
+        coordinateSystem: 'polar',
+        name: 'Female',
+        stack: 'a'
+    }, ],
+    legend: {
+        show: true,
+        data: ['Male', 'Female'],
+        y : 'bottom',
+    }
+};
+      BenGenderChart.setOption(options);
+
+    var BenUCChart = echarts.init(document.getElementById('roseUC'));
+    option = {
+    title : {
+        text: 'VERIFIED BENEFICIARIES',
+        subtext: 'UC WISE',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        x : 'center',
+        y : 'bottom',
+        data:['Awaran','Dandar','Gajjar','Gishkore','Nok Jo','Parwar','Teertaje']
+    },
+
+    calculable : true,
+    series : [
+        {
+            name:'',
+            type:'pie',
+            radius : [10, 150],
+            center : ['50%', '50%'],
+            roseType : 'radius',
+            label: {
+                normal: {
+                    formatter: '{b|{b}}\n{hr|}\n  {c}  {per|{d}%}  ',
+                    backgroundColor: '#eee',
+                    borderColor: '#aaa',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    rich: {
+                        a: {
+                            color: '#999',
+                            lineHeight: 22,
+                            align: 'center'
+                        },
+                        hr: {
+                            borderColor: '#aaa',
+                            width: '100%',
+                            borderWidth: 0.5,
+                            height: 0
+                        },
+                        b: {
+                            fontSize: 12,
+                            lineHeight: 15,
+                            align: 'center'
+                        },
+                        per: {
+                            color: '#eee',
+                            backgroundColor: '#334455',
+                            padding: [2, 4],
+                            borderRadius: 2
+                        }
+                    }
+                }
+            },
+            data:[
+                {value:2312, name:'Awaran'},
+                {value:415, name:'Dandar'},
+                {value:579, name:'Gajjar'},
+                {value:29, name:'Gishkore'},
+                {value:1375, name:'Nok Jo'},
+                {value:715, name:'Parwar'},
+                {value:473, name:'Teertaje'}
+            ]
+        }
+    ]
+  };
+  BenUCChart.setOption(option);
+
+  var BenStatusByUCChart = echarts.init(document.getElementById('BenStatusByUCChart'));
+
+
+optionBenStatusByUCChart = {
+  title : {
+      text: 'BENEFICIARIES STATUS COUNT',
+      subtext: 'UC WISE',
+      x:'left'
+  },
+  color: ['#5D2584',  '#00C1B5', '#E45A19', '#DB4848', '#9B1D20', '#80AA2B'],
+  tooltip : {
+      trigger: 'axis',
+      axisPointer : {
+          type : 'shadow'
+      }
+  },
+  legend: {
+      data: ['Total', 'Verified','Un-verified','Dubious','Approved','Rejected'],
+      x:'right'
+  },
+  grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+  },
+  xAxis:  {
+      type: 'value'
+  },
+  yAxis: {
+      type: 'category',
+      data: ['Awaran','Dandar','Gajjar','Gishkore','Nok Jo','Parwar','Teertaje']
+  },
+  series: [
+      {
+          name: 'Total',
+          type: 'bar',
+          stack: '1',
+          label: {
+              normal: {
+                  show: true,
+                  position: 'insideRight'
+              }
+          },
+          data: [2989,515,729,246,1638,930,953]
+      },
+      {
+          name: 'Verified',
+          type: 'bar',
+          stack: '1',
+          label: {
+              normal: {
+                  show: true,
+                  position: 'insideRight'
+              }
+          },
+          data: [2312,415,579,29,1375,715,473]
+      },
+      {
+          name: 'Un-Verified',
+          type: 'bar',
+          stack: '1',
+          label: {
+              normal: {
+                  show: true,
+                  position: 'insideRight'
+              }
+          },
+          data: [652,99,144,216,257,208,466]
+      },
+      {
+          name: 'Dubious',
+          type: 'bar',
+          stack: '1',
+          label: {
+              normal: {
+                  show: true,
+                  position: 'insideRight'
+              }
+          },
+          data: [25,1,6,1,6,7,14]
+      },
+      {
+          name: 'Rejected',
+          type: 'bar',
+          stack: '1',
+          label: {
+              normal: {
+                  show: true,
+                  position: 'insideRight'
+              }
+          },
+          data: [0,0,0,0,0,0,0]
+      },
+      {
+          name: 'Approved',
+          type: 'bar',
+          stack: '1',
+          label: {
+              normal: {
+                  show: true,
+                  position: 'insideRight'
+              }
+          },
+          data: [0,0,0,0,0,0,0]
+      },
+
+  ]
+};
+  BenStatusByUCChart.setOption(optionBenStatusByUCChart);
+    var myLatLng = new google.maps.LatLng(26.419826, 64.554864);
+    var myOptions = {
+      zoom: 8,
+      center: myLatLng,
+      scrollwheel: false,
+      zoomControl: false,
+      navigationControl: false,
+      mapTypeControl: false,
+      scaleControl: false,
+      draggable: false,
+      styles: [
+        {
+          featureType: 'all',
+          stylers: [
+            { saturation: -80 }
+          ]
+        },{
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [
+            { hue: '#00ffee' },
+            { saturation: 50 }
+          ]
+        },{
+          featureType: 'poi',
+          elementType: 'labels',
+          stylers: [
+            { visibility: 'on' }
+          ]
+        }
+      ]
+          //mapTypeId: google.maps.MapTypeId.TERRAIN
+    };
+    var strokeColor = '#FF0000';
+    var fillcolor = '#17A2B8';
+    var strokeOpacity = 0.2;
+    var fillOpacity =0.4;
+    var fillOpacityOver = .8;
+    var map = new google.maps.Map(document.getElementById('map'),myOptions);
+
+    var MashkaiBorder = createpoly(Mashkai);
+    MashkaiBorder.setMap(map);
+    var GishkoreBorder = createpoly(Gishkore);
+    GishkoreBorder.setMap(map);
+    var AwaranBorder = createpoly(Awaran);
+    AwaranBorder.setMap(map);
+    var KechBorder = createpoly(Kech);
+    KechBorder.setMap(map);
+
+
+    addmouseover(MashkaiBorder,2);
+
+    addmouseover(GishkoreBorder,4);
+    addmouseover(AwaranBorder,5);
+    addmouseover(KechBorder,6);
+
+
+    google.maps.event.addListener(MashkaiBorder,"click",function(){
+      regionClick('2');
+    });
+
+    google.maps.event.addListener(GishkoreBorder,"click",function(){
+      regionClick('4');
+    });
+    google.maps.event.addListener(AwaranBorder,"click",function(){
+      regionClick('5');
+    });
+    google.maps.event.addListener(KechBorder,"click",function(){
+      regionClick('6');
+    });
+
+
+    function createpoly(path) {
+      return new google.maps.Polygon({
+          paths: path,
+          strokeColor: strokeColor,
+          strokeOpacity: strokeOpacity,
+          strokeWeight: 1,
+          fillColor:fillcolor,
+          fillOpacity:fillOpacity,
+          label:'string'
+        });
+    }
+    function addmouseover(item,id) {
+
+      google.maps.event.addListener(item,"mouseover",function(){
+        this.setOptions({fillOpacity:fillOpacityOver});
+        if (id > 0) {
+          regionHover(id);
+        }
+
+      });
+      google.maps.event.addListener(item,"mouseout",function(){
+        this.setOptions({fillOpacity:fillOpacity});
+        $("#labelRegion").html("All Regions");
+        $("#labelTotalCount").html("<%= TotalBeneficiaries %>");
+        $("#labelUnverifiedCount").html("<%= TotalUnverified %>");
+        $("#labelPendingCount").html("<%= TotalPending %>");
+        $("#labelRejectedCount").html("<%= TotalRejected %>");
+        $("#labelDubiousCount").html("<%= TotalDubious %>");
+        $("#labelApprovedCount").html("<%= TotalApproved %>");
+      });
+    }
+
+    function regionHover(Region) {
+
+      var regions = ["JhalJaoSub",	"Mashkai",	"JhalJao",	"Gishkore",	"Awaran",	"Hoshab"];
+      $("#labelTehsil").html("Tehsil: "+regions[Region-1]);
+
+      $.ajax({
+        url: "/getIndicatorsByTehsil",
+        type: "get", //send it through get method
+        data:{Tehsil:regions[Region-1]},
+        success: function(response) {
+          //console.log(response.count);
+          if (response == 0){
+
+            $("#labelRegion").html("AllRegions");
+            $("#labelTotalCount").html(0);
+            $("#labelUnverifiedCount").html(0);
+            $("#labelPendingCount").html(0);
+            $("#labelRejectedCount").html(0);
+            $("#labelDubiousCount").html(0);
+            $("#labelApprovedCount").html(0);
+
+          } else {
+            console.log(response);
+            $("#labelRegion").html("Tehsil: "+regions[Region-1]);
+            $("#labelTotalCount").html(response.TotalBeneficiaries[0].count);
+            $("#labelUnverifiedCount").html(response.TotalUnverified[0].count);
+            $("#labelPendingCount").html(response.TotalPending[0].count);
+            $("#labelRejectedCount").html(response.TotalRejected[0].count);
+            $("#labelDubiousCount").html(response.TotalDubious[0].count);
+            $("#labelApprovedCount").html(response.TotalApproved[0].count);
+          }
+        },
+        error: function(xhr) {
+          //alert(xhr);
+        }
+      });
+    }
+
+
+
+    })(document, window, jQuery);
+    </script>
+  </body>
+</html>

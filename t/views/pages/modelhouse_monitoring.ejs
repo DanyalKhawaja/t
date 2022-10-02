@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+<html lang="en">
+<% } else { %>
+<html lang="en" dir="rtl" class="rtl">
+<% } %>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+  <title>HRA Portal</title>
+
+  <!-- vendor css -->
+  <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+  <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+  <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+  <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+  <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css"
+    type="text/css">
+  <link rel="stylesheet" href="theme/css/timeline.css" />
+  <style>
+    .map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+  <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+
+  <!-- Bracket CSS -->
+  <link rel="stylesheet" href="theme/css/bracket.css">
+</head>
+
+<body>
+
+  <% include ../partials/header %>
+
+  <!-- ########## START: MAIN PANEL ########## -->
+  <div class="br-mainpanel">
+    <div class="br-pagetitle">
+      <i class="icon ion-ios-pie-outline"></i>
+      <div>
+        <% if (lang == 'en') { %>
+        <h3>Model Houses | Monitoring Details</h3>
+        <h5 class="mg-b-0" id="labelRegion" style="color:#5D2584">All Regions</h5>
+        <% } else { %>
+        <h3> | </h3>
+        <h5 class="mg-b-0" id="labelRegion" style="color:#5D2584">كل المناطق</h5>
+        <% } %>
+
+      </div>
+    </div><!-- d-flex -->
+
+    <div class="br-pagebody">
+      <div class="row row-sm">
+        <div class="col-lg-3">
+          <div class="card shadow-base card-body pd-10 bd-0" style="height: 100%;text-align: center;">
+            <div class="row">
+              <div class="col-sm-12">
+                
+                <h6 class="card-title tx-uppercase tx-16">VILLAGE: <%= MHName %> </h6>
+                <br/><br/><br/><br/>
+                <% if (Completion < 100){ %>
+                  <span class="donut" data-peity='{ "fill": ["orange", "#eeeeee"], "innerRadius": 50, "radius": 100 }'><%= Completion %>/100</span>
+                <% } else { %>
+                  <span class="donut" data-peity='{ "fill": ["green", "#eeeeee"], "innerRadius": 50, "radius": 100 }'><%= Completion %>/100</span>
+                <% } %>
+              </div>
+              
+            </div><!-- row -->
+          </div><!-- card -->
+        </div>
+        <div class="col-lg-9">
+          <div class="card shadow-base bd-0 pd-50 mg-t-5">
+            <div class="timeline-container timeline-theme-1">
+              <div class="timeline js-timeline" style="text-align: center;">
+                <% if (images.length==0) { %>
+                <div data-time="1">
+                  <img src="images/ModelHouses/not_available.png" style="max-width: 100%;
+                          max-height: 100%;" />
+                </div>
+                <% } %>
+                <% for(i=1;i<images.length;i++) { %>
+                <div data-time="<%= i %>">
+                  <img src="/<%= images[i].substring(7) %>" style="max-width: 100%;
+                        max-height: 100%;" />
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </div><!-- card -->
+        </div><!-- col-8 -->
+
+      </div><!-- row -->
+
+    </div><!-- br-pagebody -->
+    <% include ../partials/footer %>
+  </div><!-- br-mainpanel -->
+  <!-- ########## END: MAIN PANEL ########## -->
+
+  <script src="theme/lib/jquery/jquery.js"></script>
+  <script src="theme/js/popper.js"></script>
+  <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+  <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+  <script src="theme/lib/moment/moment.js"></script>
+  <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+  <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+  <script src="theme/js/jquery.peity.js"></script>
+  <script src="theme/lib/d3/d3.js"></script>
+
+  <script src="theme/js/bracket.js"></script>
+
+  <script src="theme/js/ResizeSensor.js"></script>
+
+  <script type="text/javascript" src="theme/js/timeline.js"></script>
+
+  <script>
+    $(function () {
+      'use strict'
+
+      // FOR DEMO ONLY
+      // menu collapsed by default during first page load or refresh with screen
+      // having a size between 992px and 1299px. This is intended on this page only
+      // for better viewing of widgets demo.
+      $(window).resize(function () {
+        minimizeMenu();
+      });
+
+      minimizeMenu();
+
+      function minimizeMenu() {
+        if (window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
+          // show only the icons and hide left menu label by default
+          $('.menu-item-label,.menu-item-arrow').addClass('op-lg-0-force d-lg-none');
+          $('body').addClass('collapsed-menu');
+          $('.show-sub + .br-menu-sub').slideUp();
+        } else if (window.matchMedia('(min-width: 1300px)').matches && !$('body').hasClass('collapsed-menu')) {
+          $('.menu-item-label,.menu-item-arrow').removeClass('op-lg-0-force d-lg-none');
+          $('body').removeClass('collapsed-menu');
+          $('.show-sub + .br-menu-sub').slideDown();
+        }
+      }
+
+    });
+  </script>
+  <script>
+    (function (document, window, $) {
+
+      document.getElementById("li-beneficiary").classList.add('active');
+      document.getElementById("modelhouses").classList.add('active');
+      $("span.donut").peity("donut");
+      $('.timeline').Timeline({
+        autoplay: true,
+        // value: boolean | Enables Autoplay
+        autoplaySpeed: 2000,
+        // value: integer | Autoplay Speed in milliseconds
+        mode: 'horizontal',
+        // value: horizontal | vertical, default to horizontal
+        itemClass: 'timeline-item',
+        // value: item class
+        dotsClass: 'timeline-dots',
+        // value: dots item class
+        activeClass: 'slide-active',
+        // value: item and dots active class
+        prevClass: 'slide-prev',
+        // value: item and dots prev class
+        nextClass: 'slide-next',
+        // value: item and dots next class
+        startItem: 'first', // first|last|number
+        // value: first | last | number , default to first
+        dotsPosition: 'bottom',
+        // value: bottom | top, default to bottom
+        pauseOnHover: true,
+        // value: boolean | Pause Autoplay On Hover
+        pauseOnDotsHover: false,
+        // value: boolean | Pause Autoplay when a dot is hovered
+      });
+      function htmlDecode(input) {
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+      }
+      var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
+
+    })(document, window, jQuery);
+  </script>
+</body>
+
+</html>

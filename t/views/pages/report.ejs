@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter -->
+    <meta name="twitter:site" content="@themepixels">
+    <meta name="twitter:creator" content="@themepixels">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bracket Plus">
+    <meta name="twitter:description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta name="twitter:image" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+
+    <!-- Facebook -->
+    <meta property="og:url" content="http://themepixels.me/bracketplus">
+    <meta property="og:title" content="Bracket Plus">
+    <meta property="og:description" content="Premium Quality and Responsive UI for Dashboard.">
+
+    <meta property="og:image" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+    <meta property="og:image:secure_url" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+
+    <!-- Meta -->
+    <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta name="author" content="ThemePixels">
+
+    <title>HRA - Beneficiaries</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/highlightjs/github.css" rel="stylesheet">
+    <link href="theme/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pageheader">
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+          <a class="breadcrumb-item" href="/">Dashboard</a>
+          <span class="breadcrumb-item active">Beneficiaries</span>
+        </nav>
+      </div><!-- br-pageheader -->
+      <div class="br-pagetitle">
+        <i class="icon icon ion-ios-bookmarks-outline"></i>
+        <div>
+          <h4>Beneficiaries' Management</h4>
+          <p class="mg-b-0">View and manage the beneficiaries' record \& updates</p>
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+        <div class="br-section-wrapper">
+          <div class="row mg-t-0">
+            <div class="col-sm-12">
+              <div class="form-layout form-layout-4">
+                <div class="row mg-t-5">
+                  <div class="col-sm-12 mg-t-5 mg-sm-t-0">
+                    <table id="dtBeneficiary" class=" ui celled table hover" style="width:100%"></table>
+                  </div>
+                </div><!-- row -->
+                <div class="form-layout-footer mg-t-30">
+                  <a href="" id="BeneficiaryDetailButton" class="btn btn-primary tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium" data-toggle="modal" >VIEW DETAILS</a>
+                </div><!-- form-layout-footer -->
+              </div><!-- form-layout -->
+            </div>
+
+          </div>
+        </div><!-- br-section-wrapper -->
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+    <div id="modalBeneficiaryDetail" class="modal fade" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content tx-size-sm">
+          <div class="modal-header pd-x-20">
+            <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">BENEFICIARY DETAIL</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body pd-20">
+            <div class="form-layout form-layout-2">
+            <div class="row no-gutters">
+              <div class="col-md-3">
+                <div class="form-group mg-md-l--1 bd-t-0-force">
+                  <label class="form-control-label mg-b-0-force">District: <span class="tx-danger">*</span></label>
+                  <select id="select2-District" class="form-control" data-placeholder="Choose District" style="width:100%">
+                    <option label="Choose district"></option>
+                    <option value="1" selected>Awaran</option>
+                    <option value="2" selected>Kech</option>
+                  </select>
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3">
+                <div class="form-group mg-md-l--1 bd-t-0-force">
+                  <label class="form-control-label mg-b-0-force">Tehsil: <span class="tx-danger">*</span></label>
+                  <select id="select2-Tehsil" class="form-control" data-placeholder="Choose Tehsil" style="width:100%">
+                    <option label="Choose tehsil"></option>
+                    <option value="1" selected>Awaran</option>
+                    <option value="2" selected>Others</option>
+                  </select>
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3">
+                <div class="form-group mg-md-l--1 bd-t-0-force">
+                  <label class="form-control-label mg-b-0-force">UC: <span class="tx-danger">*</span></label>
+                  <select id="select2-UC" class="form-control" data-placeholder="Choose UC" style="width:100%">
+                    <option label="Choose UC"></option>
+                    <option value="1" selected>Awaran</option>
+                    <option value="2" selected>Dandar</option>
+                  </select>
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3">
+                <div class="form-group mg-md-l--1 bd-t-0-force">
+                  <label class="form-control-label mg-b-0-force">Village: <span class="tx-danger">*</span></label>
+                  <select id="select2-Village" class="form-control" data-placeholder="Choose Village" style="width:100%">
+                    <option label="Choose Village"></option>
+                    <option value="1" selected>Awaran</option>
+                    <option value="2" selected>Dandar</option>
+                  </select>
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">CNIC: <span class="tx-danger">*</span></label>
+                  <input class="form-control" type="text" name="CNIC" value="111112222223" placeholder="Enter CNIC">
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="form-control-label">Firstname: <span class="tx-danger">*</span></label>
+                  <input class="form-control" type="text" name="firstname" value="John Paul" placeholder="Enter firstname">
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3 mg-t--1 mg-md-t-0">
+                <div class="form-group mg-md-l--1">
+                  <label class="form-control-label">Lastname: <span class="tx-danger">*</span></label>
+                  <input class="form-control" type="text" name="lastname" value="McDoe" placeholder="Enter lastname">
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-3 mg-t--1 mg-md-t-0">
+                <div class="form-group mg-md-l--1">
+                  <label class="form-control-label">Email address: <span class="tx-danger">*</span></label>
+                  <input class="form-control" type="text" name="email" value="johnpaul@yourdomain.com" placeholder="Enter email address">
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-md-8">
+                <div class="form-group bd-t-0-force">
+                  <label class="form-control-label">Mail address: <span class="tx-danger">*</span></label>
+                  <input class="form-control" type="text" name="address" value="Market St., San Francisco" placeholder="Enter address">
+                </div>
+              </div><!-- col-8 -->
+              <div class="col-md-4">
+                <div class="form-group mg-md-l--1 bd-t-0-force">
+                  <label class="form-control-label mg-b-0-force">Country: <span class="tx-danger">*</span></label>
+                  <select id="select2-a" class="form-control" data-placeholder="Choose country" style="width:100%">
+                    <option label="Choose country"></option>
+                    <option value="USA" selected>United States of America</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="China">China</option>
+                    <option value="Japan">Japan</option>
+                  </select>
+                </div>
+              </div><!-- col-4 -->
+            </div><!-- row -->
+            <div class="form-layout-footer bd pd-20 bd-t-0">
+              <button class="btn btn-info">Submit Form</button>
+              <button class="btn btn-secondary">Cancel</button>
+            </div><!-- form-group -->
+          </div><!-- form-layout -->
+          </div><!-- modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary tx-size-xs">Save changes</button>
+            <button type="button" class="btn btn-secondary tx-size-xs" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div><!-- modal-dialog -->
+    </div>
+
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/highlightjs/highlight.pack.js"></script>
+    <script src="theme/lib/datatables/jquery.dataTables.js"></script>
+    <script src="theme/lib/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+
+    <script src="theme/lib/select2/js/select2.min.js"></script>
+
+    <script src="theme/js/bracket.js"></script>
+
+    <script>
+
+      $(function(){
+        $(document).ready(function() {
+
+          var url = "/beneficiary/getBenList";
+      		$('#dtBeneficiary').DataTable({
+            "paging":         	true,
+            "processing":       false,
+            "serverSide":       false,
+            "orderCellsTop":    false,
+            "ordering":         false,
+            dom: 'Bfrtip',
+            "fixedHeader":      true,
+    					"ajax": {
+    						"url": 							url,
+    						"dataSrc": 					""
+    					},
+    					"columns": [
+    						{"data": "CNIC", "title":"CNIC"},
+    						{ "data": "Name", "title":"Name" },
+                { "data": "District", "title":"Districy" },
+                { "data": "Village", "title":"Village"},
+                { "data": "UC", "title":"UC" },
+                { "data": "Latitude", "title":"Latitude" },
+                { "data": "Longitude", "title":"Longitude" },
+                { "data": "Photo", "title": "Pic",
+                  "render": function (data) {
+                    return '<img src="data:image/jpeg;base64,' + data + '" style="height:200px;width:auto;border:5px solid black" />'
+                  }
+                } ,
+    					],
+              buttons: [
+               {
+                   extend: 'pdfHtml5',
+                   orientation: 'landscape',
+                   pageSize: 'A4'
+               }
+              ]
+
+    			});
+        });
+
+
+      });
+    </script>
+  </body>
+</html>

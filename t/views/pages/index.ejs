@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+<html lang="en">
+<% } else { %>
+<html lang="en" dir="rtl" class="rtl">
+<% } %>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+  <title>HRA | Dashboard</title>
+
+  <!-- vendor css -->
+  <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+  <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+  <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+  <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+  <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+
+  <!-- Bracket CSS -->
+  <link rel="stylesheet" href="theme/css/bracket.css">
+</head>
+<style>
+  .counter{
+    border-bottom-style: solid;
+  }
+  
+  </style>
+<body>
+
+  <% include ../partials/header %>
+
+  <!-- ########## START: MAIN PANEL ########## -->
+  <div class="br-mainpanel">
+    <div style="display:flow-root;">
+      <div style="float:left;" class="br-pagetitle">
+        <i class="icon ion-ios-pie-outline"></i>
+        <div>
+          <% if (lang == 'en') { %>
+          <h4>Dashboard | Construction of 8000 Houses</h4>
+          <h5 class="mg-b-0" id="labelRegion" style="color:#5D2584">All Regions</h5>
+          <% } else { %>
+          <h4>لوحة القيادة | بناء 8000 منزل</h4>
+          <h5 class="mg-b-0" id="labelRegion" style="color:#5D2584">كل المناطق</h5>
+          <% } %>
+  
+        </div>
+       
+     
+      </div><!-- d-flex -->
+      <div  style="float:right;"" > 
+        <div  style="float:right;margin-top: 30px;margin-right: 15px;">Portal Updated on <b><%= LastUpdatedOn %></b></div><br/>
+        <div  style="float:right;margin-right: 15px;">Monitoring Data upto <b><%= LastDataReceivedOn %></b></div>
+       
+    </div>
+    </div>
+
+    <div class="br-pagebody">
+      <div class="row row-sm">
+        <div class="col-lg-8">
+
+          <div class="card shadow-base bd-0 pd-5 mg-t-5">
+            <div id="map" style="width:100%;height:645px;"></div>
+          </div><!-- card -->
+        </div><!-- col-8 -->
+        <div class="col-sm-6 col-xl-2">
+          <div class="bg-info rounded overflow-hidden">
+            <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center counter">
+              <% if (lang == 'en') { %>
+              TOTAL COUNT
+              <% } else { %>
+              العدد الإجمالي
+              <% } %>
+            </p>
+            <div class="pd-x-10 d-flex align-items-center">
+              <i class="ion ion-android-people tx-40 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <p class="tx-20 tx-center tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelTotalCount">
+                  <%= TotalBeneficiaries %></p>
+              </div>
+            </div>
+
+
+          </div>
+
+
+         
+
+          <br />
+          <div class="rounded overflow-hidden" style="background:#c29888;">
+            <p class="tx-16 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+
+              <% if (lang == 'en') { %>
+              VERIFIED
+              <% } else { %>
+              التحقق
+              <% } %>
+            </p>
+            <a href="/beneficiary/verified">
+              <div class="pd-x-10  d-flex align-items-center">
+                <i class="ion ion-checkmark tx-40 lh-0 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelVerifiedCount"><%= TotalVerified %></p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <br />
+          <div class="bg-warning rounded overflow-hidden" style="display: none;">
+            <p class="tx-16 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              DUBIOUS
+              <% } else { %>
+              مشكوك فيه
+              <% } %>
+            </p>
+            <div class="pd-x-10 d-flex align-items-center">
+              <i class="ion ion-help tx-40 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelDubiousCount"><%= TotalDubious %></p>
+              </div>
+            </div>
+          </div>
+        
+          
+          <div class="rounded overflow-hidden" style="background:#c29888;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              L-1 CHEQUES ENCASHED
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            <a href="/hc-financials/first_installment">
+            <div class="pd-x-10 d-flex align-items-center">
+              <i class="fa  fa-money tx-40 lh-0.5 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel1Encashed">
+                  <%= TotalLevel1Encashed %>
+                </p>
+              </div>
+            </div>
+            </a>
+          </div>
+          <br />
+          <div class="rounded overflow-hidden" style="background:#c29888;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              LEVEL 2 DISBURSEMENT
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            <a href="/hc-financials/second_installment">
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="fa  fa-university tx-40 lh-0.5 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel2Encashed">
+                    <%= TotalLevel2Encashed %>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <br />
+          <div class="rounded overflow-hidden" style="background:#c29888;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              LEVEL 3 DISBURSEMENT
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            <a href="/hc-financials/third_installment">
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="fa  fa-university tx-40 lh-0.5 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel3Encashed">
+                    <%= TotalLevel3Encashed %>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <br />
+          <div class="rounded overflow-hidden" style="background:#c29888;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              LEVEL 4 DISBURSEMENT
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            <a href="#">
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="fa  fa-university tx-40 lh-0.5 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel4Encashed">
+                    <%= TotalLevel4Encashed %>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <br />
+          <div class="rounded overflow-hidden" style="background:#8490a4;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              NO. OF BENEFICIARY-PAYMENTS RECOMENDED TO HRA SINCE AUGUST 2020
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="fa  fa-arrow-right tx-40 lh-0.5 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel4Encashed">
+                    <%= Last2Recomended %>
+                  </p>
+                </div>
+              </div>
+            
+          </div>
+        </div><!-- col-3 -->
+        <div class="col-sm-6 col-xl-2 mg-t-20 mg-sm-t-0">
+          <div class="bg-primary rounded overflow-hidden">
+            <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center counter">
+              <% if (lang == 'en') { %>
+              UN-VERIFIED
+              <% } else { %>
+              إلغاء التحقق
+              <% } %>
+            </p>
+            <div class="pd-x-10 d-flex align-items-center">
+              <i class="ion ion-search tx-40 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelUnverifiedCount"><%= TotalUnverified %>
+                </p>
+              </div>
+            </div>
+
+          </div>
+          <br />
+          
+          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+            <p class="tx-16 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              APPROVED
+              <% } else { %>
+              وافق
+              <% } %>
+            </p>
+            <div class="pd-x-10 d-flex align-items-center">
+              <i class="ion ion-android-checkmark-circle tx-40 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelApprovedCount"><%= TotalApproved %></p>
+              </div>
+            </div>
+
+          </div>
+          <br />
+          <div class="bg-danger rounded overflow-hidden" style="display: none;">
+            <p class="tx-16 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              REJECTED
+              <% } else { %>
+              مرفوض
+              <% } %>
+            </p>
+            <div class="pd-x-10 d-flex align-items-center">
+              <i class="ion ion-android-remove-circle tx-40 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelRejectedCount"><%= TotalRejected %></p>
+              </div>
+            </div>
+
+          </div>
+          
+          
+       
+          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              LEVEL 1 ACHEIVED
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            <a href="/level1">
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-thumbsup tx-40 lh-0 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel1Achieved">
+                    <%= TotalLevel1Achieved %>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          
+          <br />
+          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              LEVEL 2 ACHEIVED
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            <a href="/level2">
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-thumbsup tx-40 lh-0 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel2Achieved">
+                    <%= TotalLevel2Achieved %>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <br />
+          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              LEVEL 3 ACHEIVED
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            <a href="/level3">
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-thumbsup tx-40 lh-0 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel3Achieved">
+                    <%= TotalLevel3Achieved %>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <br />
+          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              LEVEL 4 ACHEIVED
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+            
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-thumbsup tx-40 lh-0 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel4Achieved">
+                    <%= TotalLevel4Achieved %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <br />
+          <div class="rounded overflow-hidden" style="background:#f85353;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+              <% if (lang == 'en') { %>
+              NO. OF BENEFICIARIY-PAYMENTS MADE BY HRA WITHOUT RELEVANT MONITORING DATA 
+              <% } else { %>
+              تبديل
+              <% } %>
+            </p>
+
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-alert-circled tx-40 lh-0 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel4Achieved">
+                    <%= NotRecomendedPaymentL2+NotRecomendedPaymentL3+NotRecomendedPaymentL4 %>
+                  </p>
+                </div>
+              </div>
+          
+          </div>
+        </div><!-- col-3 -->
+        
+      </div><!-- row -->
+
+
+
+
+
+
+
+
+
+   
+     
+      
+
+      <div class="row row-sm mg-t-20">
+
+        <div class="col-lg-12">
+          <div class="card shadow-base bd-0 pd-10 mg-t-5">
+            <div id="roseUC" style="width: 100%;height:520px;"></div>
+          </div>
+        </div><!-- col-8 -->
+      </div><!-- row -->
+
+        <div class="row row-sm mg-t-20">
+        <div class="col-lg-12">
+          <div class="card shadow-base bd-0 pd-10 mg-t-5">
+            <div id="pieGender" style="width: 100%;height:480px;"></div>
+          </div><!-- card -->
+        </div><!-- col-8 -->
+      </div><!-- row -->
+
+
+
+
+
+
+
+
+
+      <div class="row row-sm mg-t-20">
+
+        <div class="col-lg-12">
+          <div class="card shadow-base bd-0 pd-10 mg-t-5">
+
+            <div id="BenStatusByUCChart" style="width: 100%;height:470px;"></div>
+          </div>
+        </div><!-- col-8 -->
+      </div><!-- row -->
+
+
+    </div><!-- br-pagebody -->
+    <% include ../partials/footer %>
+  </div><!-- br-mainpanel -->
+  <!-- ########## END: MAIN PANEL ########## -->
+
+  <script src="theme/lib/jquery/jquery.js"></script>
+  <script src="theme/js/popper.js"></script>
+  <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+  <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+  <script src="theme/lib/moment/moment.js"></script>
+  <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+  <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+  <script src="theme/lib/peity/jquery.peity.js"></script>
+  <script src="theme/lib/d3/d3.js"></script>
+  <script src="theme/lib/rickshaw/rickshaw.min.js"></script>
+  <script src="theme/lib/Flot/jquery.flot.js"></script>
+  <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
+  <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
+  <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+  <script src="theme/lib/echarts/echarts.min.js"></script>
+  <script src="theme/lib/select2/js/select2.full.min.js"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyAtFS563VrFYCkOBmG8J2-noujJ9gP18EM"></script>
+
+  <script src="theme/lib/gmaps/gmaps.js"></script>
+
+  <script type="text/javascript" src="tehsil-jhal-jao-sub.js"></script>
+  <script type="text/javascript" src="tehsil-mashkai.js"></script>
+  <script type="text/javascript" src="tehsil-jhal-jhao.js"></script>
+  <script type="text/javascript" src="teshil-gishkore.js"></script>
+  <script type="text/javascript" src="tehsil-awaran.js"></script>
+  <script type="text/javascript" src="tehsil-hoshab.js"></script>
+  <script src="theme/js/bracket.js"></script>
+  <script src="theme/js/map.shiftworker.js"></script>
+  <script src="theme/js/ResizeSensor.js"></script>
+  <script src="theme/js/dashboard.js"></script>
+  <script src="theme/js/chart.echarts.js"></script>
+  <script>
+    $(function () {
+      'use strict'
+
+      // FOR DEMO ONLY
+      // menu collapsed by default during first page load or refresh with screen
+      // having a size between 992px and 1299px. This is intended on this page only
+      // for better viewing of widgets demo.
+      $(window).resize(function () {
+        minimizeMenu();
+      });
+
+      minimizeMenu();
+
+      function minimizeMenu() {
+        if (window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
+          // show only the icons and hide left menu label by default
+          $('.menu-item-label,.menu-item-arrow').addClass('op-lg-0-force d-lg-none');
+          $('body').addClass('collapsed-menu');
+          $('.show-sub + .br-menu-sub').slideUp();
+        } else if (window.matchMedia('(min-width: 1300px)').matches && !$('body').hasClass('collapsed-menu')) {
+          $('.menu-item-label,.menu-item-arrow').removeClass('op-lg-0-force d-lg-none');
+          $('body').removeClass('collapsed-menu');
+          $('.show-sub + .br-menu-sub').slideDown();
+        }
+      }
+
+    });
+  </script>
+  <script>
+    (function (document, window, $) {
+      document.getElementById("li-dashboard").classList.add('active');
+      function htmlDecode(input) {
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+      }
+      var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
+      var VerifiedCountByUC = JSON.parse(htmlDecode("<%= JSON.stringify(VerifiedCountByUC) %>"));
+      var VerifiedMaleCountByUC = JSON.parse(htmlDecode("<%= JSON.stringify(VerifiedMaleCountByUC) %>"));
+      var VerifiedFemaleCountByUC = JSON.parse(htmlDecode("<%= JSON.stringify(VerifiedFemaleCountByUC) %>"));
+      var BenStatusCount = JSON.parse(htmlDecode("<%= JSON.stringify(BenStatusCount) %>"));
+      var TotalCountLevel1AcheivedByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountLevel1AcheivedByUC) %>"));
+      var TotalCountInstallment1EncashedByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment1EncashedByUC) %>"));
+      var BenGenderChart = echarts.init(document.getElementById('pieGender'));
+
+      var BenGenderChartTitle = 'BENEFICIARIES GENDER COUNT';
+      var BenGenderChartSubText = 'UC WISE';
+      var name1 = 'male';
+      var name2 = 'female';
+      var titleX = "left";
+      if (lang == 'ar') {
+        BenGenderChartTitle = 'حساب المستفيدون حسب الجنس';
+        BenGenderChartSubText = 'حكيم UC';
+        name1 = 'الذكر';
+        name2 = 'إناثا';
+        titleX = "right";
+      }
+
+      options = {
+        title: {
+          text: BenGenderChartTitle,
+          subtext: BenGenderChartSubText,
+          x: titleX
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        color: ['#064789', '#A5BE00'],
+        angleAxis: {
+          type: 'category',
+          data: [VerifiedMaleCountByUC[0].UCName, VerifiedMaleCountByUC[1].UCName, VerifiedMaleCountByUC[2].UCName, VerifiedMaleCountByUC[3].UCName, VerifiedMaleCountByUC[4].UCName, VerifiedMaleCountByUC[5].UCName, VerifiedMaleCountByUC[6].UCName],
+          z: 10
+        },
+        radiusAxis: {
+        },
+        polar: {
+        },
+        series: [{
+          type: 'bar',
+          data: [VerifiedMaleCountByUC[0].count, VerifiedMaleCountByUC[1].count, VerifiedMaleCountByUC[2].count, VerifiedMaleCountByUC[3].count, VerifiedMaleCountByUC[4].count, VerifiedMaleCountByUC[5].count, VerifiedMaleCountByUC[6].count],
+          coordinateSystem: 'polar',
+          name: name1,
+          stack: 'a'
+        }, {
+          type: 'bar',
+          data: [VerifiedFemaleCountByUC[0].count, VerifiedFemaleCountByUC[1].count, VerifiedFemaleCountByUC[2].count, VerifiedFemaleCountByUC[3].count, VerifiedFemaleCountByUC[4].count, VerifiedFemaleCountByUC[5].count, VerifiedFemaleCountByUC[6].count],
+          coordinateSystem: 'polar',
+          name: name2,
+          stack: 'a'
+        },],
+        legend: {
+          show: true,
+          data: [name1, name2],
+          y: 'bottom',
+        }
+      };
+      BenGenderChart.setOption(options);
+
+      var BenUCChartTitle = 'APPROVED BENEFICIARIES';
+      var BenUCChartSubText = 'UC WISE';
+      var radius = [25, 220];
+      if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
+        || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) {
+        radius = [10, 100];
+      }
+      if (lang == 'ar') {
+        BenUCChartTitle = 'المستفيدون الذين تم التحقق منهم';
+        BenUCChartSubText = 'حكيم UC';
+        titleX = "right";
+
+      }
+      var BenUCChart = echarts.init(document.getElementById('roseUC'));
+      option = {
+        title: {
+          text: BenUCChartTitle,
+          subtext: BenUCChartSubText,
+          x: titleX
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          x: 'center',
+          y: 'bottom',
+          type: 'scroll',
+          data: [VerifiedCountByUC[0].UCName, VerifiedCountByUC[1].UCName, VerifiedCountByUC[2].UCName, VerifiedCountByUC[3].UCName, VerifiedCountByUC[4].UCName, VerifiedCountByUC[5].UCName, VerifiedCountByUC[6].UCName]
+        },
+
+        calculable: true,
+        series: [
+          {
+            name: '',
+            type: 'pie',
+            radius: radius,
+            center: ['50%', '50%'],
+            roseType: 'radius',
+            label: {
+              normal: {
+                formatter: '{b|{b}}\n{hr|}\n  {c}  {per|{d}%}  ',
+                backgroundColor: '#eee',
+                borderColor: '#aaa',
+                borderWidth: 1,
+                borderRadius: 4,
+                rich: {
+                  a: {
+                    color: '#999',
+                    lineHeight: 22,
+                    align: 'center'
+                  },
+                  hr: {
+                    borderColor: '#aaa',
+                    width: '100%',
+                    borderWidth: 0.5,
+                    height: 0
+                  },
+                  b: {
+                    fontSize: 12,
+                    lineHeight: 15,
+                    align: 'center'
+                  },
+                  per: {
+                    color: '#eee',
+                    backgroundColor: '#334455',
+                    padding: [2, 4],
+                    borderRadius: 2
+                  }
+                }
+              }
+            },
+            data: [
+              { value: VerifiedCountByUC[0].count, name: VerifiedCountByUC[0].UCName },
+              { value: VerifiedCountByUC[1].count, name: VerifiedCountByUC[1].UCName },
+              { value: VerifiedCountByUC[2].count, name: VerifiedCountByUC[2].UCName },
+              { value: VerifiedCountByUC[3].count, name: VerifiedCountByUC[3].UCName },
+              { value: VerifiedCountByUC[4].count, name: VerifiedCountByUC[4].UCName },
+              { value: VerifiedCountByUC[5].count, name: VerifiedCountByUC[5].UCName },
+              { value: VerifiedCountByUC[6].count, name: VerifiedCountByUC[6].UCName },
+            ]
+          }
+        ]
+      };
+      BenUCChart.setOption(option);
+
+      var BenStatusByUCChart = echarts.init(document.getElementById('BenStatusByUCChart'));
+
+      var BenStatusByUCChartTitle = 'BENEFICIARIES STATUS COUNT';
+      var BenStatusByUCChartSubText = 'UC WISE';
+      var x = 'left';
+      var legendX = 'right';
+      var data = ['Total', 'Un-Verified', 'Pending', 'Verified', 'Approved', 'Rejected', 'Dubious', 'Deceased'];
+      var x_inverse = false;
+      var y_position = 'left';
+      if (lang == 'ar') {
+        BenStatusByUCChartTitle = 'المستفيدون الذين تم حساب المستفيدون حسب الحالة منهم';
+        BenStatusByUCChartSubText = 'حكيم UC';
+        x = 'right';
+        legendX = 'left';
+        data = ['العدد الإجمالي', 'إلغاء التحقق', 'قيد الانتظار', 'التحقق', 'وافق', 'مرفوض', 'مشكوك فيه', 'متوفى'];
+        x_inverse = true;
+        y_position = 'right';
+      }
+      optionBenStatusByUCChart = {
+        title: {
+          text: BenStatusByUCChartTitle,
+          subtext: BenStatusByUCChartSubText,
+          x: x
+        },
+        color: ['#5D2584', '#00C1B5', '#E45A19', '#DB4848', '#80AA2B', '#9B1D20', '#0B1D20', '#A0C1B5'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {
+          data: data,
+          x: 'center',
+          top: 'bottom',
+          type: 'scroll',
+          padding: [5, 15, 0, 5]
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          inverse: x_inverse
+        },
+        yAxis: {
+          type: 'category',
+          data: ['Unknown','Awaran', 'Dandar', 'Gajjar', 'Gishkore', 'Nok Jo', 'Parwar', 'Teertaje'],
+          position: y_position
+        },
+        series: [
+          {
+            name: data[0],
+            type: 'bar',
+            stack: '1',
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [BenStatusCount[0]['Total'], BenStatusCount[1]['Total'], BenStatusCount[2]['Total'], BenStatusCount[3]['Total'], BenStatusCount[4]['Total'], BenStatusCount[5]['Total'], BenStatusCount[6]['Total'], 
+            BenStatusCount[7]['Total']]
+          },
+          {
+            name: data[1],
+            type: 'bar',
+            stack: '1',
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [BenStatusCount[0]['Un-Verified'], BenStatusCount[1]['Un-Verified'], BenStatusCount[2]['Un-Verified'], BenStatusCount[3]['Un-Verified'], BenStatusCount[4]['Un-Verified'], BenStatusCount[5]['Un-Verified'], BenStatusCount[6]['Un-Verified'], BenStatusCount[7]['Un-Verified']]
+          },
+          {
+            name: data[2],
+            type: 'bar',
+            stack: '1',
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [BenStatusCount[0]['Pending'], BenStatusCount[1]['Pending'], BenStatusCount[2]['Pending'], BenStatusCount[3]['Pending'], BenStatusCount[4]['Pending'], BenStatusCount[5]['Pending'], BenStatusCount[6]['Pending'], BenStatusCount[7]['Pending']]
+          },
+          {
+            name: data[3],
+            type: 'bar',
+            stack: '1',
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [BenStatusCount[0]['Verified'], BenStatusCount[1]['Verified'], BenStatusCount[2]['Verified'], BenStatusCount[3]['Verified'], BenStatusCount[4]['Verified'], BenStatusCount[5]['Verified'], BenStatusCount[6]['Verified'], BenStatusCount[7]['Verified']]
+          },
+          {
+            name: data[4],
+            type: 'bar',
+            stack: '1',
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [BenStatusCount[0]['Approved'], BenStatusCount[1]['Approved'], BenStatusCount[2]['Approved'], BenStatusCount[3]['Approved'], BenStatusCount[4]['Approved'], BenStatusCount[5]['Approved'], BenStatusCount[6]['Approved'], BenStatusCount[7]['Approved']]
+          },
+          {
+            name: data[5],
+            type: 'bar',
+            stack: '1',
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [BenStatusCount[0]['Rejected'], BenStatusCount[1]['Rejected'], BenStatusCount[2]['Rejected'], BenStatusCount[3]['Rejected'], BenStatusCount[4]['Rejected'], BenStatusCount[5]['Rejected'], BenStatusCount[6]['Rejected'], BenStatusCount[7]['Rejected']]
+          },
+          {
+            name: data[6],
+            type: 'bar',
+            stack: '1',
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [BenStatusCount[0]['Dubious'], BenStatusCount[1]['Dubious'], BenStatusCount[2]['Dubious'], BenStatusCount[3]['Dubious'], BenStatusCount[4]['Dubious'], BenStatusCount[5]['Dubious'], BenStatusCount[6]['Dubious'], BenStatusCount[7]['Dubious']]
+          },
+          {
+            name: data[7],
+            type: 'bar',
+            stack: '1',
+            label: {
+              normal: {
+                show: true,
+                position: 'insideRight'
+              }
+            },
+            data: [BenStatusCount[0]['Deceased'], BenStatusCount[1]['Deceased'], BenStatusCount[2]['Deceased'], BenStatusCount[3]['Deceased'], BenStatusCount[4]['Deceased'], BenStatusCount[5]['Deceased'], BenStatusCount[6]['Deceased'], BenStatusCount[7]['Deceased']]
+          }
+        ]
+      };
+      BenStatusByUCChart.setOption(optionBenStatusByUCChart);
+
+      var EncashedVsAchieved1ChartTitle = 'INSTALLMENT-I ENCASHED vs LEVEL-I ACHIEVED';
+      var EncashedVsAchieved1ChartSubText = 'UC WISE';
+      var x_inverse = false;
+      var y_position = 'left';
+      var x = 'left';
+      var legendX = 'right';
+      var data = ['INSTALLMENT-I ENCASHED', 'LEVEL-I ACHIEVED'];
+      if (lang == 'ar') {
+        EncashedVsAchieved1ChartTitle = 'التحقق من التوزيع لجميع التركيبات';
+        EncashedVsAchieved1ChartSubText = 'مجلس النقابات';
+        x = 'right';
+        legendX = 'left';
+        data = ['دفعة أولى', 'القسط الثاني', 'الدفعة الثالثة', 'الدفعة الرابعة'];
+        x_inverse = true;
+        y_position = 'right';
+      }
+
+     // var EncashedVsAchieved1Chart = echarts.init(document.getElementById('EncashedVsAchieved1Chart'));
+
+      var labelOption = {
+        normal: {
+            show: true,
+            position: 'insideBottom',
+            distance: 15,
+            align: 'left',
+            verticalAlign: 'middle',
+            rotate: 90,
+            formatter: '{c}  {name|{a}}',
+            fontSize: 18,
+            rich: {
+                name: {
+                    textBorderColor: '#fff'
+                }
+            }
+        }
+      };
+      option = {
+        title: {
+          text: EncashedVsAchieved1ChartTitle,
+          subtext: EncashedVsAchieved1ChartSubText,
+          x: x
+        },
+        color: ['#0866c6', '#1caf9a'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        legend: {
+          data: data,
+          x: legendX
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['Awaran', 'Gishkore', 'Teertaje', 'Gajjar', 'Nok Jo', 'Parwar', 'Dandar'],
+            inverse: x_inverse
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            position: y_position
+          }
+        ],
+        series: [
+          {
+            name: data[0],
+            type: 'bar',
+
+            data: [
+              TotalCountInstallment1EncashedByUC.TotalCountInstallment1Awaran,
+              TotalCountInstallment1EncashedByUC.TotalCountInstallment1Gishkore,
+              TotalCountInstallment1EncashedByUC.TotalCountInstallment1Teertaje,
+              TotalCountInstallment1EncashedByUC.TotalCountInstallment1Gajjar,
+              TotalCountInstallment1EncashedByUC.TotalCountInstallment1Nokjo,
+              TotalCountInstallment1EncashedByUC.TotalCountInstallment1Parwar,
+              TotalCountInstallment1EncashedByUC.TotalCountInstallment1Dandar
+            ]
+          },
+          {
+            name: data[1],
+            type: 'bar',
+            stack: 'Z',
+
+            data: [
+              TotalCountLevel1AcheivedByUC.TotalCountInstallment1Awaran,
+              TotalCountLevel1AcheivedByUC.TotalCountInstallment1Gishkore,
+              TotalCountLevel1AcheivedByUC.TotalCountInstallment1Teertaje,
+              TotalCountLevel1AcheivedByUC.TotalCountInstallment1Gajjar,
+              TotalCountLevel1AcheivedByUC.TotalCountInstallment1Nokjo,
+              TotalCountLevel1AcheivedByUC.TotalCountInstallment1Parwar,
+              TotalCountLevel1AcheivedByUC.TotalCountInstallment1Dandar
+            ]
+          },
+
+
+        ]
+      };
+
+     // EncashedVsAchieved1Chart.setOption(option);
+
+
+      var myLatLng = new google.maps.LatLng(26.419826, 64.554864);
+      var myOptions = {
+        zoom: 8,
+        center: myLatLng,
+        scrollwheel: false,
+        zoomControl: false,
+        navigationControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        draggable: false,
+        styles: [
+          {
+            featureType: 'all',
+            stylers: [
+              { saturation: -80 }
+            ]
+          }, {
+            featureType: 'road',
+            elementType: 'geometry',
+            stylers: [
+              { hue: '#00ffee' },
+              { saturation: 50 }
+            ]
+          }, {
+            featureType: 'poi',
+            elementType: 'labels',
+            stylers: [
+              { visibility: 'on' }
+            ]
+          }
+        ]
+        //mapTypeId: google.maps.MapTypeId.TERRAIN
+      };
+      var strokeColor = '#FF0000';
+      var fillcolors = ['#5D2584', '#00C1B5', '#E45A19', '#DB4848', '#9B1D20', '#80AA2B'];
+      var strokeOpacity = 0.2;
+      var fillOpacity = 0.4;
+      var fillOpacityOver = .8;
+      var map = new google.maps.Map(document.getElementById('map'), myOptions);
+
+      var MashkaiBorder = createpoly(Mashkai, 3);
+      MashkaiBorder.setMap(map);
+      var GishkoreBorder = createpoly(Gishkore, 2);
+      GishkoreBorder.setMap(map);
+      var AwaranBorder = createpoly(Awaran, 1);
+      AwaranBorder.setMap(map);
+      var KechBorder = createpoly(Kech, 5);
+      KechBorder.setMap(map);
+
+
+      addmouseover(MashkaiBorder, 2);
+
+      addmouseover(GishkoreBorder, 4);
+      addmouseover(AwaranBorder, 5);
+      addmouseover(KechBorder, 6);
+
+
+      google.maps.event.addListener(MashkaiBorder, "click", function () {
+        regionClick('2');
+      });
+
+      google.maps.event.addListener(GishkoreBorder, "click", function () {
+        regionClick('4');
+      });
+      google.maps.event.addListener(AwaranBorder, "click", function () {
+        regionClick('5');
+      });
+      google.maps.event.addListener(KechBorder, "click", function () {
+        regionClick('6');
+      });
+
+
+      function createpoly(path, colorIndex) {
+        return new google.maps.Polygon({
+          paths: path,
+          strokeColor: strokeColor,
+          strokeOpacity: strokeOpacity,
+          strokeWeight: 1,
+          fillColor: fillcolors[colorIndex],
+          fillOpacity: fillOpacity,
+          label: 'string'
+        });
+      }
+      function addmouseover(item, id) {
+
+        google.maps.event.addListener(item, "mouseover", function () {
+          this.setOptions({ fillOpacity: fillOpacityOver });
+          if (id > 0) {
+            regionHover(id);
+          }
+
+        });
+        google.maps.event.addListener(item, "mouseout", function () {
+          this.setOptions({ fillOpacity: fillOpacity });
+          $("#labelRegion").html("All Regions");
+          $("#labelTotalCount").html("<%= TotalBeneficiaries %>");
+          $("#labelUnverifiedCount").html("<%= TotalUnverified %>");
+          $("#labelVerifiedCount").html("<%= TotalVerified %>");
+          $("#labelPendingCount").html("<%= TotalPending %>");
+          $("#labelRejectedCount").html("<%= TotalRejected %>");
+          $("#labelDubiousCount").html("<%= TotalDubious %>");
+          $("#labelApprovedCount").html("<%= TotalApproved %>");
+          $("#labelLevel1Achieved").html("<%= TotalLevel1Achieved %>");
+          $("#labelLevel1Encashed").html("<%= TotalLevel1Encashed %>");
+          $("#labelLevel2Achieved").html("<%= TotalLevel2Achieved %>");
+          $("#labelLevel2Encashed").html("<%= TotalLevel2Encashed %>");
+          $("#labelLevel3Achieved").html("<%= TotalLevel3Achieved %>");
+          $("#labelLevel3Encashed").html("<%= TotalLevel3Encashed %>");
+          $("#labelLevel4Achieved").html("<%= TotalLevel4Achieved %>");
+          $("#labelLevel4Encashed").html("<%= TotalLevel4Encashed %>");
+        });
+      }
+
+      function regionHover(Region) {
+
+        var regions = ["JhalJaoSub", "Mashkai", "JhalJao", "Gishkore", "Awaran", "Hoshab"];
+        $("#labelTehsil").html("Tehsil: " + regions[Region - 1]);
+
+        $.ajax({
+          url: "/getIndicatorsByTehsil",
+          type: "get", //send it through get method
+          data: { Tehsil: regions[Region - 1] },
+          success: function (response) {
+            //console.log(response.count);
+            if (response == 0) {
+
+              $("#labelRegion").html("AllRegions");
+              $("#labelTotalCount").html(0);
+              $("#labelUnverifiedCount").html(0);
+              $("#labelVerifiedCount").html(0);
+              $("#labelPendingCount").html(0);
+              $("#labelRejectedCount").html(0);
+              $("#labelDubiousCount").html(0);
+              $("#labelApprovedCount").html(0);
+              $("#labelLevel1Achieved").html(0);
+              $("#labelLevel1Encashed").html(0);
+
+            } else {
+              
+              $("#labelRegion").html("Tehsil: " + regions[Region - 1]);
+              $("#labelTotalCount").html(response.TotalBeneficiaries[0].count);
+              $("#labelUnverifiedCount").html(response.TotalUnverified[0].count);
+              $("#labelVerifiedCount").html(response.TotalVerified[0].count);
+              $("#labelPendingCount").html(response.TotalPending[0].count);
+              $("#labelRejectedCount").html(response.TotalRejected[0].count);
+              $("#labelDubiousCount").html(response.TotalDubious[0].count);
+              $("#labelApprovedCount").html(response.TotalApproved[0].count);
+              $("#labelLevel1Achieved").html(response.TotalLevel1Achieved[0].count);
+              $("#labelLevel1Encashed").html(response.TotalLevel1Encashed[0].count);
+              $("#labelLevel2Achieved").html(response.TotalLevel2Achieved[0].count);
+              $("#labelLevel2Encashed").html(response.TotalLevel2Encashed[0].count);
+              $("#labelLevel3Achieved").html(response.TotalLevel3Achieved[0].count);
+              $("#labelLevel3Encashed").html(response.TotalLevel3Encashed[0].count);
+              $("#labelLevel4Achieved").html(response.TotalLevel4Achieved[0].count);
+              $("#labelLevel4Encashed").html(response.TotalLevel4Encashed[0].count);
+              
+            }
+          },
+          error: function (xhr) {
+            //alert(xhr);
+          }
+        });
+      }
+    })(document, window, jQuery);
+  </script>
+</body>
+
+</html>

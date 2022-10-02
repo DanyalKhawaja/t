@@ -1,0 +1,306 @@
+<!-- ########## START: LEFT PANEL ########## -->
+<% if (lang == 'en') { %>
+<div class="br-logo"><a href=""><span>[</span><i>HRA</i><span>]</span> PORTAL</a></div>
+<% } else { %>
+<div class="br-logo"><a href=""><span>[</span><i>HRA</i><span>]</span> بوابة</a></div>
+<% } %>
+<div class="br-sideleft overflow-y-auto">
+
+  <% if (lang == 'en') { %>
+  <label class="sidebar-label pd-x-10 mg-t-20 op-3">Navigation</label>
+  <% } else { %>
+  <label class="sidebar-label pd-x-10 mg-t-20 op-3">التنقل</label>
+  <% } %>
+  <ul class="br-sideleft-menu">
+    <li class="br-menu-item">
+      <a href="/" class="br-menu-link" id="">
+        <i class="menu-item-icon icon ion-ios-home tx-24"></i>
+        <span class="menu-item-label">
+          <% if (lang == 'en') { %>
+          Home
+          <% } else { %>
+          الصفحة الرئيسية
+          <% } %>
+        </span>
+      </a><!-- br-menu-link -->
+    </li><!-- br-menu-item -->
+    <li class="br-menu-item">
+      <a href="/hc-dashboard" class="br-menu-link" id="li-dashboard">
+        <i class="menu-item-icon icon ion-ios-pie tx-24"></i>
+        <span class="menu-item-label">
+          <% if (lang == 'en') { %>
+          Dashboard
+          <% } else { %>
+          لوحة القيادة
+          <% } %>
+        </span>
+      </a><!-- br-menu-link -->
+    </li><!-- br-menu-item -->
+    <li class="br-menu-item">
+      <a href="#" class="br-menu-link with-sub" id="li-project-plans">
+        <i class="menu-item-icon icon ion-ios-calendar tx-20"></i>
+        <span class="menu-item-label">
+          <% if (lang == 'en') { %>
+          Project Management
+          <% } else { %>
+          ادارة مشروع
+          <% } %>
+        </span>
+      </a><!-- br-menu-link -->
+      <ul class="br-menu-sub">
+        <li class="sub-item"><a href="/reports" id="reports" class="sub-link">
+
+            <% if (lang == 'en') { %>
+            Project Reports
+            <% } else { %>
+            تقارير المشروع
+            <% } %>
+          </a></li>
+        <!-- <li class="sub-item"><a href="/plan12010203" id="plan12010203" class="sub-link">
+
+            <% if (lang == 'en') { %>
+            Plan Dec 2018 - Feb 2019
+            <% } else { %>
+            خطة المشروع ديسمبر 2018 - فبراير 2019
+            <% } %>
+          </a></li> -->
+        <!-- <li class="sub-item">
+          <a href="/all-phases" id="all-phases" class="sub-link">
+            <% if (lang == 'en') { %>
+            Schedule of Completion of Services
+            <% } else { %>
+            جدول الانتهاء من الخدمات
+            <% } %>
+          </a>
+        </li> -->
+        <li class="sub-item">
+          <a href="/s_curve" id="budget-spending" class="sub-link">
+            <% if (lang == 'en') { %>
+            S-Curve
+            <% } else { %>
+            الميزانية مقابل الإنفاق
+            <% } %>
+          </a>
+        </li>
+        <!-- <li class="sub-item">
+          <a href="/performance" id="performance" class="sub-link">
+            <% if (lang == 'en') { %>
+            CPI / SPI
+            <% } else { %>
+            CPI / SPI
+            <% } %>
+          </a>
+        </li> -->
+
+      </ul>
+    </li>
+    <li class="br-menu-item">
+      <a href="#" class="br-menu-link with-sub" id="li-beneficiary">
+        <i class="menu-item-icon icon ion-ios-person tx-24"></i>
+        <span class="menu-item-label">
+          <% if (lang == 'en') { %>
+          Monitoring
+          <% } else { %>
+          مراقبة
+          <% } %>
+        </span>
+      </a><!-- br-menu-link -->
+      <ul class="br-menu-sub">
+        <li class="sub-item"><a href="/beneficiary" id="ben-list" class="sub-link">
+
+            <% if (lang == 'en') { %>
+            Beneficiaries List & Details
+            <% } else { %>
+            قائمة المستفيدين
+            <% } %>
+          </a></li>
+        <% if (User.UserTypeID == 4) { %>
+        <li class="sub-item"><a href="/beneficiary/cnic-crop" id="ben-cnic-crop" class="sub-link">Crop CNIC </a></li>
+        <% } %>
+        <li class="sub-item"><a href="/gis" id="gis-dashboard" class="sub-link">
+            <% if (lang == 'en') { %>
+            GIS Dashboard
+            <% } else { %>
+            GIS Dashboard
+            <% } %>
+          </a></li>
+        <li class="sub-item">
+          <a href="/level1" id="level1" class="sub-link">
+            <% if (lang == 'en') { %>
+            Level 1 Achievement Progress
+            <% } else { %>
+            المستوى 1 التقدم في الإنجاز
+            <% } %>
+          </a>
+        </li>
+      </ul>
+
+    </li><!-- br-menu-item -->
+    <li class="br-menu-item">
+      <a href="#" class="br-menu-link with-sub" id="li-financials">
+        <i class="menu-item-icon icon ion-ios-pulse tx-22"></i>
+        <span class="menu-item-label">
+
+          <% if (lang == 'en') { %>
+          Financials
+          <% } else { %>
+          المالية
+          <% } %>
+        </span>
+      </a><!-- br-menu-link -->
+      <ul class="br-menu-sub">
+        <li class="sub-item"><a href="/hc-financials" id="hc-financials" class="sub-link">
+            <% if (lang == 'en') { %>
+            Cheques Distributed
+            <% } else { %>
+            الشيكات الموزعة
+            <% } %>
+          </a></li>
+        <li class="sub-item"><a href="/hc-financials/first_installment" id="first-installment" class="sub-link">
+            <% if (lang == 'en') { %>
+            1st Installment Encashment
+            <% } else { %>
+            الدفعة الأولى المظللة
+            <% } %>
+          </a></li>
+      </ul>
+    </li><!-- br-menu-item -->
+    <li class="br-menu-item">
+      <a href="/gallery" class="br-menu-link" id="li-gallery">
+        <i class="menu-item-icon icon ion-ios-camera tx-24"></i>
+        <span class="menu-item-label">
+          <% if (lang == 'en') { %>
+          Photo Gallery
+          <% } else { %>
+          معرض الصور
+          <% } %>
+        </span>
+      </a><!-- br-menu-link -->
+    </li><!-- br-menu-item -->
+    <% if (User.UserTypeID == 1) { %>
+    <li class="br-menu-item">
+      <a href="#" class="br-menu-link with-sub">
+        <i class="menu-item-icon icon ion-ios-gear tx-20"></i>
+        <span class="menu-item-label">
+          <% if (lang == 'en') { %>
+          Manage Lists
+          <% } else { %>
+          إدارة القوائم
+          <% } %>
+        </span>
+      </a><!-- br-menu-link -->
+      <ul class="br-menu-sub">
+        <% if (lang == 'en') { %>
+        <li class="sub-item"><a href="/lookups" class="sub-link">Lookups</a></li>
+        <li class="sub-item"><a href="" class="sub-link">Districts</a></li>
+        <li class="sub-item"><a href="" class="sub-link">Tehsils</a></li>
+        <li class="sub-item"><a href="" class="sub-link">UCs</a></li>
+        <% } else { %>
+        <li class="sub-item"><a href="/lookups" class="sub-link">عمليات البحث</a></li>
+        <li class="sub-item"><a href="" class="sub-link">المناطق</a></li>
+        <li class="sub-item"><a href="" class="sub-link">تهسيل</a></li>
+        <li class="sub-item"><a href="" class="sub-link">مجلس النقابات</a></li>
+        <% } %>
+
+      </ul>
+    </li>
+    <li class="br-menu-item">
+      <a href="#" class="br-menu-link with-sub">
+        <i class="menu-item-icon icon ion-ios-navigate tx-24"></i>
+        <span class="menu-item-label">
+          <% if (lang == 'en') { %>
+          Villages
+          <% } else { %>
+          القرى
+          <% } %>
+        </span>
+      </a><!-- br-menu-link -->
+      <ul class="br-menu-sub">
+        <li class="sub-item"><a href="/villages" class="sub-link">
+            <% if (lang == 'en') { %>
+            Manage Villages
+            <% } else { %>
+            إدارة القرى
+            <% } %>
+
+          </a></li>
+      </ul>
+    </li><!-- br-menu-item -->
+    <li class="br-menu-item">
+      <a href="/users" class="br-menu-link">
+        <i class="menu-item-icon icon ion-ios-people tx-22"></i>
+        <span class="menu-item-label">User Management</span>
+      </a><!-- br-menu-link -->
+    </li><!-- br-menu-item -->
+    <% } %>
+  </ul><!-- br-sideleft-menu -->
+  <br>
+</div><!-- br-sideleft -->
+<!-- ########## END: LEFT PANEL ########## -->
+
+<!-- ########## START: HEAD PANEL ########## -->
+<div class="br-header">
+  <div class="br-header-left">
+    <div class="navicon-left hidden-md-down"><a id="btnLeftMenu" href=""><i class="icon ion-navicon-round"></i></a>
+    </div>
+    <div class="navicon-left hidden-lg-up"><a id="btnLeftMenuMobile" href=""><i class="icon ion-navicon-round"></i></a>
+    </div>
+    <div class="input-group hidden-xs-down wd-170 transition">
+      <input id="searchbox" type="text" class="form-control" placeholder="Search">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button"><i class="fa fa-search"></i></button>
+      </span>
+    </div><!-- input-group -->
+  </div><!-- br-header-left -->
+  <div class="br-header-right">
+    <nav class="nav">
+      <div class="dropdown">
+        <a href="" class="nav-link pd-x-7 pos-relative" data-toggle="dropdown">
+          <i class="icon ion-chatbox tx-24"></i>
+          <!-- start: if statement -->
+          <span class="square-8 bg-danger pos-absolute t-15 r-5 rounded-circle"></span>
+          <!-- end: if statement -->
+        </a>
+        <div class="dropdown-menu dropdown-menu-header">
+          <div class="dropdown-menu-label">
+            <label>English</label>
+            <a href="/change_lang?lang=en">Change</a>
+          </div><!-- d-flex -->
+          <div class="dropdown-menu-label">
+            <label>عربى</label>
+            <a href="/change_lang?lang=ar">يتغيرون</a>
+          </div><!-- d-flex -->
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
+          <span class="logged-name hidden-md-down"><%= User.UserName %></span>
+          <img src="http://via.placeholder.com/500x500" class="wd-32 rounded-circle" alt="">
+          <span class="square-10 bg-success"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-header wd-250">
+          <div class="tx-center">
+            <a href=""><img src="http://via.placeholder.com/500x500" class="wd-80 rounded-circle" alt=""></a>
+            <h6 class="logged-fullname"><%= User.FirstName %></h6>
+            <p><%= User.Email %></p>
+          </div>
+          <hr>
+          <div class="tx-center">
+            <span class="profile-earning-label">Total beneficiaries approved</span>
+            <h3 class="profile-earning-amount">5898 <i class="icon ion-ios-arrow-thin-up tx-success"></i></h3>
+            <span class="profile-earning-text">Based on the list of 8000</span>
+          </div>
+          <hr>
+          <ul class="list-unstyled user-profile-nav">
+            <li><a href=""><i class="icon ion-ios-person"></i> Edit Profile</a></li>
+            <li><a href=""><i class="icon ion-ios-gear"></i> Settings</a></li>
+            <li><a href="/logout"><i class="icon ion-power"></i> Sign Out</a></li>
+          </ul>
+        </div><!-- dropdown-menu -->
+      </div><!-- dropdown -->
+    </nav>
+
+  </div><!-- br-header-right -->
+</div><!-- br-header -->
+<!-- ########## END: HEAD PANEL ########## -->

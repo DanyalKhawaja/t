@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+
+<% if (lang == 'en') { %>
+<html lang="en">
+<% } else { %>
+<html lang="ar" dir="rtl" class="rtl">
+<% } %>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Meta -->
+    <meta name="description" content="Monitoring of Housing Reconstruction in Awaran">
+    <meta name="author" content="Cyberstate Technologies - SFD's Consultant">
+
+    <title>HRA Portal</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/highlightjs/github.css" rel="stylesheet">
+    <link href="theme/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="theme/lib/lightgallery/css/lightgallery.css">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+</head>
+
+<body>
+    <% include ../partials/header-main %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <% if (lang == 'en') { %>
+    <div class="br-mainpanel" style="margin-left:5px;">
+        <% } else { %>
+        <div class="br-mainpanel" style="margin-right:5px;">
+            <% } %>
+
+            <div class="br-pageheader">
+                <nav class="breadcrumb pd-0 mg-0 tx-12">
+                    <% if (lang == 'en') { %>
+                    <a class="breadcrumb-item" href="/">Home</a>
+                    <span class="breadcrumb-item active">Photo Gallery</span>
+                    <% } else { %>
+                    <a class="breadcrumb-item" href="/">الصفحة الرئيسية</a>
+                    <span class="breadcrumb-item active"></span>
+                    <% } %>
+                </nav>
+            </div><!-- br-pageheader -->
+            <div class="br-pagetitle">
+                <i class="icon icon ion-ios-camera"></i>
+                <div>
+                    <% if (lang == 'en') { %>
+                    <h4>Photo Gallery</h4>
+                    <p class="mg-b-0"></p>
+                    <% } else { %>
+                    <h4> مراقبة المشروع HRA</h4>
+                    <p class="mg-b-0">سبتمبر 2018 - أبريل 2020</p>
+                    <% } %>
+
+                </div>
+            </div><!-- d-flex -->
+
+            <div class="br-pagebody">
+                <div class="br-section-wrapper">
+                    <div class="row">
+
+                        <div class="col-md mg-t-20 mg-md-t-0">
+                            <div class="card bd-0">
+                                <div class="card-body rounded-top bd-0 bg-info tx-white">
+                                    <h6 class="mg-b-3"><a href="#" class="tx-white hover-white-8">
+                                            <% if (lang == 'en') { %>
+                                            Difficulties
+                                            <% } else { %>
+
+                                            <% } %></a></h6>
+                                    <span class="tx-12 tx-white-8"></span>
+                                </div><!-- card-body -->
+                                <img class="card-img-bottom img-fluid" src="images/gallery/1-difficulties/03.jpg"
+                                    alt="Image">
+                                <div class="card-footer">
+                                    <button id="GalleryDifficulties" class="btn btn-secondary">
+                                        Click here to see the album
+                                    </button>
+                                </div><!-- card-footer -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+                        <div class="col-md mg-t-20 mg-md-t-0">
+                            <div class="card bd-0">
+                                <div class="card-body rounded-top bd-0 bg-info tx-white">
+                                    <h6 class="mg-b-3"><a href="#" class="tx-white hover-white-8">
+                                            <% if (lang == 'en') { %>
+                                            Disaster
+                                            <% } else { %>
+
+                                            <% } %></a></h6>
+                                    <span class="tx-12 tx-white-8"></span>
+                                </div><!-- card-body -->
+                                <img class="card-img-bottom img-fluid" src="images/gallery/2-disaster/02.jpg" alt="Image">
+                                <div class="card-footer">
+                                    <button id="GalleryDisaster" class="btn btn-secondary">
+                                        Click here to see the album
+                                    </button>
+                                </div><!-- card-footer -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+                        <div class="col-md mg-t-20 mg-md-t-0">
+                            <div class="card bd-0">
+                                <div class="card-body rounded-top bd-0 bg-info tx-white">
+                                    <h6 class="mg-b-3"><a href="#" class="tx-white hover-white-8">
+                                            <% if (lang == 'en') { %>
+                                            People
+                                            <% } else { %>
+
+                                            <% } %></a></h6>
+                                    <span class="tx-12 tx-white-8"></span>
+                                </div><!-- card-body -->
+                                <img class="card-img-bottom img-fluid" src="images/gallery/3-people/01.jpg" alt="Image">
+                                <div class="card-footer">
+                                    <button id="GalleryPeople" class="btn btn-secondary">
+                                        Click here to see the album
+                                    </button>
+                                </div><!-- card-footer -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+
+                        <div class="col-md">
+                            <div class="card bd-0">
+                                <div class="card-body rounded-top bd-0 bg-info tx-white">
+                                    <h6 class="mg-b-3">
+                                        <a href="#" class="tx-white">
+                                            <% if (lang == 'en') { %>
+                                            HRA Activities
+                                            <% } else { %>
+                                            Pakistan Army's Role in Awaran
+                                            <% } %>
+                                        </a>
+                                    </h6>
+                                    <span class="tx-12"></span>
+                                </div><!-- card-body -->
+                                <img class="card-img-bottom img-fluid" src="images/gallery/4-hra/phase2/05.jpeg" alt="">
+                                <div class="card-footer">
+                                    <button id="GalleryHRAActivities" class="btn btn-secondary">
+                                        Click here to see the album
+                                    </button>
+                                </div><!-- card-footer -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md mg-t-20 mg-md-t-0">
+                            <div class="card bd-0">
+                                <div class="card-body rounded-top bd-0 bg-info tx-white">
+                                    <h6 class="mg-b-3"><a href="#" class="tx-white hover-white-8">
+                                            <% if (lang == 'en') { %>
+                                            HRA Phase 1 Construction
+                                            <% } else { %>
+
+                                            <% } %></a></h6>
+                                    <span class="tx-12 tx-white-8"></span>
+                                </div><!-- card-body -->
+                                <img class="card-img-bottom img-fluid" src="images/gallery/5-living/03.jpg"
+                                    alt="Image">
+                                <div class="card-footer">
+                                    <button id="GalleryPhase1Construction" class="btn btn-secondary">
+                                        Click here to see the album
+                                    </button>
+                                </div><!-- card-footer -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+                        <div class="col-md mg-t-20 mg-md-t-0">
+                            <div class="card bd-0">
+                                <div class="card-body rounded-top bd-0 bg-primary tx-white">
+                                    <h6 class="mg-b-3"><a href="#" class="tx-white hover-white-8">
+                                            <% if (lang == 'en') { %>
+                                            SFD Funded Phase 2 Construction
+                                            <% } else { %>
+
+                                            <% } %></a></h6>
+                                    <span class="tx-12 tx-white-8"></span>
+                                </div><!-- card-body -->
+                                <img class="card-img-bottom img-fluid" src="images/gallery/6-phase2/01.jpeg" alt="Image">
+                                <div class="card-footer">
+                                    <button id="GalleryPhase2Construction" class="btn btn-secondary">
+                                        Click here to see the album
+                                    </button>
+                                </div><!-- card-footer -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+                        <div class="col-md mg-t-20 mg-md-t-0">
+                            <div class="card bd-0">
+                                <div class="card-body rounded-top bd-0 bg-primary tx-white">
+                                    <h6 class="mg-b-3"><a href="#" class="tx-white hover-white-8">
+                                            <% if (lang == 'en') { %>
+                                            SFD - Cheque Distribution Ceremonies
+                                            <% } else { %>
+
+                                            <% } %></a></h6>
+                                    <span class="tx-12 tx-white-8"></span>
+                                </div><!-- card-body -->
+                                <img class="card-img-bottom img-fluid" src="images/gallery/7-ceremony/01.jpeg" alt="Image">
+                                <div class="card-footer">
+                                    <button id="GalleryChequeDistribution" class="btn btn-secondary">
+                                        Click here to see the album
+                                    </button>
+                                </div><!-- card-footer -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+
+                        <div class="col-md">
+                            <div class="card bd-0">
+                                <div class="card-body rounded-top bd-0 bg-info tx-white">
+                                    <h6 class="mg-b-3">
+                                        <a href="#" class="tx-white">
+                                            <% if (lang == 'en') { %>
+                                            Pakistan Army's Role in Awaran
+                                            <% } else { %>
+                                            Pakistan Army's Role in Awaran
+                                            <% } %>
+                                        </a>
+                                    </h6>
+                                    <span class="tx-12"></span>
+                                </div><!-- card-body -->
+                                <img class="card-img-bottom img-fluid" src="images/gallery/8-army/01.jpeg" alt="">
+                                <div class="card-footer">
+                                    <button id="GalleryArmy" class="btn btn-secondary">
+                                        Click here to see the album
+                                    </button>
+                                </div><!-- card-footer -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+
+
+
+                    </div>
+                </div><!-- br-section-wrapper -->
+            </div><!-- br-pagebody -->
+            <% include ../partials/footer %>
+        </div><!-- br-mainpanel -->
+        <!-- ########## END: MAIN PANEL ########## -->
+
+        <script src="theme/lib/jquery/jquery.js"></script>
+        <script src="theme/js/popper.js"></script>
+        <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+        <script src="theme/lib/moment/moment.js"></script>
+        <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+        <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+        <script src="theme/lib/peity/jquery.peity.js"></script>
+        <script src="theme/lib/highlightjs/highlight.pack.js"></script>
+        <script src="theme/lib/datatables/jquery.dataTables.js"></script>
+        <script src="theme/lib/datatables-responsive/dataTables.responsive.js"></script>
+        <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+        <script src="theme/lib/select2/js/select2.min.js"></script>
+
+        <script src="theme/js/bracket.js"></script>
+        <script src="theme/lib/lightgallery/js/lightgallery.js"></script>
+
+
+        <script>
+
+            $(function () {
+                $(document).ready(function () {
+                    function htmlDecode(input) {
+                        var e = document.createElement('div');
+                        e.innerHTML = input;
+                        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                    }
+                    var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
+
+                    document.getElementById('GalleryArmy').addEventListener('click', function () {
+                        lightGallery(document.getElementById('GalleryArmy'), {
+                            dynamic: true,
+                            dynamicEl: [
+                                {
+                                    "src": 'images/gallery/8-army/01.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/8-army/02.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/8-army/03.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/8-army/04.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/8-army/05.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                            ]
+                        });
+                    });
+
+                    document.getElementById('GalleryHRAActivities').addEventListener('click', function () {
+                        lightGallery(document.getElementById('GalleryHRAActivities'), {
+                            dynamic: true,
+                            dynamicEl: [
+                                {
+                                    "src": 'images/gallery/4-hra/phase1/01.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 1 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase1/02.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 1 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase1/03.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 1 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase1/04.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 1 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase1/05.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 1 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/01.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/02.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/03.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/04.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/05.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/06.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/07.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/08.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/4-hra/phase2/09.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 </h4>'
+                                },
+                            ]
+                        });
+                    });
+
+                    document.getElementById('GalleryDifficulties').addEventListener('click', function () {
+                        lightGallery(document.getElementById('GalleryDifficulties'), {
+                            dynamic: true,
+                            dynamicEl: [
+                                {
+                                    "src": 'images/gallery/1-difficulties/01.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/02.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/03.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/04.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/05.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/06.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/07.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/08.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/09.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/10.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/11.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/12.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/13.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/14.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/1-difficulties/15.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+
+                            ]
+                        });
+                    });
+                    document.getElementById('GalleryDisaster').addEventListener('click', function () {
+                        lightGallery(document.getElementById('GalleryDisaster'), {
+                            dynamic: true,
+                            dynamicEl: [
+                                {
+                                    "src": 'images/gallery/2-disaster/01.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/02.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/03.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/04.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/05.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/06.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/07.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/08.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/09.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/10.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/11.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/12.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/13.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/14.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/15.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/16.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/17.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/18.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/19.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/20.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/2-disaster/21.jpeg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                            ]
+                        });
+                    });
+                    document.getElementById('GalleryPeople').addEventListener('click', function () {
+                        lightGallery(document.getElementById('GalleryPeople'), {
+                            dynamic: true,
+                            dynamicEl: [
+                                {
+                                    "src": 'images/gallery/3-people/01.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/02.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/03.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/04.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/05.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/06.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/07.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/08.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/09.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/10.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/11.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/12.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/13.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/14.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/15.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/16.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/17.jpg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/18.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/3-people/19.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4></h4>'
+                                },
+                            ]
+                        })
+                    });
+                    document.getElementById('GalleryPhase1Construction').addEventListener('click', function () {
+                        lightGallery(document.getElementById('GalleryPhase1Construction'), {
+                            dynamic: true,
+                            dynamicEl: [
+                                {
+                                    "src": 'images/gallery/5-living/01.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/02.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/03.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/04.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/05.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/06.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/07.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/08.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/09.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/10.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/11.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/12.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/13.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/14.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/15.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/16.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/17.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/18.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/19.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/20.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/21.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/22.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/23.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/24.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/25.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/26.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/27.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/28.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/29.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/30.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/31.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/32.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                                {
+                                    "src": 'images/gallery/5-living/33.jpg',
+                                    'thumb': '',
+                                    'subHtml': ''
+                                },
+                            ]
+                        });
+                    });
+                    document.getElementById('GalleryPhase2Construction').addEventListener('click', function () {
+                        lightGallery(document.getElementById('GalleryPhase2Construction'), {
+                            dynamic: true,
+                            dynamicEl: [
+                                {
+                                    "src": 'images/gallery/6-phase2/01.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/02.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/03.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/04.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/05.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/06.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/07.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/08.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/09.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/10.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/11.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/12.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/13.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/14.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/15.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/16.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/17.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/18.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/19.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/20.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/21.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/22.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/23.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/24.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/25.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/26.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/27.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/28.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/6-phase2/29.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>PHASE 2 - SFD - House Construction Activities </h4>'
+                                },
+                            ]
+                        });
+                    });
+                    document.getElementById('GalleryChequeDistribution').addEventListener('click', function () {
+                        lightGallery(document.getElementById('GalleryChequeDistribution'), {
+                            dynamic: true,
+                            dynamicEl: [
+                                {
+                                    "src": 'images/gallery/7-ceremony/01.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD</h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/02.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD</h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/03.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/04.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/05.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/06.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/07.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/08.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/09.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by SFD </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/10.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by the Honorable Saudi Ambassador </h4>'
+                                },
+                                {
+                                    "src": 'images/gallery/7-ceremony/11.jpeg',
+                                    'thumb': '',
+                                    'subHtml': '<h4>Cheque Distribution by the Honorable Saudi Ambassador </h4>'
+                                },
+                                
+                            ]
+                        });
+                    });
+                });
+            });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+  <html lang="en">
+<% } else { %>
+  <html lang="en" dir="rtl" class="rtl">
+<% } %>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Meta -->
+    <meta name="description" content="HRA Monitoring Portal">
+    <meta name="author" content="Cyberstate">
+
+    <title>HRA - Beneficiaries</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/highlightjs/github.css" rel="stylesheet">
+    <link href="theme/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="theme/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/rowreorder/1.2.5/css/rowReorder.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pageheader">
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+          <% if (lang == 'en') { %>
+            <a class="breadcrumb-item" href="/hc-dashboard">Dashboard</a>
+            <span class="breadcrumb-item active">Beneficiaries</span>
+          <% } else { %>
+            
+            <span class="breadcrumb-item active">المستفيدين</span>
+            <a class="breadcrumb-item" href="/hc-dashboard">لوحة القيادة</a>
+          <% } %>
+        </nav>
+      </div><!-- br-pageheader -->
+      <div class="br-pagetitle">
+        <i class="icon icon ion-ios-bookmarks-outline"></i>
+        <div>
+          <% if (lang == 'en') { %>
+            <h4>Beneficiaries' Management</h4>
+            <p class="mg-b-0">View and manage the beneficiaries' record & monitoring details</p>
+          <% } else { %>
+            <h4>إدارة المستفيدين</h4>
+            <p class="mg-b-0">عرض وإدارة المعلومات الأساسية ومراقبة المعلومات للمستفيدين</p>
+          <% } %>
+          
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+        <div class="br-section-wrapper">
+          <div class="row mg-t-0">
+            <div class="col-sm-12">
+              <div class="form-layout form-layout-4">
+                <div class="row mg-t-5">
+                  <div class="col-sm-12 mg-t-5 mg-sm-t-0">
+                    <table id="dtBeneficiary" class=" ui celled table hover" style="width:100%"></table>
+                  </div>
+                </div><!-- row -->
+              </div><!-- form-layout -->
+            </div>
+
+          </div>
+        </div><!-- br-section-wrapper -->
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/highlightjs/highlight.pack.js"></script>
+    <script src="theme/lib/datatables/jquery.dataTables.js"></script>
+    <script src="theme/lib/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/rowreorder/1.2.5/js/dataTables.rowReorder.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+    <script src="theme/lib/select2/js/select2.min.js"></script>
+
+    <script src="theme/js/bracket.js"></script>
+
+    <script>
+
+      $(function(){
+        $(document).ready(function() {
+          function htmlDecode(input){
+            var e = document.createElement('div');
+            e.innerHTML = input;
+            return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+          }
+          var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
+
+          var columns = ['CNIC', 'STATUS', 'NAME', 'PRIMARY PHONE NO', 'VILLAGE', 'UNION COUNCIL', 'UPDATED BY', 'VIEW DETAIL'];
+
+          if (lang == 'ar') {
+            columns = ['CNIC', 'الحالة', 'اسم المستفيد', 'رقم الهاتف', 'قرية', 'مجلس النقابات', 'تم التحديث بواسطة', ''];
+          }
+          document.getElementById("li-beneficiary").classList.add('active');
+          document.getElementById("ben-list").classList.add('active');
+          
+
+          var url = "/beneficiary/getBeneficiairyNameForm";
+      		$('#dtBeneficiary').DataTable({
+            "paging":         	true,
+            "processing":       false,
+            "serverSide":       false,
+            "orderCellsTop":    false,
+            "ordering":         false,
+            rowReorder: {
+              selector: 'td:nth-child(2)'
+            },
+            responsive: true,
+    				"ajax": {
+    					"url": 							url,
+    					"dataSrc": 					""
+            },
+            "columnDefs": [ {
+              "targets": -1,
+              "data": null,
+              "defaultContent": "<button>Details</button>"
+            } ] ,
+    				"columns": [
+              {"data": "CNIC", "title":columns[0]},
+              {"data": "BeneficiaryStatus", "title":columns[1]},
+              { "data": "BeneficiaryName", "title":columns[2] },
+              { "data": "PhonePrimary", "title":columns[3] },
+              { "data": "Village", "title":columns[4]},
+              { "data": "UC", "title":columns[5]},
+              { "data": "Enumerator", "title": columns[6]},
+              //{ "data": null, "title": columns[7]}
+              {data: "CNIC" , render : function ( data, type, row, meta ) {
+              return type === 'display'  ?
+                '<a target="_blank" href="/beneficiary/detail?CNIC='+ data +'" > View Details</a>' :
+                data;
+            }}
+            ],
+            'rowCallback': function(row, data, index){
+              if(data[['BeneficiaryStatus']] == "Approved"){
+                $(row).find('td:eq(1)').css('color', 'green');
+              }
+              if(data[['BeneficiaryStatus']] == "Dubious"){
+                $(row).find('td:eq(1)').css('color', 'orange');
+              }
+              if(data[['BeneficiaryStatus']] == "Rejected"){
+                $(row).find('td:eq(1)').css('color', 'red');
+              }
+              if(data[['BeneficiaryStatus']] == "Un-verified"){
+                $(row).find('td:eq(1)').css('color', 'blue');
+              }
+              if(data[['BeneficiaryStatus']] == "Verified"){
+                $(row).find('td:eq(1)').css('color', 'brown');
+              }
+              
+            }
+    			});
+
+          var table = $('#dtBeneficiary').DataTable();
+
+          $('#dtBeneficiary tbody').on( 'click', 'button', function () {
+            d = table.row( $(this).parents('tr') ).data();
+            console.log(d);
+            if (d==''){
+              return;
+    				} else {
+              document.location = "/beneficiary/detail?CNIC="+d.CNIC;
+            }
+          });
+          
+        });
+
+
+      });
+    </script>
+  </body>
+</html>

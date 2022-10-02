@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+<html lang="en">
+<% } else { %>
+<html lang="ar" dir="rtl" class="rtl">
+<% } %>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+  <title>HRA Portal</title>
+
+  <!-- vendor css -->
+  <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+  <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+  <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+  <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+  <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+
+  <!-- Bracket CSS -->
+  <link rel="stylesheet" href="theme/css/bracket.css">
+</head>
+
+<body>
+
+  <% include ../partials/header %>
+
+  <!-- ########## START: MAIN PANEL ########## -->
+  <div class="br-mainpanel">
+    <div class="br-pagetitle">
+      <i class="icon ion-ios-pulse"></i>
+      <div>
+        <% if (lang == 'en') { %>
+        <h4>Construction of 8000 Houses | Beneficiaries who have achieved door band Level-1</h4>
+        <p class="mg-b-0" id="labelRegion">LAST UPDATED ON: <%= LastUpdatedOn %></p>
+        <% } else { %>
+        <h3> الشيكات المستنيرة من قبل المستفيدين | بناء 8000 منزل</h3>
+        <p class="mg-b-0" id="labelRegion">وفقًا لتقرير تسوية البنك حتى 2019</p>
+        <% } %>
+      </div>
+    </div><!-- d-flex -->
+
+    <div class="br-pagebody">
+      <div class="row row-sm mg-t-20" >
+        <div class="col-lg-4">
+          <div class="card shadow-base card-body pd-25 bd-0" style="width: 100%;height:100%;">
+            <div class="row" >
+              <div class="col-sm-12" >
+                <h6 class="card-title tx-uppercase tx-12"> Summary</h6>
+                <p class="display-4 tx-medium tx-inverse mg-b-5 tx-lato">
+                  <%= (TotalCount/TotalCountEncashed*100).toFixed(2) %>%
+                </p>
+                <div class="progress mg-b-10">
+                  <div class="progress-bar bg-primary progress-bar-xs wd-95p " role="progressbar" aria-valuenow="1"
+                    aria-valuemin="20" aria-valuemax="100"></div>
+                </div><!-- progress -->
+                <p class="tx-14"><%= TotalCount %> beneficiaries out of <%= TotalCountEncashed %> beneficiaires (who have encashed their 1st installment cheques) have achieved the door band Level-1. </p>
+                
+                <p>This is from the data received from 14 enumerators till <%= LastDataReceivedOn %></p>
+                <br/>
+                <p style="display:none" class="tx-14 lh-3 mg-b-0">You can also see the progress of Level-1 acheivement <a
+                    href="#" >chart below</a>.</p>
+              </div><!-- col-6 -->
+            </div><!-- row -->
+          </div><!-- card -->
+        </div><!-- col-6 -->
+        <div class="col-lg-8 mg-t-30 mg-lg-t-0" >
+          <div class="card shadow-base card-body pd-25 bd-0">
+            <div class="row">
+              <div class="col-sm-12">
+                <h6 class="card-title tx-uppercase tx-12 tx-inverse">Statistics - UC WISE LEVEL-1 ACHIEVEMENT</h6>
+                <canvas id="PaymentsDisbursedByUCChart" style="width: 100%;height:250px;"></canvas>
+              </div><!-- col-6 -->
+
+            </div><!-- row -->
+          </div><!-- card -->
+        </div><!-- col-6 -->
+      </div>
+      
+
+      <div class="row row-sm mg-t-20" >
+        <div class="col-lg-12">
+          <div class="card shadow-base bd-0 pd-10 mg-t-5">
+            <h4 class="card-title tx-uppercase tx-12 tx-inverse">MONTH WISE LEVEL-1 ACHIEVEMENT</h4>
+            <canvas id="LevelAchievedByMonthChart" style="width: 100%;height:600px;"></canvas>
+          </div>
+        </div><!-- col-8 -->
+      </div><!-- row -->
+
+
+    </div><!-- br-pagebody -->
+    <% include ../partials/footer %>
+  </div><!-- br-mainpanel -->
+  <!-- ########## END: MAIN PANEL ########## -->
+
+  <script src="theme/lib/jquery/jquery.js"></script>
+  <script src="theme/js/popper.js"></script>
+  <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+  <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+  <script src="theme/lib/moment/moment.js"></script>
+  <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+  <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+  <script src="theme/lib/peity/jquery.peity.js"></script>
+  <script src="theme/lib/d3/d3.js"></script>
+  <script src="theme/lib/rickshaw/rickshaw.min.js"></script>
+  <script src="theme/lib/Flot/jquery.flot.js"></script>
+  <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
+  <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
+  <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+  <script src="theme/lib/chart.js/Chart.js"></script>
+  <script src="theme/lib/echarts/echarts.min.js"></script>
+  <script src="theme/lib/select2/js/select2.full.min.js"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDw_FHu8ftIuC-35k9ViKlnp63L2vnGiLU"></script>
+
+  <script src="theme/lib/gmaps/gmaps.js"></script>
+
+  <script src="theme/js/bracket.js"></script>
+  <script src="theme/js/map.shiftworker.js"></script>
+  <script src="theme/js/ResizeSensor.js"></script>
+  <script src="theme/js/dashboard.js"></script>
+  <script src="theme/js/chart.echarts.js"></script>
+  <script>
+
+    $(function () {
+      'use strict'
+      // FOR DEMO ONLY
+      // menu collapsed by default during first page load or refresh with screen
+      // having a size between 992px and 1299px. This is intended on this page only
+      // for better viewing of widgets demo.
+      $(window).resize(function () {
+        minimizeMenu();
+      });
+      minimizeMenu();
+      function minimizeMenu() {
+        if (window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
+          // show only the icons and hide left menu label by default
+          $('.menu-item-label,.menu-item-arrow').addClass('op-lg-0-force d-lg-none');
+          $('body').addClass('collapsed-menu');
+          $('.show-sub + .br-menu-sub').slideUp();
+        } else if (window.matchMedia('(min-width: 1300px)').matches && !$('body').hasClass('collapsed-menu')) {
+          $('.menu-item-label,.menu-item-arrow').removeClass('op-lg-0-force d-lg-none');
+          $('body').removeClass('collapsed-menu');
+          $('.show-sub + .br-menu-sub').slideDown();
+        }
+      }
+    });
+  </script>
+  <script>
+    (function (document, window, $) {
+      document.getElementById("li-beneficiary").classList.add('active');
+      document.getElementById("level1").classList.add('active');
+      function htmlDecode(input) {
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+      }
+      var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
+      
+      var TotalCountLevel1AcheivedByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountLevel1AcheivedByUC) %>"));
+      var TotalCountLevel1AcheivedByMonth = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountLevel1AcheivedByMonth) %>"));
+      //var PaymentsDisbursedByUCChart = echarts.init(document.getElementById('PaymentsDisbursedByUCChart'));
+
+      var LabelMonths = [];
+      var ChartData = [];
+
+      TotalCountLevel1AcheivedByMonth.forEach(element => {
+        LabelMonths.push(element.CD);
+        ChartData.push(element.Count);
+      });
+
+      var ctx2 = document.getElementById('LevelAchievedByMonthChart').getContext('2d');
+      var p2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: LabelMonths,
+          datasets: [{
+            label: 'Door band Level-1 acheived by # of beneficiaries',
+            data: ChartData,
+            backgroundColor: ['#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990','#d47644', '#3E6990', ]
+          }]
+        },
+        options: {
+          legend: {
+            display: false,
+            labels: {
+              display: false
+            }
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 10,
+                max: 1400
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 11
+              }
+            }]
+          }
+        }
+      });
+
+      var ctx = document.getElementById('PaymentsDisbursedByUCChart').getContext('2d');
+      var p = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Awaran', 'Gishkore', 'Teertaje', 'Gajjar', 'Nok Jo', 'Parwar', 'Dandar'],
+          datasets: [{
+            label: 'Door band Level-1 acheived by # of beneficiaries',
+            data: [
+                    TotalCountLevel1AcheivedByUC.TotalCountInstallment1Awaran,
+                    TotalCountLevel1AcheivedByUC.TotalCountInstallment1Gishkore,
+                    TotalCountLevel1AcheivedByUC.TotalCountInstallment1Teertaje,
+                    TotalCountLevel1AcheivedByUC.TotalCountInstallment1Gajjar,
+                    TotalCountLevel1AcheivedByUC.TotalCountInstallment1Nokjo,
+                    TotalCountLevel1AcheivedByUC.TotalCountInstallment1Parwar,
+                    TotalCountLevel1AcheivedByUC.TotalCountInstallment1Dandar
+                  
+                ],
+            backgroundColor: ['#d47644', '#3E6990', '#e6d733', '#AABD8C', '#9B1D20', '#E45A19', '#80AA2B']
+          }]
+        },
+        options: {
+          legend: {
+            display: false,
+            labels: {
+              display: false
+            }
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 10,
+                max: TotalCountLevel1AcheivedByUC.TotalCountInstallment1Nokjo + 25
+              }
+            }],
+            xAxes: [{
+              ticks: {
+                beginAtZero: true,
+                fontSize: 11
+              }
+            }]
+          }
+        }
+      });
+
+      
+      
+
+      
+    })(document, window, jQuery);
+  </script>
+</body>
+
+</html>

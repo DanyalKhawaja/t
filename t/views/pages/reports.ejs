@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+<html lang="en">
+<% } else { %>
+<html lang="en">
+<% } %>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+    <title>HRA | Reports</title>
+
+    <!-- vendor css -->
+    <link href="/theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="/theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="/theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="/theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+    <link href="/theme/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link href="/theme/css/jsgantt.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="/theme/css/bracket.css">
+</head>
+
+<body>
+
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+        <div class="br-pagetitle">
+            <i class="icon ion-ios-book"></i>
+            <div>
+                <% if (lang == 'en') { %>
+                <h4>PROJECT REPORTS</h4>
+                <p class="mg-b-0" id="labelRegion"></p>
+                <% } else { %>
+                <h4></h4>
+                <p class="mg-b-0" id="labelRegion"></p>
+                <% } %>
+
+            </div>
+        </div><!-- d-flex -->
+
+        <div class="br-pagebody">
+            <div class="br-section-wrapper">
+
+                <p class="br-section-text"></p>
+
+                <div class="bd bd-gray-300 rounded table-responsive">
+                    <table class="table mg-b-0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Report Name</th>
+                                <th>Date</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Inception Report</td>
+                                <td>October 1, 2018</td>
+                                <td><a href="/reports/Inception Report.pdf">Click here to download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>1st Progress Report</td>
+                                <td>Nov 13, 2018</td>
+                                <td><a href="/reports/1st Progress Report.pdf">Click here to download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Project Status Report</td>
+                                <td>May 7, 2019</td>
+                                <td><a href="/reports/Project Status Report.pdf">Click here to download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>Project Status Report</td>
+                                <td>May 17, 2019</td>
+                                <td><a href="/reports/Project status Report-HRA May 17 2019.pdf">Click here to download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>Project Status Report</td>
+                                <td>July 1, 2019</td>
+                                <td><a href="/reports/Project status Report-HRA July 01 2019.pdf">Click here to download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">6</th>
+                                <td>Project Status Report</td>
+                                <td>July 26, 2019</td>
+                                <td><a href="/reports/Project status Report-HRA July 26 2019.pdf">Click here to download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">7</th>
+                                <td>Project Status Report</td>
+                                <td>August 26, 2019</td>
+                                <td><a href="/reports/Project status Report-HRA August 26 2019.pdf">Click here to download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">8</th>
+                                <td>Project Status Report</td>
+                                <td>October 05, 2019</td>
+                                <td><a href="/reports/Project Status Report-HRA October 05 2019.pdf">Click here to download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">9</th>
+                                <td>Annual Report - October 2018 to October 2019</td>
+                                <td>November 01, 2019</td>
+                                <td><a href="/reports/HRA ANNUAL PROGRESS REPORT 2018-19.pdf">Click here to download</a></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div><!-- bd -->
+
+
+
+            </div>
+
+
+
+
+        </div><!-- br-pagebody -->
+        <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+    <script src="/theme/lib/jquery/jquery.js"></script>
+    <script src="/theme/js/popper.js"></script>
+    <script src="/theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="/theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="/theme/lib/moment/moment.js"></script>
+    <script src="/theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="/theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="/theme/lib/peity/jquery.peity.js"></script>
+    <script src="/theme/lib/d3/d3.js"></script>
+    <script src="/theme/lib/rickshaw/rickshaw.min.js"></script>
+    <script src="/theme/lib/Flot/jquery.flot.js"></script>
+    <script src="/theme/lib/Flot/jquery.flot.resize.js"></script>
+    <script src="/theme/lib/flot-spline/jquery.flot.spline.js"></script>
+    <script src="/theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+    <script src="/theme/lib/echarts/echarts.min.js"></script>
+    <script src="/theme/lib/select2/js/select2.full.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDw_FHu8ftIuC-35k9ViKlnp63L2vnGiLU"></script>
+
+    <script src="/theme/lib/gmaps/gmaps.js"></script>
+
+
+    <script src="/theme/js/bracket.js"></script>
+    <script src="/theme/js/map.shiftworker.js"></script>
+    <script src="/theme/js/ResizeSensor.js"></script>
+    <script src="/theme/js/dashboard.js"></script>
+
+
+    <script>
+        document.getElementById("li-project-plans").classList.add('active');
+        document.getElementById("reports").classList.add('active');
+
+    </script>
+</body>
+
+</html>

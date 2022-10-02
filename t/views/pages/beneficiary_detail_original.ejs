@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+  <html lang="en">
+<% } else { %>
+  <html lang="en" dir="rtl" class="rtl">
+<% } %>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    
+    <!-- Meta -->
+    <meta name="description" content="HRA Monitoring Portal">
+    <meta name="author" content="Cyberstate">
+
+    <title>HRA - Beneficiary Detail</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/highlightjs/github.css" rel="stylesheet">
+    <link href="theme/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pageheader">
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+            <% if (lang == 'en') { %>
+              <a class="breadcrumb-item" href="/hc-dashboard">Dashboard</a>
+              <a class="breadcrumb-item" href="/beneficiary">Beneficiaries</a>
+              <span class="breadcrumb-item active">Detail</span>
+            <% } else { %>
+              <span class="breadcrumb-item active">عرض التفاصيل</span>
+              <a class="breadcrumb-item" href="/beneficiary"> المستفيدين</a>
+              <a class="breadcrumb-item" href="/hc-dashboard">لوحة القيادة</a>
+              
+              
+            <% } %>
+          
+        </nav>
+      </div><!-- br-pageheader -->
+      <div class="br-pagetitle">
+        <i class="icon icon ion-ios-person"></i>
+        <div>
+          <% if (lang == 'en') { %>
+            <h4>Beneficiary's Detail</h4>
+            <h5 class="mg-b-0">CNIC: <%= Beneficiary.CNIC %></h5>
+          <% } else { %>
+            <h4>تفاصيل المستفيد</h4>
+            <h5 class="mg-b-0">CNIC: <%= Beneficiary.CNIC %></h5>
+          <% } %>
+          
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+        <div class="br-section-wrapper">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="ht-70 bg-gray-100 pd-x-20 d-flex align-items-center justify-content-center shadow-base">
+                <ul class="nav nav-outline active-info align-items-center flex-row" role="tablist">
+                  <% if (lang == 'en') { %>
+                    <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#profile" role="tab" aria-selected="true">Basic Info</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#monitoring" role="tab" aria-selected="false">Monitoring Info</a></li>
+                  <% } else { %>
+                    <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#profile" role="tab" aria-selected="true">معلومات اساسية</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#monitoring" role="tab" aria-selected="false">رصد المعلومات</a></li>
+                  <% } %>
+                  
+
+                </ul>
+              </div>
+              <% if (lang == 'en') { %>
+                
+              <div class="tab-content br-profile-body">
+                <div class="tab-pane fade active show" id="profile">
+                  <div class="row mg-t-0">
+                    <div class="col-sm-8">
+                      <div class="form-layout form-layout-2">
+                      <div class="row no-gutters">
+                        <div class="col-md-3">
+                          <div class="form-group mg-md-l--1 bd-t-0-force">
+                            <label class="form-control-label mg-b-0-force">District: <span class="tx-danger">*</span></label>
+                            <select id="select2-District" class="form-control" data-placeholder="Choose District" style="width:100%">
+                              <option label="Choose district"></option>
+                              <% Districts.forEach(function(district) { %>
+                                  <% if (Beneficiary.DistrictID == district.DistrictID) { %>
+                                    <option value="<%= district.DistrictID %>" selected><%= district.DistrictName %></option>
+                                  <% } else { %>
+                                    <option value="<%= district.DistrictID %>" ><%= district.DistrictName %></option>
+                                  <% } %>
+                              <% }); %>
+                            </select>
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-3">
+                          <div class="form-group mg-md-l--1 bd-t-0-force">
+                            <label class="form-control-label mg-b-0-force">Tehsil: <span class="tx-danger">*</span></label>
+                            <select id="select2-Tehsil" class="form-control" data-placeholder="Choose Tehsil" style="width:100%">
+                              <option label="Choose tehsil"></option>
+                              <% Tehsils.forEach(function(tehsil) { %>
+                                <% if (Beneficiary.TehsilID == tehsil.TehsilID) { %>
+                                  <option value="<%= tehsil.TehsilID %>" selected><%= tehsil.TehsilName %></option>
+                                <% } else { %>
+                                  <option value="<%= tehsil.TehsilID %>"><%= tehsil.TehsilName %></option>
+                                <% } %>
+                              <% }); %>
+                            </select>
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-3">
+                          <div class="form-group mg-md-l--1 bd-t-0-force">
+                            <label class="form-control-label mg-b-0-force">UC: <span class="tx-danger">*</span></label>
+                            <select id="select2-UC" class="form-control" data-placeholder="Choose UC" style="width:100%">
+                              <option label="Choose UC"></option>
+                              <% UCs.forEach(function(uc) { %>
+                                <% if (Beneficiary.UCID == uc.UCID) { %>
+                                  <option value="<%= uc.UCID %>" selected><%= uc.UCName %></option>
+                                <% } else { %>
+                                  <option value="<%= uc.UCID %> "><%= uc.UCName %></option>
+                                <% } %>
+                              <% }) %>
+                            </select>
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-3">
+                          <div class="form-group mg-md-l--1 bd-t-0-force">
+                            <label class="form-control-label mg-b-0-force">Village: <span class="tx-danger">*</span></label>
+                            <select id="select2-Village" class="form-control" data-placeholder="Choose Village" style="width:100%">
+                              <option label="Choose Village"></option>
+                              <% Villages.forEach(function(village) { %>
+                                <% if (Beneficiary.VillageID == village.VillageID) { %>
+                                  <option value="<%= village.VillageID %>" selected><%= village.VillageName %></option>
+                                <% } else { %>
+                                  <option value="<%= village.VillageID %>"><%= village.VillageName %></option>
+                                <% } %>
+                              <% }); %>
+                            </select>
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-control-label">Beneficiary ID: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="BeneficiaryID" value="<%= Beneficiary.BeneficiaryID %>" placeholder="Will be auto-generated when status is approved" disabled>
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-control-label">Beneficiary Status: <span class="tx-danger">*</span></label>
+                            <select id="select2-BenStatus" class="form-control" data-placeholder="Choose Beneficiary Status" style="width:100%">
+                              <option label="Choose Beneficiary Status"></option>
+                              <% BenStatus.forEach(function(bs) { %>
+                                <% if (Beneficiary.BenStatusID == bs.BenStatusID) { %>
+                                  <option value="<%= bs.BenStatusID %>" selected><%= bs.BenStatusDesc %></option>
+                                <% } else { %>
+                                  <option value="<%= bs.BenStatusID %>" ><%= bs.BenStatusDesc %></option>
+                                <% } %>
+                              <% }); %>
+                            </select>
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-control-label">Firstname: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="firstname" value="<%= Beneficiary.FirstName %>" placeholder="Enter firstname">
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-6 mg-t--1 mg-md-t-0">
+                          <div class="form-group mg-md-l--1">
+                            <label class="form-control-label">Lastname: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="lastname" value="<%= Beneficiary.LastName %>" placeholder="Enter lastname">
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-6 mg-t--1 mg-md-t-0">
+                          <div class="form-group mg-md-l--1">
+                            <label class="form-control-label">Phone (Primary) <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="PhonePrimary" value="<%= Beneficiary.PhonePrimary %>" placeholder="Enter primary phone no">
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-6 mg-t--1 mg-md-t-0">
+                          <div class="form-group mg-md-l--1">
+                            <label class="form-control-label">Phone (Secondary) <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="PhoneSecondary" value="<%= Beneficiary.PhoneSecondary %>" placeholder="Enter secondary phone no">
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-3 mg-t--1 mg-md-t-0">
+                          <div class="form-group mg-md-l--1">
+                            <label class="form-control-label">Father/Husband Name <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="FatherName" value="<%= Beneficiary.FatherName %>" placeholder="Enter father or husband name">
+                          </div>
+                        </div><!-- col-4 -->
+
+                        <div class="col-md-3">
+                          <div class="form-group mg-md-l--1 bd-t-0-force">
+                            <label class="form-control-label mg-b-0-force">Gender: <span class="tx-danger">*</span></label>
+                            <select id="select2-Gender" class="form-control" data-placeholder="Choose Gender" style="width:100%">
+                              <option label="Choose Gender"></option>
+                              <% if (Beneficiary.Gender == 0) { %>
+                                <option value="0" selected>Male</option>
+                              <% } else { %>
+                                <option value="0">Male</option>
+                              <% } %>
+
+                              <% if (Beneficiary.Gender == 1) { %>
+                                <option value="1" selected>Female</option>
+                              <% } else { %>
+                                <option value="1">Female</option>
+                              <% } %>
+                            </select>
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-3">
+                          <div class="form-group mg-md-l--1 bd-t-0-force">
+                            <label class="form-control-label mg-b-0-force">New Record? <span class="tx-danger">*</span></label>
+                            <select id="select2-IsNew" class="form-control" data-placeholder="Choose Yes or No" style="width:100%">
+                              <option label="Is New Record?"></option>
+                              <% if (Beneficiary.IsNew == 0) { %>
+                                <option value="0" selected>No</option>
+                              <% } else { %>
+                                <option value="0">No</option>
+                              <% } %>
+                              <% if (Beneficiary.IsNew == 1) { %>
+                                <option value="1" selected>Yes</option>
+                              <% } else { %>
+                                <option value="1">Yes</option>
+                              <% } %>
+                            </select>
+                          </div>
+                        </div><!-- col-4 -->
+                        <div class="col-md-3">
+                          <div class="form-group mg-md-l--1 bd-t-0-force">
+                            <label class="form-control-label mg-b-0-force">House Type <span class="tx-danger">*</span></label>
+                            <select id="select2-IsNew" class="form-control" data-placeholder="Choose house type" style="width:100%">
+                              <option label="Choose House Type"></option>
+                              <% HouseTypes.forEach(function(ht) { %>
+                                <% if (Beneficiary.HouseTypeID == ht.HouseTypeID) { %>
+                                  <option value="<%= ht.HouseTypeID %>" selected><%= ht.HouseTypeDesc %></option>
+                                <% } else { %>
+                                  <option value="<%= ht.HouseTypeID %>"><%= ht.HouseTypeDesc %></option>
+                                <% } %>
+                              <% }); %>
+
+                            </select>
+                          </div>
+                        </div><!-- col-4 -->
+
+                        <div class="col-md-8">
+                          <div class="form-group bd-t-0-force">
+                            <label class="form-control-label">Comments: <span class="tx-danger">*</span></label>
+                            <textarea class="form-control" type="text" name="Comments" value="" placeholder="Enter comments"><%= Beneficiary.Comments %></textarea>
+                          </div>
+                        </div><!-- col-3 -->
+                        <div class="col-md-4">
+                            <% if (UserType == 1) { %>
+                              <div class="form-group bd pd-20 bd-t-0">
+                                <button type="button" class="btn btn-primary tx-size-xs">Save</button>
+                                <button class="btn btn-secondary">Cancel</button>
+                              </div><!-- form-group -->
+                              <% } %>
+                        </div>
+
+                      </div><!-- row -->
+                      <div class="form-layout-footer bd pd-20 bd-t-0">
+                          
+                      </div><!-- form-group -->
+                    </div><!-- form-layout -->
+                    </div>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-md-12">
+                        <% if (FaceImage == "") { %>
+                          <div class="card" style="height:400px;align-items:center;">
+                            <img src="theme/img/img11.jpg" class="img-fluid" alt="" style="width:auto;height:inherit;">
+                          </div><!-- card -->
+
+                        <% } else { %>
+                          <div class="card" style="height:400px;align-items:center;">
+                            <img src="data:image/jpeg;base64, <%= FaceImage %>" class="card-img-bottom img-fluid" alt=""
+                            style="height:inherit;width:auto;border:5px solid black">
+                          </div><!-- card -->
+
+                        <% } %>
+                        </div>
+                      </div>
+                      
+                    </div>
+
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div id="map" style="height:450px"></div>
+                        </div><!-- card -->
+                      </div>
+                    </div>
+                </div><!-- tab-pane -->
+                <div class="tab-pane fade" id="monitoring">
+                    <div class="row row-sm mg-t-20">
+                        <div class="col-lg-6">
+                          <div class="widget-2">
+                            <div class="card shadow-base overflow-hidden">
+                              <div class="card-header">
+                                <h6 class="card-title">CNIC FRONT</h6>
+                                
+                              </div><!-- card-header -->
+                              <div class="card-body pd-0 bd-color-gray-lighter">
+                                  <img id="CNICFront" src="theme/img/img11.jpg" class="img-fluid img-thumbnail" alt="" style="height:100%">
+                              </div><!-- card-body -->
+                              <div class="card-body pd-0">
+                                
+                              </div><!-- card-body -->
+                            </div><!-- card -->
+                          </div><!-- widget-2 -->
+                        </div><!-- col-6 -->
+                        <div class="col-lg-6 mg-t-20 mg-lg-t-0">
+                          <div class="widget-2">
+                            <div class="card shadow-base overflow-hidden">
+                              <div class="card-header">
+                                <h6 class="card-title">CNIC BACK</h6>
+                                
+                              </div><!-- card-header -->
+                              <div class="card-body pd-0 bd-color-gray-lighter">
+                                  <img id="CNICBack" src="theme/img/img11.jpg" class="img-fluid img-thumbnail" alt="" style="height:100%">
+                              </div><!-- card-body -->
+                              <div class="card-body pd-0">
+                                
+                              </div><!-- card-body -->
+                            </div><!-- card -->
+                          </div><!-- widget-2 -->
+                        </div><!-- col-6 -->
+                      </div>
+                      <div class="row row-sm mg-t-20">
+                          <div class="col-lg-6">
+                            <div class="widget-2">
+                              <div class="card shadow-base overflow-hidden">
+                                <div class="card-header">
+                                  <h6 class="card-title">HOUSE FRONT</h6>
+                                  
+                                </div><!-- card-header -->
+                                <div class="card-body pd-0 bd-color-gray-lighter">
+                                    <img id="HouseFrontImagePhaseI" src="theme/img/img11.jpg" class="img-fluid img-thumbnail" alt="" style="height:100%">
+                                </div><!-- card-body -->
+                                <div class="card-body pd-0">
+                                  
+                                </div><!-- card-body -->
+                              </div><!-- card -->
+                            </div><!-- widget-2 -->
+                          </div><!-- col-6 -->
+                          <div class="col-lg-6 mg-t-20 mg-lg-t-0">
+                            <div class="widget-2">
+                              <div class="card shadow-base overflow-hidden">
+                                <div class="card-header">
+                                  <h6 class="card-title">HOUSE SIDE</h6>
+                                  
+                                </div><!-- card-header -->
+                                <div class="card-body pd-0 bd-color-gray-lighter">
+                                    <img id="HouseSideImagePhaseI" src="theme/img/img11.jpg" class="img-fluid img-thumbnail" alt="" style="height:100%">
+                                </div><!-- card-body -->
+                                <div class="card-body pd-0">
+                                  
+                                </div><!-- card-body -->
+                              </div><!-- card -->
+                            </div><!-- widget-2 -->
+                          </div><!-- col-6 -->
+                        </div>
+                  
+                </div><!-- tab-pane -->
+              </div>
+              
+              <% } else { %>
+                <div class="tab-content br-profile-body">
+                    <div class="tab-pane fade active show" id="profile">
+                      <div class="row mg-t-0">
+                        <div class="col-sm-8">
+                          <div class="form-layout form-layout-2">
+                          <div class="row no-gutters">
+                            <div class="col-md-3">
+                              <div class="form-group mg-md-l--1 bd-t-0-force">
+                                <label class="form-control-label mg-b-0-force">منطقة: <span class="tx-danger">*</span></label>
+                                <select id="select2-District" class="form-control" data-placeholder="Choose District" style="width:100%">
+                                  <option label="Choose district"></option>
+                                  <% Districts.forEach(function(district) { %>
+                                      <% if (Beneficiary.DistrictID == district.DistrictID) { %>
+                                        <option value="<%= district.DistrictID %>" selected><%= district.DistrictName %></option>
+                                      <% } else { %>
+                                        <option value="<%= district.DistrictID %>" ><%= district.DistrictName %></option>
+                                      <% } %>
+                                  <% }); %>
+                                </select>
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-3">
+                              <div class="form-group mg-md-l--1 bd-t-0-force">
+                                <label class="form-control-label mg-b-0-force">تهسيل: <span class="tx-danger">*</span></label>
+                                <select id="select2-Tehsil" class="form-control" data-placeholder="Choose Tehsil" style="width:100%">
+                                  <option label="Choose tehsil"></option>
+                                  <% Tehsils.forEach(function(tehsil) { %>
+                                    <% if (Beneficiary.TehsilID == tehsil.TehsilID) { %>
+                                      <option value="<%= tehsil.TehsilID %>" selected><%= tehsil.TehsilName %></option>
+                                    <% } else { %>
+                                      <option value="<%= tehsil.TehsilID %>"><%= tehsil.TehsilName %></option>
+                                    <% } %>
+                                  <% }); %>
+                                </select>
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-3">
+                              <div class="form-group mg-md-l--1 bd-t-0-force">
+                                <label class="form-control-label mg-b-0-force">مجلس النقابات:<span class="tx-danger">*</span></label>
+                                <select id="select2-UC" class="form-control" data-placeholder="Choose UC" style="width:100%">
+                                  <option label="Choose UC"></option>
+                                  <% UCs.forEach(function(uc) { %>
+                                    <% if (Beneficiary.UCID == uc.UCID) { %>
+                                      <option value="<%= uc.UCID %>" selected><%= uc.UCName %></option>
+                                    <% } else { %>
+                                      <option value="<%= uc.UCID %> "><%= uc.UCName %></option>
+                                    <% } %>
+                                  <% }) %>
+                                </select>
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-3">
+                              <div class="form-group mg-md-l--1 bd-t-0-force">
+                                <label class="form-control-label mg-b-0-force">قرية: <span class="tx-danger">*</span></label>
+                                <select id="select2-Village" class="form-control" data-placeholder="Choose Village" style="width:100%">
+                                  <option label="Choose Village"></option>
+                                  <% Villages.forEach(function(village) { %>
+                                    <% if (Beneficiary.VillageID == village.VillageID) { %>
+                                      <option value="<%= village.VillageID %>" selected><%= village.VillageName %></option>
+                                    <% } else { %>
+                                      <option value="<%= village.VillageID %>"><%= village.VillageName %></option>
+                                    <% } %>
+                                  <% }); %>
+                                </select>
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="form-control-label">هوية المستفيد: <span class="tx-danger">*</span></label>
+                                <input class="form-control" type="text" name="BeneficiaryID" value="<%= Beneficiary.BeneficiaryID %>" placeholder="سيتم إنشاؤه تلقائيًا للمستفيدين المعتمدين" disabled>
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="form-control-label">الحالة: <span class="tx-danger">*</span></label>
+                                <select id="select2-BenStatus" class="form-control" data-placeholder="Choose Beneficiary Status" style="width:100%">
+                                  <option label="Choose Beneficiary Status"></option>
+                                  <% BenStatus.forEach(function(bs) { %>
+                                    <% if (Beneficiary.BenStatusID == bs.BenStatusID) { %>
+                                      <option value="<%= bs.BenStatusID %>" selected><%= bs.BenStatusDesc %></option>
+                                    <% } else { %>
+                                      <option value="<%= bs.BenStatusID %>" ><%= bs.BenStatusDesc %></option>
+                                    <% } %>
+                                  <% }); %>
+                                </select>
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="form-control-label">الاسم الاول: <span class="tx-danger">*</span></label>
+                                <input class="form-control" type="text" name="firstname" value="<%= Beneficiary.FirstName %>" placeholder="Enter firstname">
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-6 mg-t--1 mg-md-t-0">
+                              <div class="form-group mg-md-l--1">
+                                <label class="form-control-label">اسم العائلة : <span class="tx-danger">*</span></label>
+                                <input class="form-control" type="text" name="lastname" value="<%= Beneficiary.LastName %>" placeholder="Enter lastname">
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-6 mg-t--1 mg-md-t-0">
+                              <div class="form-group mg-md-l--1">
+                                <label class="form-control-label">رقم الهاتف ابتدائي <span class="tx-danger">*</span></label>
+                                <input class="form-control" type="text" name="PhonePrimary" value="<%= Beneficiary.PhonePrimary %>" placeholder="Enter primary phone no">
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-6 mg-t--1 mg-md-t-0">
+                              <div class="form-group mg-md-l--1">
+                                <label class="form-control-label">رقم الهاتف ثانوي <span class="tx-danger">*</span></label>
+                                <input class="form-control" type="text" name="PhoneSecondary" value="<%= Beneficiary.PhoneSecondary %>" placeholder="Enter secondary phone no">
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-3 mg-t--1 mg-md-t-0">
+                              <div class="form-group mg-md-l--1">
+                                <label class="form-control-label">اسم الأب/اسم الزوج <span class="tx-danger">*</span></label>
+                                <input class="form-control" type="text" name="FatherName" value="<%= Beneficiary.FatherName %>" placeholder="Enter father or husband name">
+                              </div>
+                            </div><!-- col-4 -->
+    
+                            <div class="col-md-3">
+                              <div class="form-group mg-md-l--1 bd-t-0-force">
+                                <label class="form-control-label mg-b-0-force">جنس: <span class="tx-danger">*</span></label>
+                                <select id="select2-Gender" class="form-control" data-placeholder="Choose Gender" style="width:100%">
+                                  <option label="Choose Gender"></option>
+                                  <% if (Beneficiary.Gender == 0) { %>
+                                    <option value="0" selected>Male</option>
+                                  <% } else { %>
+                                    <option value="0">Male</option>
+                                  <% } %>
+    
+                                  <% if (Beneficiary.Gender == 1) { %>
+                                    <option value="1" selected>Female</option>
+                                  <% } else { %>
+                                    <option value="1">Female</option>
+                                  <% } %>
+                                </select>
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-3">
+                              <div class="form-group mg-md-l--1 bd-t-0-force">
+                                <label class="form-control-label mg-b-0-force">سجل جديد? <span class="tx-danger">*</span></label>
+                                <select id="select2-IsNew" class="form-control" data-placeholder="Choose Yes or No" style="width:100%">
+                                  <option label="Is New Record?"></option>
+                                  <% if (Beneficiary.IsNew == 0) { %>
+                                    <option value="0" selected>No</option>
+                                  <% } else { %>
+                                    <option value="0">No</option>
+                                  <% } %>
+                                  <% if (Beneficiary.IsNew == 1) { %>
+                                    <option value="1" selected>Yes</option>
+                                  <% } else { %>
+                                    <option value="1">Yes</option>
+                                  <% } %>
+                                </select>
+                              </div>
+                            </div><!-- col-4 -->
+                            <div class="col-md-3">
+                              <div class="form-group mg-md-l--1 bd-t-0-force">
+                                <label class="form-control-label mg-b-0-force">نوع البيت <span class="tx-danger">*</span></label>
+                                <select id="select2-IsNew" class="form-control" data-placeholder="Choose house type" style="width:100%">
+                                  <option label="Choose House Type"></option>
+                                  <% HouseTypes.forEach(function(ht) { %>
+                                    <% if (Beneficiary.HouseTypeID == ht.HouseTypeID) { %>
+                                      <option value="<%= ht.HouseTypeID %>" selected><%= ht.HouseTypeDesc %></option>
+                                    <% } else { %>
+                                      <option value="<%= ht.HouseTypeID %>"><%= ht.HouseTypeDesc %></option>
+                                    <% } %>
+                                  <% }); %>
+    
+                                </select>
+                              </div>
+                            </div><!-- col-4 -->
+    
+                            <div class="col-md-8">
+                              <div class="form-group bd-t-0-force">
+                                <label class="form-control-label">تعليقات: <span class="tx-danger">*</span></label>
+                                <textarea class="form-control" type="text" name="Comments" value="" placeholder="Enter comments"><%= Beneficiary.Comments %></textarea>
+                              </div>
+                            </div><!-- col-3 -->
+                            <div class="col-md-4">
+                                <% if (UserType == 1) { %>
+                                  <div class="form-group bd pd-20 bd-t-0">
+                                    <button type="button" class="btn btn-primary tx-size-xs">Save </button>
+                                    <button class="btn btn-secondary">Cancel</button>
+                                  </div><!-- form-group -->
+                                  <% } %>
+                            </div>
+                          </div><!-- row -->
+                          
+                        </div><!-- form-layout -->
+                        </div>
+                        <div class="col-md-4">
+                          <div class="row">
+                            <div class="col-md-12">
+                            <% if (FaceImage == "") { %>
+                              <div class="card" style="height:400px;align-items:center;">
+                                <img src="theme/img/img11.jpg" class="img-fluid" alt="" style="width:auto;height:inherit;">
+                              </div><!-- card -->
+    
+                            <% } else { %>
+                              <div class="card" style="height:400px;align-items:center;">
+                                <img src="data:image/jpeg;base64, <%= FaceImage %>" class="card-img-bottom img-fluid" alt=""
+                                style="height:inherit;width:auto;border:5px solid black">
+                              </div><!-- card -->
+    
+                            <% } %>
+                            </div>
+                          </div>
+                          
+                        </div>
+    
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                            <div class="card">
+                              <div id="map" style="height:450px"></div>
+                            </div><!-- card -->
+                          </div>
+                        </div>
+                    </div><!-- tab-pane -->
+                    <div class="tab-pane fade" id="monitoring">
+                        <div class="row row-sm mg-t-20">
+                            <div class="col-lg-6">
+                              <div class="widget-2">
+                                <div class="card shadow-base overflow-hidden">
+                                  <div class="card-header">
+                                    <h6 class="card-title">CNIC صورة الجانب الأمامي</h6>
+                                    
+                                  </div><!-- card-header -->
+                                  <div class="card-body pd-0 bd-color-gray-lighter">
+                                      <img id="CNICFront" src="theme/img/img11.jpg" class="img-fluid img-thumbnail" alt="" style="height:100%">
+                                  </div><!-- card-body -->
+                                  <div class="card-body pd-0">
+                                    
+                                  </div><!-- card-body -->
+                                </div><!-- card -->
+                              </div><!-- widget-2 -->
+                            </div><!-- col-6 -->
+                            <div class="col-lg-6 mg-t-20 mg-lg-t-0">
+                              <div class="widget-2">
+                                <div class="card shadow-base overflow-hidden">
+                                  <div class="card-header">
+                                    <h6 class="card-title">CNIC الخلفي صورة جانبية</h6>
+                                    
+                                  </div><!-- card-header -->
+                                  <div class="card-body pd-0 bd-color-gray-lighter">
+                                      <img id="CNICBack" src="theme/img/img11.jpg" class="img-fluid img-thumbnail" alt="" style="height:100%">
+                                  </div><!-- card-body -->
+                                  <div class="card-body pd-0">
+                                    
+                                  </div><!-- card-body -->
+                                </div><!-- card -->
+                              </div><!-- widget-2 -->
+                            </div><!-- col-6 -->
+                          </div>
+                          <div class="row row-sm mg-t-20">
+                              <div class="col-lg-6">
+                                <div class="widget-2">
+                                  <div class="card shadow-base overflow-hidden">
+                                    <div class="card-header">
+                                      <h6 class="card-title">صورة واجهة المنزل</h6>
+                                      
+                                    </div><!-- card-header -->
+                                    <div class="card-body pd-0 bd-color-gray-lighter">
+                                        <img id="HouseFrontImagePhaseI" src="theme/img/img11.jpg" class="img-fluid img-thumbnail" alt="" style="height:100%">
+                                    </div><!-- card-body -->
+                                    <div class="card-body pd-0">
+                                      
+                                    </div><!-- card-body -->
+                                  </div><!-- card -->
+                                </div><!-- widget-2 -->
+                              </div><!-- col-6 -->
+                              <div class="col-lg-6 mg-t-20 mg-lg-t-0">
+                                <div class="widget-2">
+                                  <div class="card shadow-base overflow-hidden">
+                                    <div class="card-header">
+                                      <h6 class="card-title">صورة جانبية للمنزل</h6>
+                                      
+                                    </div><!-- card-header -->
+                                    <div class="card-body pd-0 bd-color-gray-lighter">
+                                        <img id="HouseSideImagePhaseI" src="theme/img/img11.jpg" class="img-fluid img-thumbnail" alt="" style="height:100%">
+                                    </div><!-- card-body -->
+                                    <div class="card-body pd-0">
+                                      
+                                    </div><!-- card-body -->
+                                  </div><!-- card -->
+                                </div><!-- widget-2 -->
+                              </div><!-- col-6 -->
+                            </div>
+                    </div><!-- tab-pane -->
+                  </div>
+              
+              <% } %>
+            </div>
+
+
+          </div>
+
+        </div><!-- br-section-wrapper -->
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+    <div id="modalBeneficiaryDetail" class="modal fade" style="display: none;" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content tx-size-sm">
+          <div class="modal-header pd-x-20">
+            <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Message</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body pd-20">
+
+          </div><!-- modal-body -->
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-secondary tx-size-xs" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div><!-- modal-dialog -->
+    </div>
+
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/highlightjs/highlight.pack.js"></script>
+    <script src="theme/lib/datatables/jquery.dataTables.js"></script>
+    <script src="theme/lib/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script src="theme/lib/select2/js/select2.min.js"></script>
+
+    <script src="theme/js/bracket.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUPN1s4MuQOfg5N0vAt6UTJ3uC5Vacf_0"></script>
+
+    <script>
+
+      $(function(){
+        $(document).ready(function() {
+          document.getElementById("li-beneficiary").classList.add('active');
+          document.getElementById("ben-list").classList.add('active');
+          $('#select2-a, #select2-District, #select2-Tehsil, #select2-UC, #select2-Village, \
+          #select2-BenStatus, #select2-Gender, #select2-IsNew, #select2-HouseType').select2({
+
+          minimumResultsForSearch: Infinity
+        });
+
+        $('#select2-a').on('select2:opening', function (e) {
+          $(this).closest('.form-group').addClass('form-group-active');
+        });
+
+        $('#select2-a').on('select2:closing', function (e) {
+          $(this).closest('.form-group').removeClass('form-group-active');
+        });
+
+        function htmlDecode(input){
+					var e = document.createElement('div');
+					e.innerHTML = input;
+					return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+			  }
+        let Beneficiary = JSON.parse(htmlDecode("<%= JSON.stringify(Beneficiary) %>"));
+        
+        if (Beneficiary.VHLatitude > 0 && Beneficiary.VHLongitude > 0) {
+          var myLatLng = new google.maps.LatLng(Beneficiary.VHLatitude, Beneficiary.VHLongitude);
+          var myOptions = {
+            zoom: 3,
+            center: myLatLng,
+            scrollwheel: false,
+            zoomControl: true,
+            navigationControl: false,
+            mapTypeControl: false,
+            scaleControl: false,
+            draggable: true,
+            mapTypeId: 'hybrid',
+            styles: [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ]
+            //mapTypeId: google.maps.MapTypeId.TERRAIN
+          };
+        window.map = new google.maps.Map(document.getElementById('map'),myOptions);
+        var bounds = new google.maps.LatLngBounds();
+        var markers = [];
+
+        // Display multiple markers on a map
+        // Loop through our array of markers & place each one on the map
+
+          var position = new google.maps.LatLng(Beneficiary.VHLatitude, Beneficiary.VHLongitude);
+          bounds.extend(position);
+
+          marker = new google.maps.Marker({
+              position: position,
+              map: map
+          });
+          // Automatically center the map fitting all markers on the screen
+          map.fitBounds(bounds);
+          map.setCenter(marker.getPosition());
+
+
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+          this.setZoom(18);
+          google.maps.event.removeListener(boundsListener);
+        });
+      }
+
+      $.ajax({
+        url: '/beneficiary/getHouseImages?CNIC='+Beneficiary.CNIC,
+        type: 'GET',
+        success: function(data) {   // A function to be called if request succeeds
+          document.getElementById('HouseFrontImagePhaseI').src = "data:image/jpeg;base64, "+ data.HouseFrontImagePhaseI;
+          document.getElementById('HouseSideImagePhaseI').src = "data:image/jpeg;base64, "+ data.HouseSideImagePhaseI; 
+          
+        },
+        error: function(data) {
+          console.log('Couldn\'t GET the beneficiary\'s house images');
+            
+        }
+      });
+
+      $.ajax({
+        url: '/beneficiary/getCNICImages?CNIC='+Beneficiary.CNIC,
+        type: 'GET',
+        success: function(data) {   // A function to be called if request succeeds
+          document.getElementById('CNICFront').src = "data:image/jpeg;base64, "+ data.CNICFront; 
+          document.getElementById('CNICBack').src = "data:image/jpeg;base64, "+ data.CNICBack; 
+        },
+        error: function(data) {
+          console.log('Couldn\'t GET the beneficiary\'s CNIC images');
+            
+        }
+      });
+
+
+        $('#addButton').click( function () {
+
+        });
+  			$('#deleteButton').click( function () {
+
+
+  			});
+        $('#saveButton').click( function () {
+
+
+
+        });
+        $('#cancelButton').click( function () {
+
+        });
+
+
+        });
+
+
+      });
+    </script>
+  </body>
+</html>
