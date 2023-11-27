@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+<html lang="en">
+<% } else { %>
+<html lang="en" dir="rtl" class="rtl">
+<% } %>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+  <title>HRA | GIS</title>
+
+  <!-- vendor css -->
+  <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+  <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+  <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+  <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+  <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+
+  <!-- Bracket CSS -->
+  <link rel="stylesheet" href="theme/css/bracket.css">
+</head>
+
+<body class="collapsed-menu">
+
+  <% include ../partials/header %>
+
+  <!-- ########## START: MAIN PANEL ########## -->
+  <div class="br-mainpanel">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="br-pagetitle">
+          <i class="icon ion-android-map"></i>
+          <div>
+            <% if (lang == 'en') { %>
+            <h3>GIS Dashboard </h3>
+            <h6 class="mg-b-0">LAST UPDATED ON: <%= LastUpdatedOn %></h6>
+            <% } else { %>
+            <h3>GIS </h3>
+            <% } %>
+
+          </div>
+        </div><!-- d-flex -->
+      </div>
+      <div class="col-sm-5 b-1 t-45">
+
+        <button id="btn-houses" class="btn btn-oblong btn-secondary mg-b-5 mg-t-5 mg-r-5 mg-l-5"
+          style="width: auto;">HOUSES</button>
+        <button id="btn-model-houses" class="btn btn-oblong btn-secondary mg-b-5 mg-t-5 mg-r-5 mg-l-5"
+          style="width: auto;">MODEL HOUSES</button>
+        
+
+      </div>
+      <div class="col-sm-3">
+        <div class="form-layout form-layout-2">
+          <div class="row no-gutters">
+
+            <div class="col-md-12">
+              <div class="form-group mg-md-l--1 bd-t-0-force">
+                <label class="form-control-label mg-b-10-force">Union Council (UC):<span
+                    class="tx-danger">*</span></label>
+                <select id="select2-UC" class="form-control" data-placeholder="Select a UC" style="width:100%">
+                  <option value="0">Select a UC</option>
+                  <% UCs.forEach(function(uc) { %>
+                  <option value="<%= uc.UCID %> "><%= uc.UCName %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div><!-- col-4 -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="br-pagebody">
+      <div class="br-section-wrapper">
+
+        <div class="row row-sm">
+          <div class="col-lg-10">
+
+            <div class="card shadow-base bd-0 pd-5 mg-t-0">
+              <div id="map" style="width:100%;height:750px;"></div>
+            </div><!-- card -->
+          </div><!-- col-8 -->
+          <div class="col-lg-2 col-xl-2">
+            <div class="rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+                <% if (lang == 'en') { %>
+                BUDGET ALLOCATED
+                <% } else { %>
+                العدد الإجمالي
+                <% } %>
+              </p>
+              <p class="tx-16 tx-center tx-white tx-lato tx-bold mg-b-5 lh-1" id="labelBudgetAllocated">Rs.
+                <%= (Beneficiaries.length * 260000).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
+            </div>
+            <br />
+            <div class=" rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">
+
+                <% if (lang == 'en') { %>
+                BUDGET DISBURSED
+                <% } else { %>
+                التحقق
+                <% } %>
+              </p>
+              <p class="tx-14 tx-center tx-white tx-lato tx-bold mg-b-5 lh-1" id="labelBudgetDisbursed">Rs.
+                <%= ((CountLevel1InProgress * 88000)+(CountLevel2InProgress * 66000)).toLocaleString(undefined, {maximumFractionDigits:2}) %>
+              </p>
+            </div>
+            <br />
+            <div class="rounded" style="background:#1D2939;">
+
+              <div class="dropdown">
+                <a href="" class="tx-gray-800 d-inline-block" data-toggle="dropdown">
+                  <div class="ht-45 pd-x-20 bd d-flex align-items-center justify-content-center">
+                    <span class="tx-14 tx-center tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-1">MAP LEGEND
+                    </span>
+                    <img src="http://via.placeholder.com/280x280" class="wd-20 rounded-circle" alt="">
+                    <i class="fa fa-angle-down mg-l-10"></i>
+                  </div>
+                </a>
+                <div class="dropdown-menu pd-10 wd-200" style="background:#1D2939;">
+                  <nav class="nav nav-style-2 flex-column">
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Not Started</p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/blu-circle.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-1 In-Progress
+                        </p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-1 Completed
+                        </p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/ltblu-circle.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-2 In-Progress
+                        </p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/pink-circle.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-2 Completed
+                        </p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/wht-circle.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-3 In-Progress
+                        </p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/purple-circle.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-3 Completed
+                        </p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/orange-circle.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-4 In-Progress
+                        </p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/paddle/grn-stars.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-4 Completed
+                        </p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Model House - Not
+                          started</p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Model House - In
+                          Progress</p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Model House -
+                          Completed</p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/pal3/icon32.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Govt Building - In
+                          progress</p>
+                      </div>
+                    </div>
+                    <div class="pd-x-5 d-flex align-items-center">
+                      <img style="-webkit-user-select: none;height:30px;"
+                        src="http://maps.google.com/mapfiles/kml/pal3/icon28.png">
+                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Govt Building -
+                          Completed</p>
+                      </div>
+                    </div>
+                  </nav>
+                </div><!-- dropdown-menu -->
+              </div><!-- dropdown -->
+            </div>
+            <br />
+            <div class=" rounded " style="background: #1D2939">
+              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-1">
+                <% if (lang == 'en') { %>
+                LEVEL 1 - DOOR BAND
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <div class="card shadow-base bd-0 pd-1 mg-t-1" style="background: #1D2939">
+                <div id="Level1PieChart" style="width: 100%;height:100px;"></div>
+              </div><!-- card -->
+            </div>
+            <br />
+            <div class=" rounded" style="background: #1D2939">
+              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-1">
+
+                <% if (lang == 'en') { %>
+                LEVEL 2 - ROOF BAND
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <div class="card shadow-base bd-0 pd-1 mg-t-1" style="background: #1D2939">
+                <div id="Level2PieChart" style="width: 100%;height:100px;"></div>
+              </div><!-- card -->
+            </div>
+            <br />
+            <div class=" rounded " style="background: #1D2939">
+              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-1">
+
+                <% if (lang == 'en') { %>
+                LEVEL 3
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <div class="card shadow-base bd-0 pd-1 mg-t-1" style="background: #1D2939">
+                <div id="Level3PieChart" style="width: 100%;height:100px;"></div>
+              </div><!-- card -->
+            </div>
+            <br />
+            <div class=" rounded " style="background: #1D2939">
+              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-1">
+
+                <% if (lang == 'en') { %>
+                LEVEL 4
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <div class="card shadow-base bd-0 pd-1 mg-t-1" style="background: #1D2939">
+                <div id="Level4PieChart" style="width: 100%;height:100px;"></div>
+              </div><!-- card -->
+            </div>
+            <br />
+          </div><!-- col-3 -->
+
+        </div><!-- row -->
+        <div class="row row-sm">
+          <div class="col-lg-3">
+            <div class="rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+                <% if (lang == 'en') { %>
+                  APPROVED BENEFICIARIES
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <p class="tx-36 tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelTotalCount">
+                <%= Beneficiaries.length  %> / 8000</p>
+            </div>
+          </div><!-- col-8 -->
+          <div class="col-lg-3">
+            <div class=" rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center"
+                style="color:#cc2a36">
+                <% if (lang == 'en') { %>
+                NOT STARTED
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <p class="tx-36  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted"
+                style="color:#cc2a36">
+                <%= Beneficiaries.length - CountLevel1InProgress  %>
+                / <%= Beneficiaries.length %></p>
+            </div>
+          </div><!-- col-8 -->
+          <div class="col-lg-3">
+            <div class="rounded overflow-hidden" style="background:#1D2939">
+              <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center"
+                style="color:#edc951">
+                <% if (lang == 'en') { %>
+                IN PROGRESS
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <p class="tx-36 tx-center tx-white tx-lato tx-bold mg-b-10 lh-1" id="labelInProgress"
+                style="color:#edc951">
+                <%= CountLevel1InProgress - CountLevel4Achieved   %>
+            </div>
+          </div><!-- col-8 -->
+          <div class="col-lg-3">
+            <div class=" rounded overflow-hidden" style="background:#1D2939">
+              <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center"
+                style="color:#00a0b0">
+                <% if (lang == 'en') { %>
+                COMPLETED
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <p class="tx-36 tx-center tx-white tx-lato tx-bold mg-b-10 lh-1" id="labelCompleted"
+                style="color:#00a0b0"> <%= CountLevel4Achieved %></p>
+            </div>
+          </div><!-- col-8 -->
+        </div>
+      </div>
+    </div><!-- br-pagebody -->
+    <% include ../partials/footer %>
+  </div><!-- br-mainpanel -->
+  <!-- ########## END: MAIN PANEL ########## -->
+
+  <script src="theme/lib/jquery/jquery.js"></script>
+  <script src="theme/js/popper.js"></script>
+  <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+  <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+  <script src="theme/lib/moment/moment.js"></script>
+  <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+  <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+  <script src="theme/lib/peity/jquery.peity.js"></script>
+  <script src="theme/lib/d3/d3.js"></script>
+  <script src="theme/lib/rickshaw/rickshaw.min.js"></script>
+  <script src="theme/lib/Flot/jquery.flot.js"></script>
+  <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
+  <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
+  <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+  <script src="theme/lib/echarts/echarts.min.js"></script>
+  <script src="theme/lib/select2/js/select2.min.js"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyAtFS563VrFYCkOBmG8J2-noujJ9gP18EM"></script>
+
+
+  <script src="theme/lib/gmaps/gmaps.js"></script>
+
+
+  <script src="theme/js/bracket.js"></script>
+
+
+  <script async>
+    $(function () {
+      $(document).ready(function () {
+        'use strict'
+        $('#select2-a, #select2-UC, #select2-Village').select2({
+          minimumResultsForSearch: Infinity
+        });
+        var selectedID = "";
+        var zoomLevel = 9;
+        var markers = [];
+        var ModelHousesMarkers = [];
+
+        $('#btn-houses').on('click', function (e) {
+          if ($('#btn-houses').hasClass("btn-secondary")) {
+            $("#btn-houses").addClass("btn-outline-secondary").removeClass("btn-secondary");
+            clearMarkers();
+          } else {
+            $("#btn-houses").addClass("btn-secondary").removeClass("btn-outline-secondary");
+            redrawMarkers();
+          }
+        });
+        $('#btn-model-houses').on('click', function (e) {
+          if ($('#btn-model-houses').hasClass("btn-secondary")) {
+            $("#btn-model-houses").addClass("btn-outline-secondary").removeClass("btn-secondary");
+            clearModelHousesMarkers();
+          } else {
+            $("#btn-model-houses").addClass("btn-secondary").removeClass("btn-outline-secondary");
+            redrawModelHousesMarkers();
+          }
+        });
+        $('#btn-govt-buildings').on('click', function (e) {
+          if ($('#btn-govt-buildings').hasClass("btn-secondary")) {
+            $("#btn-govt-buildings").addClass("btn-outline-secondary").removeClass("btn-secondary");
+            //clearMarkers();
+          } else {
+            $("#btn-govt-buildings").addClass("btn-secondary").removeClass("btn-outline-secondary");
+            //redrawMarkers();
+          }
+        });
+
+        $('#select2-UC').on('select2:select', function (e) {
+          var data = e.params.data;
+          selectedID = data.id;
+          if (selectedID == 0) {
+            return;
+          }
+
+          $.ajax({
+            url: '/beneficiary/getVillagesByUC?UCID=' + data.id,
+            type: 'GET',
+            success: function (Villages) {   // A function to be called if request succeeds
+              console.log(Villages);
+
+              $("#select2-Village").prop("disabled", false);
+              $('#select2-Village').empty().trigger("change");
+              $('#select2-Village').select2({
+                data: [{ id: 0, text: 'Select a Village' }]
+              });
+              $('#select2-Village').select2({
+                data: Villages
+              });
+            },
+            error: function (data) {
+              console.log('Couldn\'t GET the Beneficiaries');
+            }
+          });
+          $.ajax({
+            url: '/beneficiary/getBeneficiaryByUC?UCID=' + data.id,
+            type: 'GET',
+            success: function (data) {   // A function to be called if request succeeds
+              console.log(data.CountLevel1InProgress[0].count);
+              clearMarkers();
+              clearModelHousesMarkers();
+              Beneficiaries = data.Beneficiary;
+              ModelHouses = data.ModelHouses;
+              markers = [];
+
+              $("#labelBudgetAllocated").html("Rs. " + (data.Beneficiary.length * 260000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+              $("#labelBudgetDisbursed").html("Rs. " + (data.CountLevel1InProgress[0].count * 88000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+              $("#labelTotalCount").html(data.Beneficiary.length);
+              $("#labelNotStarted").html(data.Beneficiary.length - data.CountLevel1InProgress[0].count);
+              $("#labelInProgress").html(data.CountLevel1InProgress[0].count);
+              $("#labelCompleted").html(0);
+              Level1PieChart.setOption({
+                series: [{
+                  data: [
+                    { value: (data.Beneficiary.length - data.CountLevel1InProgress[0].count), name: 'Not Started' },
+                    { value: data.CountLevel1InProgress[0].count, name: 'In Progress' },
+                    { value: data.CountLevel1Achieved[0].count, name: 'Completed' },
+                  ]
+                }]
+              });
+              Level2PieChart.setOption({
+                series: [{
+                  data: [{ value: data.Beneficiary.length, name: 'Not Started' },
+                  { value: 0, name: 'In Progress' },
+                  { value: 0, name: 'Completed' },]
+                }]
+              });
+              Level3PieChart.setOption({
+                series: [{
+                  data: [{ value: data.Beneficiary.length, name: 'Not Started' },
+                  { value: 0, name: 'In Progress' },
+                  { value: 0, name: 'Completed' },]
+                }]
+              });
+              Level4PieChart.setOption({
+                series: [{
+                  data: [
+                    { value: data.Beneficiary.length, name: 'Not Started' },
+                    { value: 0, name: 'In Progress' },
+                    { value: 0, name: 'Completed' },
+                  ]
+                }]
+              });
+
+              for (let i = 0; i < Beneficiaries.length; i++) {
+                if (Beneficiaries[i].VHLatitude == 0 || !Beneficiaries[i].VHLatitude) {
+                  continue;
+                }
+                var infowindow = new google.maps.InfoWindow({ content: Beneficiaries[i].FirstName });
+                var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
+                bounds.extend(position);
+
+                let icon = "";
+                if (Beneficiaries[i].InstallmentType == 1) {
+                  icon = "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png";
+                  //check if level-1 is achieved
+
+                }
+                if (Beneficiaries[i].InstallmentType == 2) {
+                  icon = "http://maps.google.com/mapfiles/kml/paddle/ltblu-circle.png";
+                  //check if level-1 is achieved
+                }
+                if (Beneficiaries[i].InstallmentType == 3) {
+                  icon = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png";
+                  //check if level-1 is achieved
+                }
+                if (Beneficiaries[i].InstallmentType == 4) {
+                  icon = "http://maps.google.com/mapfiles/kml/paddle/orange-circle.png";
+                  //check if level-1 is achieved
+                }
+                if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 2) {
+                  icon = "http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png";
+                  //check if level-1 is achieved
+                }
+
+                if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 2) {
+                  icon = "http://maps.google.com/mapfiles/kml/paddle/pink-circle.png";
+                  //check if level-1 is achieved
+                }
+                if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 2) {
+                  icon = "http://maps.google.com/mapfiles/kml/paddle/purple-circle.png";
+                  //check if level-1 is achieved
+                }
+                if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 2) {
+                  icon = "http://maps.google.com/mapfiles/kml/paddle/grn-stars.png";
+                  //check if level-1 is achieved
+                }
+
+
+                var marker = new google.maps.Marker({
+                  position: position,
+                  map: map,
+                  title: Beneficiaries[i].FirstName,
+                  icon: icon
+                });
+                markers.push(marker);
+                map.setZoom(11);
+                // Automatically center the map fitting all markers on the screen
+                map.fitBounds(bounds);
+                map.setCenter(marker.getPosition());
+
+                function load_content(marker, CNIC) {
+                  let temp = '<strong style="color:red;">NONE</strong><br>';
+                  if (Beneficiaries[i].InstallmentType == 1) {
+                    temp = '<strong style="color:blue;">1st</strong><br>'
+                  }
+                  $.ajax({
+                    url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
+                    success: function (data) {
+                      let temp = '<strong style="color:red;">NONE</strong><br>';
+                      var progress1 = 'PROGRESS: <strong style="color:red;">' + '0' + '%</strong>';
+
+                      if (Beneficiaries[i].InstallmentType == 1) {
+                        temp = '<strong style="color:blue;">1st</strong>';
+
+                      }
+                      if (Beneficiaries[i].InstallmentType == 2) {
+                        temp = '<strong style="color:blue;">2nd</strong>';
+                      }
+
+                      if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 2) {
+                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 ACHIEVED' + '</strong>';
+                      } else if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 1) {
+                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 IN-PROGRESS' + '</strong>';
+                      } else if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 1) {
+                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 IN-PROGRESS' + '</strong>';
+                      } else if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 2) {
+                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 ACHIEVED' + '</strong>';
+                      } else if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 1) {
+                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 IN-PROGRESS' + '</strong>';
+                      } else if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 2) {
+                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 ACHIEVED' + '</strong>';
+                      } else if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 1) {
+                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 IN-PROGRESS' + '</strong>';
+                      } else if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 2) {
+                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 ACHIEVED' + '</strong>';
+                      }
+                      infowindow.setContent('<div id="iw-container">' +
+                        '<div class="iw-title">' + Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName + '</div>' +
+                        '<div class="iw-content">' +
+                        '<img src="' + data + '"  height="120" width="100">' +
+                        '<div class="iw-subTitle">CNIC: ' + Beneficiaries[i].CNIC + '</div>' +
+                        '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>' +
+                        'INSTALLMENT PAID: ' + temp + '<br>' + progress1 +
+                        '<br>PHONE: ' + Beneficiaries[i].PhonePrimary +
+                        '<a href="/beneficiary/detail?CNIC=' + Beneficiaries[i].CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
+                        '</div>' +
+                        '</div>');
+                      infowindow.open(map, marker);
+                    }
+                  });
+                }
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                  return function () {
+                    load_content(marker, Beneficiaries[i].CNIC);
+                    infowindow.open(map, marker);
+                  }
+                })(marker, i));
+              }
+
+              for (let i = 0; i < ModelHouses.length; i++) {
+
+                if (ModelHouses[i].Latitude == 0 || !ModelHouses[i].Longitude) {
+                  continue;
+                }
+                var infowindow = new google.maps.InfoWindow({ content: ModelHouses[i].ID });
+                var position = new google.maps.LatLng(ModelHouses[i].Latitude, ModelHouses[i].Longitude);
+                bounds.extend(position);
+
+                let icon = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
+                // if (Beneficiaries[i].Level == 1){
+                //   console.log(Beneficiaries[i].CNIC);
+                //   icon = "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png";
+                // };
+
+                var marker = new google.maps.Marker({
+                  position: position,
+                  map: map,
+                  title: ModelHouses[i].ID,
+                  icon: icon
+                });
+                ModelHousesMarkers.push(marker);
+                // Automatically center the map fitting all markers on the screen
+                map.fitBounds(bounds);
+                map.setCenter(marker.getPosition());
+                function load_content(marker, CNIC) {
+                  infowindow.setContent('<div id="iw-container">' +
+                    '<div class="iw-title">' + ModelHouses[i].MHName + '</div>' +
+                    '<div class="iw-content">' +
+                    '<img src="/images/ModelHouses/' + ModelHouses[i].MHName + '/01.jpg" height="120" width="160">' +
+                    '<div class="iw-subTitle">UC: ' + ModelHouses[i].UCName + '</div>' +
+                    '<p> STATUS: <strong style="color:orange;">' + ModelHouses[i].Status + '</strong><br>' +
+                    'PROGRESS: <strong style="color:red;">' + ModelHouses[i].Progress + '%</strong>' +
+                    '<br/><br/><a target="_blank" href="/modelhouse/detail?ID=' + ModelHouses[i].ID + '"><br> DETAIL</a>' + '</p>' +
+                    '</div>' +
+                    '</div>');
+                  infowindow.open(map, marker);
+                  // $.ajax({
+                  //   url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
+                  //   success: function(data){
+                  //     let temp = '<strong style="color:red;">NONE</strong><br>';
+                  //     if (Beneficiaries[i].Level == 1){
+                  //       temp = '<strong style="color:blue;">1st</strong><br>'
+                  //     }
+                  //     infowindow.setContent('<div id="iw-container">' +
+                  //         '<div class="iw-title">'+Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName+'</div>' +
+                  //         '<div class="iw-content">' +
+                  //           '<img src="'+data+'"  height="120" width="100">' +
+                  //           '<div class="iw-subTitle">CNIC: '+Beneficiaries[i].CNIC+'</div>' +
+                  //           '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>'+
+                  //             'INSTALLMENT PAID: '+temp+''+
+                  //               'PROGRESS: <strong style="color:red;">0%</strong>'+
+                  //           '<br>PHONE: '+Beneficiaries[i].PhonePrimary+
+                  //           '<a href="/beneficiary/detail?CNIC='+Beneficiaries[i].CNIC+'"><br>MONITORING DETAIL</a>'+'</p>'+
+                  //         '</div>' +
+                  //       '</div>');
+                  //     infowindow.open(map, marker);
+                  //   }
+                  // });
+                }
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                  return function () {
+                    load_content(marker, ModelHouses[i].ID);
+                    infowindow.open(map, marker);
+                  }
+                })(marker, i));
+              }
+            },
+            error: function (data) {
+              console.log('Couldn\'t GET the Beneficiaries');
+            }
+          });
+        });
+
+        $('#select2-Village').on('select2:select', function (e) {
+          var data = e.params.data;
+          if (data.id == 0) {
+            console.log(selectedID);
+            $("#select2-UC").select2("trigger", "select", {
+              data: { id: selectedID }
+            });
+            return;
+          }
+          $.ajax({
+            url: '/beneficiary/getBeneficiaryByVillage?VillageID=' + data.id,
+            type: 'GET',
+            success: function (data) {   // A function to be called if request succeeds
+              console.log(data.length);
+              clearMarkers();
+              Beneficiaries = data;
+              markers = [];
+              $("#labelBudgetAllocated").html("Rs. " + (data.length * 260000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+              $("#labelBudgetDisbursed").html("Rs. " + 0);
+              $("#labelTotalCount").html(data.length);
+              $("#labelNotStarted").html(data.length);
+              $("#labelInProgress").html(0);
+              $("#labelCompleted").html(0);
+
+              Level1PieChart.setOption({
+                series: [{
+                  data: [
+                    { value: data.length, name: 'Not Started' },
+                    { value: 0, name: 'In Progress' },
+                    { value: 0, name: 'Completed' },
+                  ]
+                }]
+              });
+              Level2PieChart.setOption({
+                series: [{
+                  data: [{ value: data.length, name: 'Not Started' },
+                  { value: 0, name: 'In Progress' },
+                  { value: 0, name: 'Completed' },]
+                }]
+              });
+              Level3PieChart.setOption({
+                series: [{
+                  data: [{ value: data.length, name: 'Not Started' },
+                  { value: 0, name: 'In Progress' },
+                  { value: 0, name: 'Completed' },]
+                }]
+              });
+              Level4PieChart.setOption({
+                series: [{
+                  data: [
+                    { value: data.length, name: 'Not Started' },
+                    { value: 0, name: 'In Progress' },
+                    { value: 0, name: 'Completed' },
+                  ]
+                }]
+              });
+              for (let i = 0; i < Beneficiaries.length; i++) {
+
+                var infowindow = new google.maps.InfoWindow({ content: Beneficiaries[i].FirstName });
+                var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
+                bounds.extend(position);
+
+                var marker = new google.maps.Marker({
+                  position: position,
+                  map: map,
+                  title: Beneficiaries[i].FirstName
+                });
+                markers.push(marker);
+                // Automatically center the map fitting all markers on the screen
+                map.fitBounds(bounds);
+                map.setCenter(marker.getPosition());
+
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                  return function () {
+                    infowindow.setContent(Beneficiaries[i].CNIC);
+                    infowindow.open(map, marker);
+                  }
+                })(marker, i));
+              }
+            },
+            error: function (data) {
+              console.log('Couldn\'t GET the Beneficiaries');
+            }
+          });
+        });
+
+        var map;
+
+        document.getElementById("li-beneficiary").classList.add('active');
+        document.getElementById("gis-dashboard").classList.add('active');
+
+        function htmlDecode(input) {
+          var e = document.createElement('div');
+          e.innerHTML = input;
+          return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+        }
+        var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
+
+        var Beneficiaries = JSON.parse('<%- JSON.stringify(Beneficiaries) %>');
+        var ModelHouses = JSON.parse('<%- JSON.stringify(ModelHouses) %>');
+        var CountLevel1InProgress = JSON.parse('<%- JSON.stringify(CountLevel1InProgress) %>');
+        var CountLevel1Achieved = JSON.parse('<%- JSON.stringify(CountLevel1Achieved) %>');
+        var CountLevel2InProgress = JSON.parse('<%- JSON.stringify(CountLevel2InProgress) %>');
+        var CountLevel2Achieved = JSON.parse('<%- JSON.stringify(CountLevel2Achieved) %>');
+        var CountLevel3InProgress = JSON.parse('<%- JSON.stringify(CountLevel3InProgress) %>');
+        var CountLevel3Achieved = JSON.parse('<%- JSON.stringify(CountLevel3Achieved) %>');
+        var CountLevel4InProgress = JSON.parse('<%- JSON.stringify(CountLevel4InProgress) %>');
+        var CountLevel4Achieved = JSON.parse('<%- JSON.stringify(CountLevel4Achieved) %>');
+
+        var myLatLng = new google.maps.LatLng(Beneficiaries[0].VHLatitude, Beneficiaries[0].VHLongitude);
+
+        var myOptions = {
+          zoom: 12,
+          center: myLatLng,
+          scrollwheel: false,
+          zoomControl: true,
+          navigationControl: false,
+          mapTypeControl: false,
+          mapTypeId: 'hybrid',
+          scaleControl: false,
+          draggable: true,
+          styles: [
+            {
+              featureType: 'all',
+              stylers: [
+                { saturation: -80 }
+              ]
+            }, {
+              featureType: 'road.arterial',
+              elementType: 'geometry',
+              stylers: [
+                { hue: '#00ffee' },
+                { saturation: 50 }
+              ]
+            }, {
+              featureType: 'poi.business',
+              elementType: 'labels',
+              stylers: [
+                { visibility: 'off' }
+              ]
+            }
+          ]
+          //mapTypeId: google.maps.MapTypeId.TERRAIN
+        };
+        map = new google.maps.Map(document.getElementById('map'), myOptions);
+        var bounds = new google.maps.LatLngBounds();
+
+
+        // Display multiple markers on a map
+        // Loop through our array of markers & place each one on the map
+        for (let i = 0; i < Beneficiaries.length; i++) {
+
+          if (Beneficiaries[i].VHLatitude == 0 || !Beneficiaries[i].VHLatitude) {
+            continue;
+          }
+          var infowindow = new google.maps.InfoWindow({ content: Beneficiaries[i].FirstName });
+          var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
+          bounds.extend(position);
+
+          var icon = "";
+          //var progress = 'PROGRESS: <strong style="color:red;">'+'0'+'%</strong>';
+
+          if (Beneficiaries[i].InstallmentType == 1) {
+            icon = "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png";
+            //check if level-1 is achieved
+
+          }
+          if (Beneficiaries[i].InstallmentType == 2) {
+            icon = "http://maps.google.com/mapfiles/kml/paddle/ltblu-circle.png";
+            //check if level-1 is achieved
+          }
+          if (Beneficiaries[i].InstallmentType == 3) {
+            icon = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png";
+            //check if level-1 is achieved
+          }
+          if (Beneficiaries[i].InstallmentType == 4) {
+            icon = "http://maps.google.com/mapfiles/kml/paddle/orange-circle.png";
+            //check if level-1 is achieved
+          }
+          if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 2) {
+            icon = "http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png";
+            //check if level-1 is achieved
+          }
+
+          if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 2) {
+            icon = "http://maps.google.com/mapfiles/kml/paddle/pink-circle.png";
+            //check if level-1 is achieved
+          }
+          if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 2) {
+            icon = "http://maps.google.com/mapfiles/kml/paddle/purple-circle.png";
+            //check if level-1 is achieved
+          }
+          if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 2) {
+            icon = "http://maps.google.com/mapfiles/kml/paddle/grn-stars.png";
+            //check if level-1 is achieved
+          }
+
+          var marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: Beneficiaries[i].FirstName,
+            icon: icon
+          });
+          markers.push(marker);
+          // Automatically center the map fitting all markers on the screen
+          map.fitBounds(bounds);
+          map.setCenter(marker.getPosition());
+          function load_content(marker, CNIC) {
+            $.ajax({
+              url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
+              success: function (data) {
+                let temp = '<strong style="color:red;">NONE</strong><br>';
+                var progress1 = 'PROGRESS: <strong style="color:red;">' + '0' + '%</strong>';
+
+                if (Beneficiaries[i].InstallmentType == 1) {
+                  temp = '<strong style="color:blue;">1st</strong>';
+
+                }
+                if (Beneficiaries[i].InstallmentType == 2) {
+                  temp = '<strong style="color:blue;">2nd</strong>';
+                }
+                if (Beneficiaries[i].InstallmentType == 3) {
+                  temp = '<strong style="color:blue;">3rd</strong>';
+                }
+                if (Beneficiaries[i].InstallmentType == 4) {
+                  temp = '<strong style="color:blue;">4th</strong>';
+                }
+
+                if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 2) {
+                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 ACHIEVED' + '</strong>';
+                } else if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 1) {
+                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 IN-PROGRESS' + '</strong>';
+                } else if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 1) {
+                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 IN-PROGRESS' + '</strong>';
+                } else if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 2) {
+                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 ACHIEVED' + '</strong>';
+                } else if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 1) {
+                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 IN-PROGRESS' + '</strong>';
+                } else if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 2) {
+                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 ACHIEVED' + '</strong>';
+                } else if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 1) {
+                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 IN-PROGRESS' + '</strong>';
+                } else if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 2) {
+                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 ACHIEVED' + '</strong>';
+                }
+
+
+
+                infowindow.setContent('<div id="iw-container">' +
+                  '<div class="iw-title">' + Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName + '</div>' +
+                  '<div class="iw-content">' +
+                  '<img src="' + data + '"  height="120" width="100">' +
+                  '<div class="iw-subTitle">CNIC: ' + Beneficiaries[i].CNIC + '</div>' +
+                  '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>' +
+                  'INSTALLMENT PAID: ' + temp + '<br>' + progress1 +
+                  '<br>PHONE: ' + Beneficiaries[i].PhonePrimary +
+                  '<a href="/beneficiary/detail?CNIC=' + Beneficiaries[i].CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
+                  '</div>' +
+                  '</div>');
+                infowindow.open(map, marker);
+              }
+            });
+          }
+
+          google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            return function () {
+              load_content(marker, Beneficiaries[i].CNIC);
+              infowindow.open(map, marker);
+            }
+          })(marker, i));
+        }
+
+        for (let i = 0; i < ModelHouses.length; i++) {
+
+          if (ModelHouses[i].Latitude == 0 || !ModelHouses[i].Longitude) {
+            continue;
+          }
+          var infowindow = new google.maps.InfoWindow({ content: ModelHouses[i].ID });
+          var position = new google.maps.LatLng(ModelHouses[i].Latitude, ModelHouses[i].Longitude);
+          bounds.extend(position);
+
+          let icon = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
+          if (ModelHouses[i].Progress == 100) {
+            icon = "http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png";
+          };
+
+          var marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: ModelHouses[i].ID,
+            icon: icon
+          });
+          ModelHousesMarkers.push(marker);
+          // Automatically center the map fitting all markers on the screen
+          map.fitBounds(bounds);
+          map.setCenter(marker.getPosition());
+          function load_content(marker, CNIC) {
+            infowindow.setContent('<div id="iw-container">' +
+              '<div class="iw-title">' + ModelHouses[i].MHName + '</div>' +
+              '<div class="iw-content">' +
+              '<img src="/images/ModelHouses/' + ModelHouses[i].MHName + '/01.jpg" height="120" width="160">' +
+              '<div class="iw-subTitle">UC: ' + ModelHouses[i].UCName + '</div>' +
+              '<p> STATUS: <strong style="color:orange;">' + ModelHouses[i].Status + '</strong><br>' +
+              'PROGRESS: <strong style="color:red;">' + ModelHouses[i].Progress + '%</strong>' +
+              '<br/><br/><a target="_blank" href="/modelhouse/detail?ID=' + ModelHouses[i].ID + '"><br> DETAIL</a>' + '</p>' +
+              '</div>' +
+              '</div>');
+            infowindow.open(map, marker);
+            // $.ajax({
+            //   url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
+            //   success: function(data){
+            //     let temp = '<strong style="color:red;">NONE</strong><br>';
+            //     if (Beneficiaries[i].Level == 1){
+            //       temp = '<strong style="color:blue;">1st</strong><br>'
+            //     }
+            //     infowindow.setContent('<div id="iw-container">' +
+            //         '<div class="iw-title">'+Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName+'</div>' +
+            //         '<div class="iw-content">' +
+            //           '<img src="'+data+'"  height="120" width="100">' +
+            //           '<div class="iw-subTitle">CNIC: '+Beneficiaries[i].CNIC+'</div>' +
+            //           '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>'+
+            //             'INSTALLMENT PAID: '+temp+''+
+            //               'PROGRESS: <strong style="color:red;">0%</strong>'+
+            //           '<br>PHONE: '+Beneficiaries[i].PhonePrimary+
+            //           '<a href="/beneficiary/detail?CNIC='+Beneficiaries[i].CNIC+'"><br>MONITORING DETAIL</a>'+'</p>'+
+            //         '</div>' +
+            //       '</div>');
+            //     infowindow.open(map, marker);
+            //   }
+            // });
+          }
+
+          google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            return function () {
+              load_content(marker, ModelHouses[i].ID);
+              infowindow.open(map, marker);
+            }
+          })(marker, i));
+        }
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+          //this.setZoom(zoomLevel);
+          google.maps.event.removeListener(boundsListener);
+        });
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+          for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+          }
+        }
+        // Sets the map on all markers in the array.
+        function setMapOnAllModelHouses(map) {
+          for (var i = 0; i < ModelHousesMarkers.length; i++) {
+            ModelHousesMarkers[i].setMap(map);
+          }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearMarkers() {
+          setMapOnAll(null);
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearModelHousesMarkers() {
+          setMapOnAllModelHouses(null);
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function redrawMarkers() {
+          setMapOnAll(map);
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function redrawModelHousesMarkers() {
+          setMapOnAllModelHouses(map);
+        }
+
+        var Level1PieChart = echarts.init(document.getElementById('Level1PieChart'));
+        var option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: <br/> {c} ({d}%)"
+          },
+          color: ['#cc2a36', '#edc951', '#00a0b0', '#9B1D20', '#0B1D20', '#A0C1B5', '#E45A19'],
+          series: [
+            {
+
+              name: 'Level 1',
+              type: 'pie',
+              radius: ['50%', '80%'],
+              center: ['50%', '50%'],
+              avoidLabelOverlap: true,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '10',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              data: [
+                { value: Beneficiaries.length - CountLevel1InProgress, name: 'Not Started' },
+                { value: CountLevel1InProgress - CountLevel1Achieved, name: 'In Progress' },
+                { value: CountLevel1Achieved, name: 'Completed' },
+              ]
+            }
+          ]
+        };
+
+        Level1PieChart.setOption(option);
+
+        var Level2PieChart = echarts.init(document.getElementById('Level2PieChart'));
+        var option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: <br/> {c} ({d}%)"
+          },
+          color: ['#cc2a36', '#edc951', '#00a0b0', '#9B1D20', '#0B1D20', '#A0C1B5', '#E45A19'],
+          series: [
+            {
+
+              name: 'Level 1',
+              type: 'pie',
+              radius: ['0%', '80%'],
+              center: ['50%', '50%'],
+              avoidLabelOverlap: true,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '10',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              data: [
+                { value: Beneficiaries.length - CountLevel2InProgress, name: 'Not Started' },
+                { value: CountLevel2InProgress - CountLevel2Achieved, name: 'In Progress' },
+                { value: CountLevel2Achieved, name: 'Completed' },
+              ]
+            }
+          ]
+        };
+        Level2PieChart.setOption(option);
+
+        var Level3PieChart = echarts.init(document.getElementById('Level3PieChart'));
+        var option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: <br/> {c} ({d}%)"
+          },
+          color: ['#cc2a36', '#edc951', '#00a0b0', '#9B1D20', '#0B1D20', '#A0C1B5', '#E45A19'],
+          series: [
+            {
+
+              name: 'Level 1',
+              type: 'pie',
+              radius: ['50%', '80%'],
+              center: ['50%', '50%'],
+              avoidLabelOverlap: true,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '10',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              data: [
+                { value: Beneficiaries.length - CountLevel3InProgress - CountLevel3Achieved, name: 'Not Started' },
+                { value: CountLevel3InProgress - CountLevel3Achieved, name: 'In Progress' },
+                { value: CountLevel3Achieved, name: 'Completed' },
+              ]
+            }
+          ]
+        };
+
+        Level3PieChart.setOption(option);
+        var Level4PieChart = echarts.init(document.getElementById('Level4PieChart'));
+        var option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b}: <br/> {c} ({d}%)"
+          },
+          color: ['#cc2a36', '#edc951', '#00a0b0', '#9B1D20', '#0B1D20', '#A0C1B5', '#E45A19'],
+          series: [
+            {
+
+              name: 'Level 1',
+              type: 'pie',
+              radius: ['0%', '80%'],
+              center: ['50%', '50%'],
+              avoidLabelOverlap: true,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '10',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              data: [
+                { value: Beneficiaries.length - CountLevel4InProgress - CountLevel4Achieved, name: 'Not Started' },
+                { value: CountLevel4InProgress - CountLevel4Achieved, name: 'In Progress' },
+                { value: CountLevel4Achieved, name: 'Completed' },
+              ]
+            }
+          ]
+        };
+
+        Level4PieChart.setOption(option);
+
+        // FOR DEMO ONLY
+        // menu collapsed by default during first page load or refresh with screen
+        // having a size between 992px and 1299px. This is intended on this page only
+        // for better viewing of widgets demo.
+        $(window).resize(function () {
+          minimizeMenu();
+        });
+
+        minimizeMenu();
+
+        function minimizeMenu() {
+          if (window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
+            // show only the icons and hide left menu label by default
+            $('.menu-item-label,.menu-item-arrow').addClass('op-lg-0-force d-lg-none');
+            $('body').addClass('collapsed-menu');
+            $('.show-sub + .br-menu-sub').slideUp();
+          } else if (window.matchMedia('(min-width: 1300px)').matches && !$('body').hasClass('collapsed-menu')) {
+            $('.menu-item-label,.menu-item-arrow').removeClass('op-lg-0-force d-lg-none');
+            $('body').removeClass('collapsed-menu');
+            $('.show-sub + .br-menu-sub').slideDown();
+          }
+        }
+      });
+    });
+  </script>
+  <script>
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+  <html lang="en">
+<% } else { %>
+  <html lang="en">
+<% } %>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+    <title>HRA | Dashboard</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link href="theme/css/jsgantt.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pagetitle">
+        <i class="icon ion-ios-plan"></i>
+        <div>
+            <% if (lang == 'en') { %>
+              <h4>PROJECT PLAN</h4>
+              <p class="mg-b-0" id="labelRegion">DEC 2018 - MAR 2019</p>
+            <% } else { %>
+              <h4>خطة المشروع</h4>
+              <p class="mg-b-0" id="labelRegion">ديسمبر 2018 - مارس 2019</p>
+            <% } %>
+          
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+
+        <div class="row row-sm mg-t-20">
+          <div class="col-lg-12">
+            <div class="card shadow-base bd-0 pd-10 mg-t-5">
+              <div style="position:relative" class="gantt" id="GanttChartDIV"></div>
+
+            </div><!-- card -->
+          </div><!-- col-8 -->
+
+        </div><!-- row -->
+
+
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/d3/d3.js"></script>
+    <script src="theme/lib/rickshaw/rickshaw.min.js"></script>
+    <script src="theme/lib/Flot/jquery.flot.js"></script>
+    <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
+    <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
+    <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+    <script src="theme/lib/echarts/echarts.min.js"></script>
+    <script src="theme/lib/select2/js/select2.full.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDw_FHu8ftIuC-35k9ViKlnp63L2vnGiLU"></script>
+
+    <script src="theme/lib/gmaps/gmaps.js"></script>
+
+    <script type="text/javascript" src="tehsil-jhal-jao-sub.js"></script>
+    <script type="text/javascript" src="tehsil-mashkai.js"></script>
+    <script type="text/javascript" src="tehsil-jhal-jhao.js"></script>
+    <script type="text/javascript" src="teshil-gishkore.js"></script>
+    <script type="text/javascript" src="tehsil-awaran.js"></script>
+    <script type="text/javascript" src="tehsil-hoshab.js"></script>
+    <script src="theme/js/bracket.js"></script>
+    <script src="theme/js/map.shiftworker.js"></script>
+    <script src="theme/js/ResizeSensor.js"></script>
+    <script src="theme/js/dashboard.js"></script>
+    <script src="theme/js/jsgantt.js"></script>
+
+
+    <script>
+        document.getElementById("li-project-plans").classList.add('active');
+        document.getElementById("plan12010203").classList.add('active');
+        var g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'day');
+        if( g.getDivId() != null ) {
+          g.setCaptionType('Complete');  // Set to Show Caption (None,Caption,Resource,Duration,Complete)
+
+          g.setDateTaskTableDisplayFormat('dd/mm/yyyy');
+          g.setDateTaskDisplayFormat('day dd month yyyy'); // Shown in tool tip box
+          g.setDayMajorDateDisplayFormat('mon yyyy - Week ww'); // Set format to display dates in the "Major" header of the "Day" view
+          g.setWeekMinorDateDisplayFormat('dd mon'); // Set format to display dates in the "Minor" header of the "Week" view
+          g.setShowTaskInfoLink(1); //Show link in tool tip (0/1)
+          g.setShowEndWeekDate(0); // Show/Hide the date for the last day of the week in header for daily view (1/0)
+          g.setUseSingleCell(25000); // Set the threshold at which we will only use one cell per table row (0 disables).  Helps with rendering performance for large charts.
+          g.setFormatArr('Day', 'Week', 'Month', 'Quarter');
+          //g.setRowHeight(30);
+          g.setDayColWidth(18);
+          g.setWeekColWidth(50);
+          g.setMonthColWidth(150);
+          g.setQuarterColWidth(236);
+          g.setMinGpLen(1);
+          g.setShowDeps(1);
+          g.setShowComp(0);
+          g.setShowDur(0);
+          g.setShowSelector("Top", "Bottom");
+          g.setScrollTo("2018-12-01");
+
+
+          // g.AddTaskItem(new JSGantt.TaskItem(1,'Communication of deadline of verification to the leftover beneficiaries',new Date('12/03/2018'),new Date('12/07/2018'),'gtaskred','',0,'Consultant',100,0,0,1,'','',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(1,'Communication of deadline of verification to the leftover beneficiaries','2018-12-03','2018-12-07','gtaskred','',0,'Consultant',100,0,0,1,'','',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(2,'Sharing of verified list with HRA by the Consultant','2018-12-03','2018-12-04','gtaskred','',0,'Consultant',100,0,0,1,'','',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(3,'HRA to take approval of the verified list from SFD for payment of first Installment ','2018-12-04','2018-12-07','gtaskblue','',0,'HRA',25,0,0,1,2,'',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(4,'Draft Agreement for construction of Model Houses by People\'s Primary Healthcare Initiative \(PPHI\)','2018-12-03','2018-12-07','gtaskyellow','',0,'PPHI',0,0,0,1,'','',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(5,'Identification of cheque distribution points','2018-12-03','2018-12-14','gtaskblue','',0,'HRA',0,0,0,1,'','',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(6,'Provision of SFD-funded PC-Is, drawings and specifications of Government buildings by HRA to Consultant','2018-12-03','2018-12-07','gtaskblue','',0,'HRA',100,0,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(7,'Sharing of list of deceased by Consultant with HRA','2018-12-03','2018-12-07','gtaskred','',0,'Consultant',100,0,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(8,'Provision of design of Nameplate for beneficiaries houses to SFD by the Consultant','2018-12-03','2018-12-07','gtaskred','',0,'Consultant',100,0,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(9,'SFD to approve list of verified beneficiaries and payment plan for 1st  Installment','2018-12-07','2018-12-11','gtaskgreen','',0,'SFD',25,0,0,1,3,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(10,'Approval of the agreement by SFD for construction of 51 Model Houses','2018-12-09','2018-12-13','gtaskgreen','',0,'SFD',0,0,0,1,4,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(11,'Identification of location of 51 Model Houses by Consultant','2018-12-09','2018-12-20','gtaskred','',0,'Consultant',0,0,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(12,'Approval of design of Nameplate for beneficiaries’ houses by SFD','2018-12-09','2018-12-20','gtaskgreen','',0,'SFD',0,0,0,1,8,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(13,'Demarcation of land for construction of Government buildings by HRA ','2018-12-10','2019-01-11','gtaskblue','',0,'HRA',0,0,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(14,'Processing and provision of Next of Kin (NOK) list to consultant by HRA','2018-12-10','2019-01-31','gtaskblue','',0,'HRA',0,0,0,1,7,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(15,'Cheque printing for payment of 1st  Installment ','2018-12-12','2019-01-11','gtaskblue','',0,'HRA',0,0,0,1,9,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(16,'Signing of the agreement by HRA for construction of 51 Model Houses','2018-12-14','2018-12-21','gtaskblue','',0,'HRA',0,0,0,1,10,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(17,'Start of construction of 51 Model Houses','2018-12-25','2019-01-22','gtaskyellow','',0,'PPHI',0,0,0,1,16,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(18,'Preparation of tender documents for construction of Government buildings by the Consultant ','2019-01-01','2019-01-31','gtaskred','',0,'Consultant',0,0,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(19,'Geo-tagging of Government buildigs by the Consultant','2019-01-14','2019-01-18','gtaskred','',0,'Consultant',0,0,0,1,13,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(20,'Cheque distribution for payment of 1st Installment','2019-01-24','2019-02-06','gtaskblue','',0,'HRA',0,0,0,1,15,'',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(21,'Availability of Beneficiary Information, monitoring data, online. ','2019-01-29','2019-02-28','gtaskred','',0,'Consultant',0,0,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(22,'Submission of tender documetns of Government Buildings by HRA to SFD for approval.','2019-02-04','2019-02-07','gtaskblue','',0,'HRA',0,0,0,1,18,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(23,'Approval of tender documetns for Government Buildings by SFD.','2019-02-10','2019-02-21','gtaskgreen','',0,'SFD',0,0,0,1,22,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(24,'Online availability of first bank reconcilation report. ','2019-02-25','2019-02-28','gtaskred','',0,'Consultant',0,0,0,1,20,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(25,'Call for Bids for construction of Government Buildings by HRA','2019-02-25','2019-03-15','gtaskblue','',0,'HRA',0,0,0,1,23,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(26,'Start of Monitoring of construction activity of Level-I by Consultant ','2019-03-01','2019-05-30','gtaskred','',0,'Consultant',0,0,0,1,20,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(27,'Finalizing the list of 2,043 Leftover Beneficiaries by Consultant','2019-01-03','2019-03-08','gtaskred','',0,'Consultant',0,0,0,1,14,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(28,'Provision of replacement list for unverified/leftover beneficiaries by HRA to Consultant','2019-03-11','2019-03-15','gtaskblue','',0,'HRA',0,0,0,1,27,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(29,'Verification of the substituted beneficiaries by Consultant ','2019-03-18','2019-03-29','gtaskred','',0,'Consultant',0,0,0,1,28,'',''));
+
+
+
+          g.Draw();
+        } else {
+          alert("Error, unable to create Gantt Chart");
+        }
+
+        g.Draw();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+  <html lang="en">
+<% } else { %>
+  <html lang="en" dir="rtl" class="rtl">
+<% } %>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Monitoring of Housing Reconstruction in Awaran Project">
+    <meta name="author" content="Cyberstate Technologies - SFD's Consultant">
+
+    <title>HRA Monitoring Portal</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+
+    <div class="row no-gutters flex-row-reverse ht-100v">
+      <div class="col-md-6 bg-gray-200 d-flex align-items-center justify-content-center">
+        <div class="login-wrapper wd-250 wd-xl-350 mg-y-30">
+          <% if (lang == 'en') { %>
+            <h4 class="tx-inverse tx-center">Sign In</h4>
+            <p class="tx-center mg-b-60">Welcome back! Please sign in.</p>
+            <form method="post" action="/login">
+              <div class="form-group">
+                <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Enter your username">
+              </div><!-- form-group -->
+              <div class="form-group">
+                <input type="password" id="UserPassword" name="UserPassword" class="form-control" placeholder="Enter your password">
+                <a href="" class="tx-info tx-12 d-block mg-t-10">Forgot password?</a>
+              </div><!-- form-group -->
+              <button type="submit" class="btn btn-info btn-block">Sign In</button>
+              
+            </form>
+          <% } else { %>
+            <h4 class="tx-inverse tx-center">تسجيل الدخول</h4>
+            <p class="tx-center mg-b-60">مرحبا بعودتك! الرجاء تسجيل الدخول</p>
+            <form method="post" action="/login">
+              <div class="form-group">
+                <input type="text" id="UserName" name="UserName" class="form-control" placeholder="اسم المستخدم">
+              </div><!-- form-group -->
+              <div class="form-group">
+                <input type="password" id="UserPassword" name="UserPassword" class="form-control" placeholder="كلمه السر">
+                <a href="" class="tx-info tx-12 d-block mg-t-10">هل نسيت كلمة المرور</a>
+              </div><!-- form-group -->
+              
+              <button type="submit" class="btn btn-info btn-block">تسجيل الدخول</button>
+              
+            </form>
+          <% } %>
+          <div class="wd-450 wd-xl-350 mg-y-40" >
+            
+            <a href="/change_lang?lang=en" class="btn btn-outline bd bd-black bd-2 tx-black pd-x-35 tx-uppercase tx-12 tx-spacing-2 tx-medium">English</a> | 
+            <a href="/change_lang?lang=ar" class="btn btn-outline bd bd-black bd-2 tx-black pd-x-35 tx-uppercase tx-12 tx-spacing-2 tx-medium">عربى</a>
+          </div>
+          <% if (lang == 'en') { %>
+            <div class="wd-250 wd-xl-350 mg-y-10 " >
+              <div class="tx-18">
+                POWERED BY:
+              </div>
+              <a href="https://cyberstate.tech"><img src="cst.png" class="img-fluid" alt="" style="width:inherit;height:inherit;"></a>
+            </div>
+          <% } else { %>
+            <div class="wd-250 wd-xl-350 mg-y-10" >
+              <div class="tx-18 tx-black">
+                مشغل بواسطة:
+              </div>
+              <a href="https://cyberstate.tech"><img src="cst.png" class="img-fluid" alt="" style="width:inherit;height:inherit;"></a>
+            </div>
+          <% } %>
+        </div><!-- login-wrapper -->
+        
+      </div><!-- col -->
+      <div class="col-md-6 bg-br-primary d-flex align-items-center justify-content-center">
+        <div class="wd-250 wd-xl-450 mg-y-30">
+          <% if (lang == 'en') { %>
+            <div class="signin-logo tx-28 tx-bold tx-white">
+              <span class="tx-normal">[</span> 
+              <span class="tx-info"> MONITORING PORTAL</span>  
+              <span class="tx-normal">]</span>
+            </div>
+            <div class="tx-white mg-b-60">Construction of 8000 Housing Units in Awaran, Balochistan</div>
+
+            <div class="signin-logo tx-18 tx-bold tx-white">
+              FUNDED BY:
+            </div>
+            <a href="https://www.sfd.gov.sa/"><img src="sfd.jpeg" class="img-fluid" alt="" style="width:auto;height:inherit;"></a>
+            <div class="tx-white mg-b-20"></div>
+
+            <h5 class="tx-white">PROJECT INFORMATION PORTAL</h5>
+            <p class="tx-white-6">Cyberstate Technologies has developed a web portal for the management and monitoring of all the activities that will be involved during this project.</p>
+            <p class="tx-white-6 mg-b-60">The portal will provide a dashboard to the management of “Saudi Fund for Development (SFD)” for all the phases of the project to have a clear and precise overview and the details of the ground work and data for the beneficiaries being gathered by the field agents.</p>
+            <a href="https://cyberstate.tech/hra" class="btn btn-outline-light bd bd-white bd-2 tx-white pd-x-25 tx-uppercase tx-12 tx-spacing-3 tx-medium">PUBLIC PORTAL</a>
+          <% } else { %>
+              <div class="signin-logo tx-28 tx-bold tx-white">
+                <span class="tx-normal">[</span> 
+                <span class="tx-info"> بوابة المراقبة</span>
+                <span class="tx-normal">]</span>
+              </div>
+              <div class="tx-white mg-b-60"> بناء 8000 وحدة سكنية في Awaran ، بلوشستان </div>
+  
+              <div class="signin-logo tx-18 tx-bold tx-white">
+                  بتمويل من :
+                </div>
+                <img src="sfd.jpeg" class="img-fluid" alt="" style="width:auto;height:inherit;">
+                <div class="tx-white mg-b-20"></div>
+
+              <h5 class="tx-white">بوابة معلومات المشروع</h5>
+              <p class="tx-white-6">طورت Cyberstate Technologies بوابة إلكترونية لإدارة ومراقبة جميع الأنشطة التي يتضمنها هذا المشروع.</p>
+              <p class="tx-white-6 mg-b-60">ستوفر البوابة لوحة تحكم لإدارة " الصندوق السعودي للتنمية (SFD) " لجميع مراحل المشروع للحصول على نظرة عامة واضحة ودقيقة وتفاصيل العمل الميدانى والبيانات          الخاصة بالمستفيدين الذين يتم جمعهم من قبل الوكلاء العاملين بالمجال "</p>
+              <a href="http://cyberstate.tech/hra" class="btn btn-outline-light bd bd-white bd-2 tx-white pd-x-25 tx-uppercase tx-12 tx-spacing-2 tx-medium">البوابة العامة</a>
+          <% } %>
+        </div><!-- wd-500 -->
+      </div>
+    </div><!-- row -->
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+
+  </body>
+</html>

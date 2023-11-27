@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+  <html lang="en">
+<% } else { %>
+  <html lang="en">
+<% } %>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+    <title>HRA | Project Plan</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link href="theme/css/jsgantt.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pagetitle">
+        <i class="icon ion-ios-plan"></i>
+        <div>
+            <% if (lang == 'en') { %>
+              <h4>SCHEDULE OF COMPLETION OF SERVICES</h4>
+              <p class="mg-b-0" id="labelRegion">SEP 2018 - APR 2020</p>
+            <% } else { %>
+              <h4>حساب المستفيدون حسب الجنس</h4>
+              <p class="mg-b-0" id="labelRegion">سبتمبر 2018 - أبريل 2020</p>
+            <% } %>
+          
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+
+        <div class="row row-sm mg-t-20">
+          <div class="col-lg-12">
+            <div class="card shadow-base bd-0 pd-10 mg-t-5">
+              <div style="position:relative" class="gantt" id="GanttChartDIV"></div>
+
+            </div><!-- card -->
+          </div><!-- col-8 -->
+
+        </div><!-- row -->
+
+
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/d3/d3.js"></script>
+    <script src="theme/lib/rickshaw/rickshaw.min.js"></script>
+    <script src="theme/lib/Flot/jquery.flot.js"></script>
+    <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
+    <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
+    <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+    <script src="theme/lib/echarts/echarts.min.js"></script>
+    <script src="theme/lib/select2/js/select2.full.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDw_FHu8ftIuC-35k9ViKlnp63L2vnGiLU"></script>
+
+    <script src="theme/lib/gmaps/gmaps.js"></script>
+
+    <script type="text/javascript" src="tehsil-jhal-jao-sub.js"></script>
+    <script type="text/javascript" src="tehsil-mashkai.js"></script>
+    <script type="text/javascript" src="tehsil-jhal-jhao.js"></script>
+    <script type="text/javascript" src="teshil-gishkore.js"></script>
+    <script type="text/javascript" src="tehsil-awaran.js"></script>
+    <script type="text/javascript" src="tehsil-hoshab.js"></script>
+    <script src="theme/js/bracket.js"></script>
+    <script src="theme/js/map.shiftworker.js"></script>
+    <script src="theme/js/ResizeSensor.js"></script>
+    <script src="theme/js/dashboard.js"></script>
+    <script src="theme/js/jsgantt.js"></script>
+
+
+    <script>
+        document.getElementById("li-project-plans").classList.add('active');
+        document.getElementById("all-phases").classList.add('active');
+        var g = new JSGantt.GanttChart(document.getElementById('GanttChartDIV'), 'month');
+        if( g.getDivId() != null ) {
+          g.setCaptionType('Complete');  // Set to Show Caption (None,Caption,Resource,Duration,Complete)
+
+          g.setDateTaskTableDisplayFormat('dd/mm/yyyy');
+          g.setDateTaskDisplayFormat('day dd month yyyy'); // Shown in tool tip box
+          g.setDayMajorDateDisplayFormat('mon yyyy - Week ww'); // Set format to display dates in the "Major" header of the "Day" view
+          g.setWeekMinorDateDisplayFormat('dd mon'); // Set format to display dates in the "Minor" header of the "Week" view
+          g.setShowTaskInfoLink(1); //Show link in tool tip (0/1)
+          g.setShowEndWeekDate(0); // Show/Hide the date for the last day of the week in header for daily view (1/0)
+          g.setUseSingleCell(25000); // Set the threshold at which we will only use one cell per table row (0 disables).  Helps with rendering performance for large charts.
+          g.setFormatArr('Day', 'Week', 'Month', 'Quarter');
+          g.setRowHeight(20);
+          g.setDayColWidth(18);
+          g.setWeekColWidth(50);
+          g.setMonthColWidth(80);
+          g.setQuarterColWidth(150);
+          g.setMinGpLen(1);
+          g.setShowDeps(1);
+          g.setShowComp(0);
+          g.setShowDur(0);
+          g.setShowSelector("Top", "Bottom");
+          g.setScrollTo("2018-09-01");
+          g.setShowRes(0);
+
+
+          // g.AddTaskItem(new JSGantt.TaskItem(1,'Communication of deadline of verification to the leftover beneficiaries',new Date('12/03/2018'),new Date('12/07/2018'),'gtaskred','',0,'Consultant',100,0,0,1,'','',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(1,'PHASE-I (Approximately 6 Months)','', '', 'gtaskyellow','',0,'',0,1,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(2,'Signing of Agreement','2018-09-20','2018-09-26','gtaskred','',0,'',100,0,1,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(3,'Field Teams Setup','2018-10-08','2018-10-19','gtaskred','',0,'',100,0,1,0,2,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(4,'Field Teams Training','2018-10-15','2018-10-19','gtaskred','',0,'',100,0,1,0,2,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(5,'Field Data Collection (First Trip to Reg A,B,C)','2018-10-22','2018-11-11','gtaskred','',0,'',100,0,1,0,4,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(6,'Field Data Validation','2018-11-11','2018-11-12','gtaskred','',0,'',100,0,1,0,5,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(7,'PMS Server Setup','2018-09-04','2018-09-17','gtaskred','',0,'',100,0,1,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(8,'First report to SFD for release of Ist Instalment','2018-11-13','2018-11-13','gtaskred','',1,'',100,0,1,0,6,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(9,'Construction of Model Houses in identified clusters','2018-12-25','2019-01-22','gtaskred','',0,'',0,0,1,0,8,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(10,'Preparation and call for bids for construction of government buildings','2019-01-01','2019-03-15','gtaskred','',0,'',0,0,1,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(11,'Field Data Collection and validation for monitoring of Ist Instalment Disbursement','2019-02-18','2019-02-22','gtaskred','',0,'',0,0,1,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(12,'Report to SFD for confirmation of Ist Instalment &Reconciliation with bank','2019-02-25','2019-02-28','gtaskred','',0,'',0,0,1,0,11,'',''));
+          g.AddTaskItem(new JSGantt.TaskItem(13,'Field Data Collection for monitoring of 8,000 houses construction after Ist Instalment','2019-03-01','2019-05-31','gtaskred','',0,'',0,0,1,0,9,'',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(14,'PHASE-II (Approximately 6 Months)','', '', 'gtaskyellow','',0,'',0,1,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(15,'Release of IInd Instalment to HRA','2019-04-01','2019-04-05','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(16,'Preparation and approval of Livelihood component ','2019-04-02','2019-04-30','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(17,'Disbursement of second instalment to beneficiaries & Field Data Collection for reconciliation','2019-04-15','2019-05-17','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(18,'Implementation of Livelihood component','2019-05-15','2020-03-31','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(19,'Report to SFD for confirmation of 2nd Instalment to beneficiaries','2019-05-20','2019-05-24','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(20,'Field Data Collection  Trip to Reg A,B,C for monitoring of construction of houses for Level-2','2019-06-03','2019-07-31','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(21,'Report to SFD on progress of Level-2 of houses construction ','2019-08-01','2019-08-09','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(22,'Field Data Collection for construction of Govt buildings','2019-05-01','2019-05-10','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(23,'Report to SFD on progress of construction of Govt buildings ','2019-05-13','2019-05-17','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(24,'Release of IIIrd Instalment to HRA','2019-08-05','2019-08-16','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(25,'Field Data Collection for monitoring of Livelihood ','2019-08-12','2019-08-23','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(26,'Interim Report to SFD for Livelihood','2019-08-26','2019-09-09','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(27,'Field Data Collection for confirmation of disbursement to beneficiaries','2019-08-19','2019-09-06','gtaskblue','',0,'',0,0,14,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(28,'Report to SFD for confirmation of 3rd Instalment to beneficiaries','2019-09-16','2019-09-30','gtaskblue','',0,'',0,0,14,0,'','',''));
+
+          g.AddTaskItem(new JSGantt.TaskItem(29,'PHASE-III (Approximately 6 Months)','', '', 'gtaskyellow','',0,'',0,1,0,1,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(30,'Field Data Collection  Trip to Reg A,B,C for monitoring of construction of houses for Level-3','2019-10-01','2019-12-31','gtaskgreen','',0,'',0,0,29,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(31,'Approval for procurement & supply plan for Solar to houses','2019-09-02','2019-09-27','gtaskgreen','',0,'',0,0,29,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(32,'Interim Report to SFD for construction of Govt buildings','2019-11-01','2019-11-15','gtaskgreen','',0,'',0,0,29,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(33,'Field Data Collection for monitoring of Livelihood ','2019-11-18','2019-11-29','gtaskgreen','',0,'',0,0,29,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(34,'Interim Report to SFD for Livelihood','2019-12-02','2019-12-06','gtaskgreen','',0,'',0,0,29,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(35,'Provision and supply of Solar','2019-11-01','2020-03-31','gtaskgreen','',0,'',0,0,29,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(36,'Final Reporting to SFD','2020-04-01','2020-04-15','gtaskgreen','',0,'',0,0,29,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(37,'Project Data Archiving','2020-04-16','2020-04-26','gtaskgreen','',0,'',0,0,29,0,'','',''));
+          g.AddTaskItem(new JSGantt.TaskItem(38,'Closing of Project ','2020-04-29','2020-04-30','gtaskgreen','',0,'',0,0,29,0,'','',''));
+
+          g.Draw();
+        } else {
+          alert("Error, unable to create Gantt Chart");
+        }
+
+        g.Draw();
+    </script>
+  </body>
+</html>

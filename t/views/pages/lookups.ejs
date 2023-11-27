@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter -->
+    <meta name="twitter:site" content="@themepixels">
+    <meta name="twitter:creator" content="@themepixels">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bracket Plus">
+    <meta name="twitter:description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta name="twitter:image" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+
+    <!-- Facebook -->
+    <meta property="og:url" content="http://themepixels.me/bracketplus">
+    <meta property="og:title" content="Bracket Plus">
+    <meta property="og:description" content="Premium Quality and Responsive UI for Dashboard.">
+
+    <meta property="og:image" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+    <meta property="og:image:secure_url" content="http://themepixels.me/bracketplus/img/bracketplus-social.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+
+    <!-- Meta -->
+    <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
+    <meta name="author" content="ThemePixels">
+
+    <title>HRA - Lookups</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="theme/lib/highlightjs/github.css" rel="stylesheet">
+    <link href="theme/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="theme/lib/jsgrid/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="theme/lib/jsgrid/jsgrid-theme.min.css" />
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+
+  <body>
+    <% include ../partials/header %>
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pageheader">
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+          <a class="breadcrumb-item" href="/">Dashboard</a>
+          <span class="breadcrumb-item active">Lookup Lists</span>
+        </nav>
+      </div><!-- br-pageheader -->
+      <div class="br-pagetitle">
+        <i class="icon icon ion-ios-bookmarks-outline"></i>
+        <div>
+          <h4>Lookup Lists</h4>
+          <p class="mg-b-0">Manage the lookup lists.</p>
+        </div>
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+        <div class="br-section-wrapper">
+          <div class="row">
+            <div class="col-md">
+              <div class="card">
+                <div class="card-body">
+                  <div class="pd-10 bg-gray-300 rounded" style="height: 475px;">
+                    <ul class="nav nav-pills flex-column" role="tablist">
+                      <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#" role="tab" aria-selected="true" id="LBenStatus" onclick="refreshGrid(this.id)">BENEFICIARY STATUS</a></li>
+                      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#" role="tab" aria-selected="false" id="LHouseTypes" onclick="refreshGrid(this.id)">HOUSE TYPES</a></li>
+                      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#" role="tab" aria-selected="false" id="LUserTypes" onclick="refreshGrid(this.id)">USER TYPES</a></li>
+                      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#" role="tab" aria-selected="false" id="LVisitTypes" onclick="refreshGrid(this.id)">VISIT TYPES</a></li>
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8 mg-t-30 mg-md-t-0">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-subtitle tx-normal mg-b-15"></p>
+                  <p class="card-text"><div id="jsGrid"></div></p>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div><!-- br-section-wrapper -->
+      </div><!-- br-pagebody -->
+      <% include ../partials/footer %>
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="theme/lib/moment/moment.js"></script>
+    <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="theme/lib/peity/jquery.peity.js"></script>
+    <script src="theme/lib/highlightjs/highlight.pack.js"></script>
+    <script src="theme/lib/datatables/jquery.dataTables.js"></script>
+    <script src="theme/lib/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="theme/lib/select2/js/select2.min.js"></script>
+
+    <script src="theme/js/bracket.js"></script>
+    <script type="text/javascript" src="theme/lib/jsgrid/jsgrid.min.js"></script>
+    <script>
+    var lookupTable = "LBenStatus";
+    var Prefix = "BenStatus";
+    var chosenLookup = document.getElementById("LBenStatus");
+
+    function refreshGrid(id){
+        lookupTable = id;
+        Prefix = id.substring(1);
+        $("#jsGrid").jsGrid("loadData");
+        $("#jsGrid").jsGrid("refresh");
+        // chosenLookup.className = "list-group-item flex-column align-items-start";
+        // document.getElementById(lookupTable).className = "list-group-item list-group-item-action active flex-column align-items-start";
+        // chosenLookup = document.getElementById(lookupTable);
+        //document.getElementById("labelLookup").innerHTML = "Lookup: " + Prefix;
+    }
+      $(function(){
+        $(document).ready(function() {
+          $("#jsGrid").jsGrid({
+              height: "450px",
+              width: "100%",
+              filtering: false,
+              inserting: true,
+              editing: true,
+              sorting: true,
+              paging: true,
+              autoload: true,
+              pageSize: 10,
+              pageButtonCount: 5,
+              noDataContent: "No lookup values found in the database",
+              confirmDeleting: true,
+              deleteConfirm: function(item) {
+                  return "The lookup value will be removed. Are you sure?";
+              },
+              loadIndication: true,
+              loadIndicationDelay: 500,
+              loadMessage: "Please, wait...",
+              loadShading: true,
+              controller: {
+                loadData: function(filter) {
+      	          return $.ajax({
+      	            type: "GET",
+      	            url: "/lookups/get?Type="+lookupTable,
+      	            data: filter
+                  }).done(function(response) {
+                    console.log(response);
+                    for (var i in response) {
+                      switch(Prefix) {
+                        case "BenStatus" :
+                          response[i].ID = response[i].BenStatusID;
+                          response[i].Desc = response[i].BenStatusDesc;
+                          break;
+                        case "UserTypes" :
+                          response[i].ID = response[i].UserTypeID;
+                          response[i].Desc = response[i].UserTypeDesc;
+                          break;
+                        case "VisitTypes" :
+                          response[i].ID = response[i].VisitTypeID;
+                          response[i].Desc = response[i].VisitTypeDesc;
+                          break;
+                        case "HouseTypes" :
+                          response[i].ID = response[i].HouseTypeID;
+                          response[i].Desc = response[i].HouseTypeDesc;
+                          break;
+
+                        default:
+                          break;
+                      }
+                    }
+                    //console.log(response);
+                  });
+      	        },
+                insertItem: function(item) {
+      					  $.ajax({
+      	            type: "POST",
+      	            url: "/lookups/post?Type="+lookupTable+"&Prefix="+Prefix,
+      	            data: item
+      	          });
+      		        return;
+      	        },
+                updateItem: function(item) {
+      	          $.ajax({
+      	            type: "PUT",
+      	            url: "/lookups/put?Type="+lookupTable+"&Prefix="+Prefix,
+      	            data: item
+      	          });
+      					  return;
+      	         },
+                 deleteItem: function(item) {
+                   return $.ajax({
+                     type: "DELETE",
+                     url: "/lookups/delete?Type="+lookupTable+"&Prefix="+Prefix,
+                     data: item
+                   });
+                 }
+              },
+              fields: [
+                { name: "ID", title: "ID", type: "number", width: 25, visible:false },
+                { name: "Desc", title: "Lookup Values", type: "text", width: 75, validate: "required" },
+
+                {
+                  type: "control",
+                  modeSwitchButton: false,
+                  editButton: true,
+
+                }
+              ],
+              onItemUpdated: function(args) {
+                $("#jsGrid").jsGrid("refresh");
+      				  $("#jsGrid").jsGrid("loadData");
+                console.log("Lookup updated!");
+      			  },
+              onItemInserted: function(args) {
+                $("#jsGrid").jsGrid("refresh");
+      				  $("#jsGrid").jsGrid("loadData");
+      			  },
+          });
+
+
+
+        });
+
+
+      });
+    </script>
+  </body>
+</html>

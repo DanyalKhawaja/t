@@ -1,0 +1,8 @@
+LBenStatus
+LDistricts
+LTehsils
+LUCs
+LUserTypes
+LVisitTypes
+LHouseTypes
+LLevelStatus

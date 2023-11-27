@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+<html lang="en">
+<% } else { %>
+<html lang="ar" dir="rtl" class="rtl">
+<% } %>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Meta -->
+  <meta name="description" content="HRA Awaran SFD Cyberstate">
+
+  <title>HRA Portal</title>
+
+  <!-- vendor css -->
+  <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+  <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+  <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+  <link href="theme/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+  <link href="theme/lib/select2/css/select2.min.css" rel="stylesheet">
+
+  <!-- Bracket CSS -->
+  <link rel="stylesheet" href="theme/css/bracket.css">
+</head>
+
+<body>
+
+  <% include ../partials/header %>
+
+  <!-- ########## START: MAIN PANEL ########## -->
+  <div class="br-mainpanel">
+    <div class="br-pagetitle">
+      <i class="icon ion-ios-pulse"></i>
+      <div>
+        <% if (lang == 'en') { %>
+        <h4>Construction of 8000 Houses | Cheques Distributed / Installment Disbursed   to Beneficiaries</h4>
+        <p class="mg-b-0" id="labelRegion">As of <%= LastDisbursementOn %></p>
+        <% } else { %>
+        <h3>الشيكات الموزعة على المستفيدين
+          | بناء 8000 منزل</h3>
+        <p class="mg-b-0" id="labelRegion">اعتبارًا من 25 أبريل 2019</p>
+        <% } %>
+      </div>
+    </div><!-- d-flex -->
+
+    <div class="br-pagebody">
+      <div class="row row-sm">
+        <div class="col-lg-3">
+          <a href="/hc-financials/first_installment">
+            <div class="card shadow-base card-body pd-10 bd-0">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h6 class="card-title tx-uppercase tx-12">1st INSTALLMENT</h6>
+                  <p class="tx-20"><%= TotalCounts.TotalCountInstallment1 %>  / 7947</p>
+                  <div class="progress mg-b-10">
+                    <div class="progress-bar bg-orange progress-bar-xs wd-75p" role="progressbar" aria-valuenow="1"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div><!-- progress -->
+                </div>
+                <div class="col-sm-6">
+                  <div id="Installment1Chart" style="width: 100%;height:100px;"></div>
+                </div>
+              </div><!-- row -->
+            </div><!-- card -->
+          </a>
+        </div>
+        <div class="col-lg-3">
+          <a href="/hc-financials/second_installment">
+            <div class="card shadow-base card-body pd-10 bd-0">
+
+            <div class="row">
+              <div class="col-sm-6">
+                <h6 class="card-title tx-uppercase tx-12">2nd INSTALLMENT</h6>
+                <p class="tx-20"><%= TotalCounts.TotalCountInstallment2 %> / 7947</p>
+                <div class="progress mg-b-10">
+                  <div class="progress-bar progress-bar-xs wd-55p" role="progressbar" aria-valuenow="1" aria-valuemin="0"
+                    aria-valuemax="100" style="background:steelblue"></div>
+                </div><!-- progress -->
+              </div>
+              <div class="col-sm-6">
+                <div id="Installment2Chart" style="width: 100%;height:100px;"></div>
+              </div>
+            </div><!-- row -->
+          </div><!-- card -->
+          </a>
+        </div>
+        <div class="col-lg-3">
+          <div class="card shadow-base card-body pd-10 bd-0">
+
+            <div class="row">
+              <div class="col-sm-6">
+                <h6 class="card-title tx-uppercase tx-12">3RD INSTALLMENT</h6>
+                <p class="tx-20"><%= TotalCounts.TotalCountInstallment3 %> / 7947</p>
+                <div class="progress mg-b-10">
+                  <div class="progress-bar progress-bar-xs wd-25p" role="progressbar" aria-valuenow="1" aria-valuemin="0"
+                    aria-valuemax="100" style="background: darkkhaki"></div>
+                </div><!-- progress -->
+              </div>
+              <div class="col-sm-6">
+                <div id="Installment3Chart" style="width: 100%;height:100px;"></div>
+              </div>
+            </div><!-- row -->
+          </div><!-- card -->
+        </div>
+        <div class="col-lg-3">
+          <div class="card shadow-base card-body pd-10 bd-0">
+
+            <div class="row">
+              <div class="col-sm-6">
+                <h6 class="card-title tx-uppercase tx-12">4th INSTALLMENT</h6>
+                <p class="tx-20"><%= TotalCounts.TotalCountInstallment4 %> / 7947</p>
+                <div class="progress mg-b-10">
+                  <div class="progress-bar progress-bar-xs wd-5p" role="progressbar" aria-valuenow="1" aria-valuemin="0"
+                    aria-valuemax="100" style="background:darkseagreen"></div>
+                </div><!-- progress -->
+              </div>
+              <div class="col-sm-6">
+                <div id="Installment4Chart" style="width: 100%;height:100px;"></div>
+              </div>
+            </div><!-- row -->
+          </div><!-- card -->
+        </div>
+        <!--
+        <div class="col-sm-6 col-xl-3">
+          <div class=" rounded overflow-hidden" style="background: #fff">
+            <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+              <i class="ion ion-android-people tx-60 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <% if (lang == 'en') { %>
+                <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-grey-8 mg-b-10">1st INSTALLMENT</p>
+                <p class="tx-24 tx-grey tx-lato tx-bold mg-b-0 lh-1">
+                  <%= TotalCounts.TotalCountInstallment1 %>
+                </p>
+                <span class="tx-11 tx-roboto tx-white-8">beneficiaries </span>
+                <% } else { %>
+                <p class="tx-20 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-grey-8 mg-b-10">AWARAN</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">
+                  <%= TotalCounts.TotalCountInstallment1 %>
+                </p>
+                <span class="tx-14 tx-roboto tx-white-8">المستفيدين </span>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3 mg-t-20 mg-sm-t-0">
+          <div class=" rounded overflow-hidden" style="background: #3E6990">
+            <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+              <i class="ion ion-android-people tx-60 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <% if (lang == 'en') { %>
+                <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">2nd INSTALLMENT</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">
+                  <%= TotalCounts.TotalCountInstallment2 %>
+                </p>
+                <span class="tx-11 tx-roboto tx-white-8">beneficiaries </span>
+                <% } else { %>
+                <p class="tx-20 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">GISHKORE</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">
+                  <%= TotalCounts.TotalCountInstallment2 %>
+                </p>
+                <span class="tx-14 tx-roboto tx-white-8">المستفيدين </span>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3 mg-t-20 mg-sm-t-0">
+          <div class=" rounded overflow-hidden" style="background: #e6d733">
+            <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+              <i class="ion ion-android-people tx-60 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <% if (lang == 'en') { %>
+                <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">3rd INSTALLMENT</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">
+                  <%= TotalCounts.TotalCountInstallment3 %>
+                </p>
+                <span class="tx-11 tx-roboto tx-white-8">beneficiaries </span>
+                <% } else { %>
+                <p class="tx-20 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">MASHKAI</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">
+                  <%= TotalCounts.TotalCountInstallment3 %>
+                </p>
+                <span class="tx-14 tx-roboto tx-white-8">المستفيدين </span>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-3 mg-t-20 mg-sm-t-0">
+          <div class=" rounded overflow-hidden" style="background: #AABD8C">
+            <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+              <i class="ion ion-android-people tx-60 lh-0 tx-white op-7"></i>
+              <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                <% if (lang == 'en') { %>
+                <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">4th INSTALLMENT</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">
+                  <%= TotalCounts.TotalCountInstallment4 %>
+                </p>
+                <span class="tx-11 tx-roboto tx-white-8">beneficiaries </span>
+                <% } else { %>
+                <p class="tx-20 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">HOSHAB</p>
+                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1">
+                  <%= TotalCounts.TotalCountInstallment4 %>
+                </p>
+                <span class="tx-14 tx-roboto tx-white-8">المستفيدين </span>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      -->
+
+      </div><!-- row -->
+
+      <div class="row row-sm mg-t-20">
+        <div class="col-lg-12">
+          <div class="card shadow-base bd-0 pd-10 mg-t-5">
+            <div id="PaymentStatusChart" style="width: 100%;height:425px;"></div>
+          </div><!-- card -->
+        </div><!-- col-8 -->
+
+      </div><!-- row -->
+      
+
+
+    </div><!-- br-pagebody -->
+    <% include ../partials/footer %>
+  </div><!-- br-mainpanel -->
+  <!-- ########## END: MAIN PANEL ########## -->
+
+  <script src="theme/lib/jquery/jquery.js"></script>
+  <script src="theme/js/popper.js"></script>
+  <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+  <script src="theme/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+  <script src="theme/lib/moment/moment.js"></script>
+  <script src="theme/lib/jquery-ui/jquery-ui.js"></script>
+  <script src="theme/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+  <script src="theme/lib/peity/jquery.peity.js"></script>
+  <script src="theme/lib/d3/d3.js"></script>
+  <script src="theme/lib/rickshaw/rickshaw.min.js"></script>
+  <script src="theme/lib/Flot/jquery.flot.js"></script>
+  <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
+  <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
+  <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+  <script src="theme/lib/echarts/echarts.min.js"></script>
+  <script src="theme/lib/select2/js/select2.full.min.js"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyDw_FHu8ftIuC-35k9ViKlnp63L2vnGiLU"></script>
+
+  <script src="theme/lib/gmaps/gmaps.js"></script>
+
+  <script type="text/javascript" src="tehsil-jhal-jao-sub.js"></script>
+  <script type="text/javascript" src="tehsil-mashkai.js"></script>
+  <script type="text/javascript" src="tehsil-jhal-jhao.js"></script>
+  <script type="text/javascript" src="teshil-gishkore.js"></script>
+  <script type="text/javascript" src="tehsil-awaran.js"></script>
+  <script type="text/javascript" src="tehsil-hoshab.js"></script>
+  <script src="theme/js/bracket.js"></script>
+  <script src="theme/js/map.shiftworker.js"></script>
+  <script src="theme/js/ResizeSensor.js"></script>
+  <script src="theme/js/dashboard.js"></script>
+  <script src="theme/js/chart.echarts.js"></script>
+  <script>
+
+    $(function () {
+      'use strict'
+      // FOR DEMO ONLY
+      // menu collapsed by default during first page load or refresh with screen
+      // having a size between 992px and 1299px. This is intended on this page only
+      // for better viewing of widgets demo.
+      $(window).resize(function () {
+        minimizeMenu();
+      });
+      minimizeMenu();
+      function minimizeMenu() {
+        if (window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
+          // show only the icons and hide left menu label by default
+          $('.menu-item-label,.menu-item-arrow').addClass('op-lg-0-force d-lg-none');
+          $('body').addClass('collapsed-menu');
+          $('.show-sub + .br-menu-sub').slideUp();
+        } else if (window.matchMedia('(min-width: 1300px)').matches && !$('body').hasClass('collapsed-menu')) {
+          $('.menu-item-label,.menu-item-arrow').removeClass('op-lg-0-force d-lg-none');
+          $('body').removeClass('collapsed-menu');
+          $('.show-sub + .br-menu-sub').slideDown();
+        }
+      }
+    });
+  </script>
+  <script>
+    (function (document, window, $) {
+      document.getElementById("li-financials").classList.add('active');
+      document.getElementById("hc-financials").classList.add('active');
+      function htmlDecode(input) {
+        var e = document.createElement('div');
+        e.innerHTML = input;
+        return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+      }
+      var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
+      let TotalCountInstallment1ByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment1ByUC) %>"));
+      console.log(TotalCountInstallment1ByUC);
+      let TotalCountInstallment2ByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment2ByUC) %>"));
+      let TotalCountInstallment3ByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment3ByUC) %>"));
+      let TotalCountInstallment4ByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment4ByUC) %>"));
+
+      var PaymentStatusChartTitle = 'CHEQUE DISTRIBUTION FOR ALL INSTALLMENTS ';
+      var PaymentStatusChartSubText = 'UC Wise';
+      var x_inverse = false;
+      var y_position = 'left';
+      var x = 'left';
+      var legendX = 'right';
+      var data = ['1st Installment', '2nd Installment', '3rd Installment', '4th Installment'];
+      if (lang == 'ar') {
+        PaymentStatusChartTitle = 'التحقق من التوزيع لجميع التركيبات';
+        PaymentStatusChartSubText = 'مجلس النقابات';
+        x = 'right';
+        legendX = 'left';
+        data = ['دفعة أولى', 'القسط الثاني', 'الدفعة الثالثة', 'الدفعة الرابعة'];
+        x_inverse = true;
+        y_position = 'right';
+      }
+
+      var PaymentStatusChart = echarts.init(document.getElementById('PaymentStatusChart'));
+
+      option = {
+        title: {
+          text: PaymentStatusChartTitle,
+          subtext: PaymentStatusChartSubText,
+          x: x
+        },
+        color: ['#d47644', '#3E6990', '#e6d733', '#AABD8C', '#9B1D20', '#E45A19', '#80AA2B'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        legend: {
+          data: data,
+          x: legendX
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['Awaran', 'Gishkore', 'Teertaje', 'Gajjar', 'Nok Jo', 'Parwar', 'Dandar'],
+            inverse: x_inverse
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            position: y_position
+          }
+        ],
+        series: [
+          {
+            name: data[0],
+            type: 'bar',
+            data: [
+              TotalCountInstallment1ByUC.TotalCountInstallment1Awaran,
+              TotalCountInstallment1ByUC.TotalCountInstallment1Gishkore,
+              TotalCountInstallment1ByUC.TotalCountInstallment1Teertaje,
+              TotalCountInstallment1ByUC.TotalCountInstallment1Gajjar,
+              TotalCountInstallment1ByUC.TotalCountInstallment1Nokjo,
+              TotalCountInstallment1ByUC.TotalCountInstallment1Parwar,
+              TotalCountInstallment1ByUC.TotalCountInstallment1Dandar,
+            ]
+          },
+          {
+            name: data[1],
+            type: 'bar',
+            stack: 'Z',
+            data: [TotalCountInstallment2ByUC.TotalCountInstallment2Awaran,
+            TotalCountInstallment2ByUC.TotalCountInstallment2Gishkore,
+            TotalCountInstallment2ByUC.TotalCountInstallment2Teertaje,
+            TotalCountInstallment2ByUC.TotalCountInstallment2Gajjar,
+            TotalCountInstallment2ByUC.TotalCountInstallment2Nokjo,
+            TotalCountInstallment2ByUC.TotalCountInstallment2Parwar,
+            TotalCountInstallment2ByUC.TotalCountInstallment2Dandar
+            ]
+          },
+          {
+            name: data[2],
+            type: 'bar',
+            stack: 'Z',
+            data: [TotalCountInstallment3ByUC.TotalCountInstallment3Awaran,
+            TotalCountInstallment3ByUC.TotalCountInstallment3Gishkore,
+            TotalCountInstallment3ByUC.TotalCountInstallment3Teertaje,
+            TotalCountInstallment3ByUC.TotalCountInstallment3Gajjar,
+            TotalCountInstallment3ByUC.TotalCountInstallment3Nokjo,
+            TotalCountInstallment3ByUC.TotalCountInstallment3Parwar,
+            TotalCountInstallment3ByUC.TotalCountInstallment3Dandar
+            ]
+          },
+          {
+            name: data[3],
+            type: 'bar',
+            stack: 'Z',
+            data: [TotalCountInstallment4ByUC.TotalCountInstallment4Awaran,
+            TotalCountInstallment4ByUC.TotalCountInstallment4Gishkore,
+            TotalCountInstallment4ByUC.TotalCountInstallment4Teertaje,
+            TotalCountInstallment4ByUC.TotalCountInstallment4Gajjar,
+            TotalCountInstallment4ByUC.TotalCountInstallment4Nokjo,
+            TotalCountInstallment4ByUC.TotalCountInstallment4Parwar,
+            TotalCountInstallment4ByUC.TotalCountInstallment4Dandar
+            ]
+          },
+
+        ]
+      };
+
+      PaymentStatusChart.setOption(option);
+
+      var Installment1Chart = echarts.init(document.getElementById('Installment1Chart'));
+      option = {
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+
+        series: [
+          {
+            name: '',
+            type: 'pie',
+            radius: ['60%', '100%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '14',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data:
+              [
+                { value: TotalCountInstallment1ByUC.TotalCountInstallment1Awaran, name: 'Awaran' },
+                { value: TotalCountInstallment1ByUC.TotalCountInstallment1Teertaje, name: 'Teertaje' },
+                { value: TotalCountInstallment1ByUC.TotalCountInstallment1Gishkore, name: 'Gishkore' },
+                { value: TotalCountInstallment1ByUC.TotalCountInstallment1Dandar, name: 'Dandar' },
+                { value: TotalCountInstallment1ByUC.TotalCountInstallment1Gajjar, name: 'Gajjar' },
+                { value: TotalCountInstallment1ByUC.TotalCountInstallment1Nokjo, name: 'Nok Jo' },
+                { value: TotalCountInstallment1ByUC.TotalCountInstallment1Parwar, name: 'Parwar' }
+              ]
+
+          }
+        ]
+      };
+      Installment1Chart.setOption(option);
+
+      var Installment2Chart = echarts.init(document.getElementById('Installment2Chart'));
+      option = {
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+
+        series: [
+          {
+            name: '',
+            type: 'pie',
+            radius: ['60%', '100%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '14',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: [
+              { value: TotalCountInstallment2ByUC.TotalCountInstallment2Awaran, name: 'Awaran' },
+              { value: TotalCountInstallment2ByUC.TotalCountInstallment2Teertaje, name: 'Teertaje' },
+              { value: TotalCountInstallment2ByUC.TotalCountInstallment2Gishkore, name: 'Gishkore' },
+              { value: TotalCountInstallment2ByUC.TotalCountInstallment2Dandar, name: 'Dandar' },
+              { value: TotalCountInstallment2ByUC.TotalCountInstallment2Gajjar, name: 'Gajjar' },
+              { value: TotalCountInstallment2ByUC.TotalCountInstallment2Nokjo, name: 'Nok Jo' },
+              { value: TotalCountInstallment2ByUC.TotalCountInstallment2Parwar, name: 'Parwar' }
+            ]
+          }
+        ]
+      };
+      Installment2Chart.setOption(option);
+      var Installment3Chart = echarts.init(document.getElementById('Installment3Chart'));
+      option = {
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+
+        series: [
+          {
+            name: '',
+            type: 'pie',
+            radius: ['60%', '100%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '14',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            
+            data: [
+              { value: TotalCountInstallment3ByUC.TotalCountInstallment3Awaran, name: 'Awaran' },
+              { value: TotalCountInstallment3ByUC.TotalCountInstallment3Teertaje, name: 'Teertaje' },
+              { value: TotalCountInstallment3ByUC.TotalCountInstallment3Gishkore, name: 'Gishkore' },
+              { value: TotalCountInstallment3ByUC.TotalCountInstallment3Dandar, name: 'Dandar' },
+              { value: TotalCountInstallment3ByUC.TotalCountInstallment3Gajjar, name: 'Gajjar' },
+              { value: TotalCountInstallment3ByUC.TotalCountInstallment3Nokjo, name: 'Nok Jo' },
+              { value: TotalCountInstallment3ByUC.TotalCountInstallment3Parwar, name: 'Parwar' }
+            ]
+          }
+        ]
+      };
+      Installment3Chart.setOption(option);
+      var Installment4Chart = echarts.init(document.getElementById('Installment4Chart'));
+      option = {
+        tooltip: {
+          trigger: 'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+
+        series: [
+          {
+            name: '',
+            type: 'pie',
+            radius: ['60%', '100%'],
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '14',
+                  fontWeight: 'bold'
+                }
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: [
+              { value: 0, name: 'Awaran' },
+              { value: 0, name: 'Teertaje' },
+              { value: 0, name: 'Gishkore' },
+              { value: 0, name: 'Dandar' },
+              { value: 0, name: 'Gajjar' },
+              { value: 0, name: 'Nok Jo' },
+              { value: 0, name: 'Parwar' }
+            ]
+          }
+        ]
+      };
+      Installment4Chart.setOption(option);
+
+    })(document, window, jQuery);
+  </script>
+</body>
+
+</html>
