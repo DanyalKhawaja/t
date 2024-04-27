@@ -7,8 +7,8 @@ function Connection() {
     this.pool = mysql.createPool({
       connectionLimit: 10,
       host: 'localhost',
-      user: 'cybers56_pip',
-      password: 'Q1QHJg~(8kqt',
+      user: 'rahat',
+      password: 'Junglebook1_',
       database: 'cybers56_pip02'
     });
   };

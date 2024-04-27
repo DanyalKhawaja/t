@@ -386,11 +386,11 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
 				WHERE MonitoringLevel = 2 AND LevelStatus = 2 ', null, callback)
 			},
-			Last2Recomended: function (callback){
-				// db.query('select SubmittedOn, count(*) as count from Recomended \
-				// group by SubmittedOn order by SubmittedOn desc limit 2', null, callback)
-				db.query('select count(*) as count from Recomended', null, callback)
-			},
+			// Last2Recomended: function (callback){
+			// 	// db.query('select SubmittedOn, count(*) as count from Recomended \
+			// 	// group by SubmittedOn order by SubmittedOn desc limit 2', null, callback)
+			// 	db.query('select count(*) as count from Recomended', null, callback)
+			// },
 			NotRecomendedPaymentL2: function (callback){
 				db.query('select count(*) as count from DistributedCheques \
 				where DistributedCheques.InstallmentType = 2 and  DistributedCheques.CNIC not in (select Monitoring.CNIC from Monitoring where Monitoring.MonitoringLevel=1 and Monitoring.LevelStatus=2) ;', null, callback)
