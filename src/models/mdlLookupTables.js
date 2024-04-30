@@ -5,7 +5,7 @@ var fs = require('fs');
 var lookups = {
 
   getAll: function(req, res) {
-    var array = fs.readFileSync('./config/lookupTables.txt').toString().split("\n");
+    var array = fs.readFileSync('../config/lookupTables.txt').toString().split("\n");
     array.splice(-1,1);
   	var json = {};
 
