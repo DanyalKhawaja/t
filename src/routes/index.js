@@ -584,7 +584,7 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				TotalLevel2Achieved: results.TotalLevel2Achieved[0].count,
 				TotalLevel3Achieved: results.TotalLevel3Achieved[0].count,
 				TotalLevel4Achieved: results.TotalLevel4Achieved[0].count,
-				Last2Recomended: results.Last2Recomended[0].count,
+				// Last2Recomended: results.Last2Recomended[0].count,
 				NotRecomendedPaymentL2: results.NotRecomendedPaymentL2[0].count,
 				NotRecomendedPaymentL3: results.NotRecomendedPaymentL3[0].count,
 				NotRecomendedPaymentL4: results.NotRecomendedPaymentL4[0].count,
