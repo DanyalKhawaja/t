@@ -1,15 +1,16 @@
 var mysql = require('mysql');
-
+require('dotenv').config();
+const { env } = require("process");
 function Connection() {
   this.pool = null;
 
   this.init = function() {
     this.pool = mysql.createPool({
       connectionLimit: 10,
-      host: 'localhost',
-      user: 'rahat',
-      password: 'Junglebook1_',
-      database: 'cybers56_pip02'
+      host: env.DB_HOTS,
+      user: env.DB_USER,
+      password: env.DB_PWD,
+      database: env.DB_NAME
     });
   };
 
