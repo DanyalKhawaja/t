@@ -723,7 +723,7 @@ router.get('/getBeneficiaryByUC', isAuthenticated, function (req, res) {
 		WHERE \
 			BenStatusID = 4 AND Beneficiary.UCID = ? \
 		GROUP BY \
-			Beneficiary.CNIC', [req.query.UCID], callback)
+			Beneficiary.CNIC, m3.MonitoringLevel, m3.LevelStatus', [req.query.UCID], callback)
 		},
 		ModelHouses: function (callback) {
 			db.query('SELECT ModelHouses.*, LUCs.UCName \
