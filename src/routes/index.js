@@ -30,20 +30,41 @@ var isAuthenticated = function (req, res, next) {
 	}
 	console.log(req.isAuthenticated());
 	// if the user is not authenticated then redirect him to the login page
-	res.redirect('/login');
+	res.redirect('/landing');
 }
+
+/* GET login page. */
+router.get('/landing', function (req, res) {
+	// Display the Login page with any flash message, if any
+	//console.log(req.flash);
+	res.render('pages/landing', { message: req.flash('message'), lang: req.session.lang });
+});
 
 
 /* GET login page. */
-router.get('/login', function (req, res) {
+router.get('/login_c1', function (req, res) {
 	// Display the Login page with any flash message, if any
 	//console.log(req.flash);
-	res.render('pages/login', { message: req.flash('message'), lang: req.session.lang });
+	res.render('pages/login_c1', { message: req.flash('message'), lang: req.session.lang });
+});
+
+/* GET login page. */
+router.get('/login_c2', function (req, res) {
+	// Display the Login page with any flash message, if any
+	//console.log(req.flash);
+	res.render('pages/login_c2', { message: req.flash('message'), lang: req.session.lang });
+});
+
+/* GET login page. */
+router.get('/login_c3', function (req, res) {
+	// Display the Login page with any flash message, if any
+	//console.log(req.flash);
+	res.render('pages/login_c3', { message: req.flash('message'), lang: req.session.lang });
 });
 
 router.get('/change_lang', function (req, res) {
 	req.session.lang = req.query.lang;
-	res.redirect("/");
+	res.redirect(`/${req.query.page}`);
 });
 
 /* GET MAIN page. */

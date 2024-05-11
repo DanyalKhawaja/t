@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<% if (lang == 'en') { %>
+  <html lang="en">
+<% } else { %>
+  <html lang="en" dir="rtl" class="rtl">
+<% } %>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Monitoring of Housing Reconstruction in Awaran Project">
+    <meta name="author" content="Cyberstate Technologies - SFD's Consultant">
+
+    <title>SFD Component-I Monitoring Portal</title>
+
+    <!-- vendor css -->
+    <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="theme/css/bracket.css">
+  </head>
+<style>
+  .project-des
+{
+  font-size: 1.75rem;
+}
+.house {
+  background-repeat: no-repeat;
+    background-size: cover;
+}
+.img-fluid1 {
+    max-width: 50%;
+    margin-inline: 30px;
+}
+.img-fluid2 {
+    max-width: 23%;
+}
+
+.img-fluid0 {
+  max-width: 5%;
+    margin: 24px;
+    /* overflow: hidden; */
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+
+.loginbox {
+    background-color: rgb(253 254 255);
+    padding: 10px;
+    border-radius: 4px;
+}
+.loginbox:hover {
+    background-color: rgb(239 239 239);
+    box-shadow: rgb(32 41 57) 5px 6px 8px 1px;
+}
+
+
+
+
+</style>
+  <body>
+    
+    <div class="row no-gutters flex-row-reverse ht-100v">
+     
+      <div class="col-md-6 bg-gray-200 d-flex align-items-center justify-content-center house" style="background-image: url('house.jpeg')">
+ 
+        <div class="login-wrapper wd-250 wd-xl-350 mg-y-30 loginbox">
+       
+          
+     
+          <% if (lang == 'en') { %>
+            <h4 class="tx-inverse tx-center">Sign In</h4>
+            <p class="tx-center mg-b-60">Welcome back! Please sign in.</p>
+            <form method="post" action="/login">
+              <div class="form-group">
+                <input type="text" id="UserName" name="UserName" class="form-control" placeholder="Enter your username">
+              </div><!-- form-group -->
+              <div class="form-group">
+                <input type="password" id="UserPassword" name="UserPassword" class="form-control" placeholder="Enter your password">
+                <a href="" class="tx-info tx-12 d-block mg-t-10">Forgot password?</a>
+              </div><!-- form-group -->
+              <button type="submit" class="btn btn-info btn-block">Sign In</button>
+              
+            </form>
+          <% } else { %>
+            <h4 class="tx-inverse tx-center">تسجيل الدخول</h4>
+            <p class="tx-center mg-b-60">مرحبا بعودتك!  الرجاء تسجيل الدخول</p>
+            <form method="post" action="/login">
+              <div class="form-group">
+                <input type="text" id="UserName" name="UserName" class="form-control" placeholder="اسم المستخدم">
+              </div><!-- form-group -->
+              <div class="form-group">
+                <input type="password" id="UserPassword" name="UserPassword" class="form-control" placeholder="كلمه السر">
+                <a href="" class="tx-info tx-12 d-block mg-t-10">هل نسيت كلمة المرور</a>
+              </div><!-- form-group -->
+              
+              <button type="submit" class="btn btn-info btn-block">تسجيل الدخول</button>
+              
+            </form>
+          <% } %>
+
+          
+        
+        </div><!-- login-wrapper -->
+       
+      </div><!-- col -->
+      <div class="col-md-6 bg-br-primary d-flex align-items-center justify-content-center">
+        <a href="/landing" class="tx-info tx-12 d-block mg-t-10"><img src="hub.png" class="img-fluid0" alt="" style="width:auto;height:inherit;"></a>
+
+        <div class="wd-250 wd-xl-450 mg-y-30">
+          <% if (lang == 'en') { %>
+            <h4>MONITORING PORTAL<br><br></h4>  
+            <div class="signin-logo tx-28 tx-bold tx-white">
+              <span class="tx-info">COMPONENT I</span>  
+            </div>
+            <div class="tx-white mg-b-60 project-des">Construction of 8000 Housing Units in Awaran, Balochistan</div>
+          <% } else { %>
+            <h5> بوابة المراقبة<br><br></h5>
+              <div class="signin-logo tx-28 tx-bold tx-white">
+   
+                <span class="tx-info">المكون I</span>
+
+              </div>
+              <div class="tx-white mg-b-60 project-des"> بناء 8000 وحدة سكنية في Awaran ، بلوشستان </div>
+             
+             
+              
+          <% } %>
+          <img src="cst.png" class="img-fluid2" alt="" style="width:inherit;height:inherit;">
+          <img src="sfd-removebg.png" class="img-fluid1" alt="" style="width:auto;height:inherit;">
+          
+        </div><!-- wd-500 -->
+       
+      </div>
+      
+    </div><!-- row -->
+
+    <script src="theme/lib/jquery/jquery.js"></script>
+    <script src="theme/js/popper.js"></script>
+    <script src="theme/lib/bootstrap/js/bootstrap.js"></script>
+
+  </body>
+</html>
