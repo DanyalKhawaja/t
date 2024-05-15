@@ -35,7 +35,6 @@
     box-shadow: rgb(32 41 57) 5px 6px 8px 1px;
     color:  rgb(32 41 57) 5px 6px 8px 1px;
     line-height: 1.70;
-    background-image: linear-gradient(to right, #775d06, #f6f6f6) !important;
 }
  .tx-white-8 {
   color: #202939;
@@ -134,7 +133,7 @@
           </div>
         
           
-          <div class="rounded overflow-hidden" style="background:#c29888;">
+          <div class="rounded overflow-hidden l1ce" style="background:#c29888;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               L-1 CHEQUES ENCASHED
@@ -147,14 +146,15 @@
               <i class="fa  fa-money tx-40 lh-0.5 tx-white op-7"></i>
               <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
                 <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel1Encashed">
-                  <%= TotalLevel1Encashed %>
+                  <!-- <%= TotalLevel1Encashed %> -->
+                  7,800*
                 </p>
               </div>
             </div>
             </a>
           </div>
           <br />
-          <div class="rounded overflow-hidden" style="background:#c29888;">
+          <div class="rounded overflow-hidden l2d" style="background:#c29888;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               LEVEL 2 DISBURSEMENT
@@ -167,14 +167,15 @@
                 <i class="fa  fa-university tx-40 lh-0.5 tx-white op-7"></i>
                 <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
                   <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel2Encashed">
-                    <%= TotalLevel2Encashed %>
+                    <!-- <%= TotalLevel2Encashed %> -->
+                    7,507*
                   </p>
                 </div>
               </div>
             </a>
           </div>
           <br />
-          <div class="rounded overflow-hidden" style="background:#c29888;">
+          <div class="rounded overflow-hidden l3d" style="background:#c29888;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               LEVEL 3 DISBURSEMENT
@@ -187,14 +188,15 @@
                 <i class="fa  fa-university tx-40 lh-0.5 tx-white op-7"></i>
                 <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
                   <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel3Encashed">
-                    <%= TotalLevel3Encashed %>
+                    <!-- <%= TotalLevel3Encashed %> -->
+                    6,828*
                   </p>
                 </div>
               </div>
             </a>
           </div>
           <br />
-          <div class="rounded overflow-hidden" style="background:#c29888;">
+          <div class="rounded overflow-hidden l4d" style="background:#c29888;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               LEVEL 4 DISBURSEMENT
@@ -207,7 +209,8 @@
                 <i class="fa  fa-university tx-40 lh-0.5 tx-white op-7"></i>
                 <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
                   <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel4Encashed">
-                    <%= TotalLevel4Encashed %>
+                    <!-- <%= TotalLevel4Encashed %> -->
+                    4,797*
                   </p>
                 </div>
               </div>
@@ -233,9 +236,27 @@
               </div>
             
           </div> -->
+
+  <div class="rounded overflow-hidden" style="background:#8490a4;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+
+            </p>
+            
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="fa  fa-arrow-right tx-40 lh-0.5 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel4Encashed">
+                    * As per bank statements Jan 1, 2018 till May 7, 2024
+                  </p>
+                </div>
+              </div>
+            
+          </div>
+
+
         </div><!-- col-3 -->
         <div class="col-sm-6 col-xl-2 mg-t-20 mg-sm-t-0 card-list">
-          <div class="bg-primary rounded overflow-hidden">
+          <div class="bg-primary rounded overflow-hidden uvc">
             <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center counter">
               <% if (lang == 'en') { %>
               UN-VERIFIED
@@ -254,7 +275,7 @@
           </div>
           <br />
           
-          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+          <div class="rounded overflow-hidden apc" style="background:#1caf9a;">
             <p class="tx-16 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               APPROVED
@@ -271,7 +292,7 @@
 
           </div>
           <br />
-          <div class="bg-danger rounded overflow-hidden" style="display: none;">
+          <div class="bg-danger rounded overflow-hidden rjc" style="display: none;">
             <p class="tx-16 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               REJECTED
@@ -290,7 +311,7 @@
           
           
        
-          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+          <div class="rounded overflow-hidden l1a" style="background:#1caf9a;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               LEVEL 1 ACHEIVED
@@ -300,10 +321,10 @@
             </p>
             <a href="/level1">
               <div class="pd-x-10 d-flex align-items-center">
-                <i class="ion ion-thumbsup tx-40 lh-0 tx-white op-7"></i>
+                <i class="ion ion-flag tx-40 lh-0 tx-white op-7"></i>
                 <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
                   <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel1Achieved">
-                    <%= TotalLevel1Achieved %>
+                    <%= TotalLevel1Achieved %>†
                   </p>
                 </div>
               </div>
@@ -311,7 +332,7 @@
           </div>
           
           <br />
-          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+          <div class="rounded overflow-hidden l2a" style="background:#1caf9a;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               LEVEL 2 ACHEIVED
@@ -321,17 +342,17 @@
             </p>
             <a href="/level2">
               <div class="pd-x-10 d-flex align-items-center">
-                <i class="ion ion-thumbsup tx-40 lh-0 tx-white op-7"></i>
+                <i class="ion ion-flag tx-40 lh-0 tx-white op-7"></i>
                 <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
                   <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel2Achieved">
-                    <%= TotalLevel2Achieved %>
+                    <%= TotalLevel2Achieved %>†
                   </p>
                 </div>
               </div>
             </a>
           </div>
           <br />
-          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+          <div class="rounded overflow-hidden l3a" style="background:#1caf9a;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               LEVEL 3 ACHEIVED
@@ -341,17 +362,17 @@
             </p>
             <a href="/level3">
               <div class="pd-x-10 d-flex align-items-center">
-                <i class="ion ion-thumbsup tx-40 lh-0 tx-white op-7"></i>
+                <i class="ion ion-flag tx-40 lh-0 tx-white op-7"></i>
                 <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
                   <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel3Achieved">
-                    <%= TotalLevel3Achieved %>
+                    <%= TotalLevel3Achieved %>†
                   </p>
                 </div>
               </div>
             </a>
           </div>
           <br />
-          <div class="rounded overflow-hidden" style="background:#1caf9a;">
+          <div class="rounded overflow-hidden l4a" style="background:#1caf9a;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
               LEVEL 4 ACHEIVED
@@ -361,15 +382,34 @@
             </p>
             
               <div class="pd-x-10 d-flex align-items-center">
-                <i class="ion ion-thumbsup tx-40 lh-0 tx-white op-7"></i>
+                <i class="ion ion-flag tx-40 lh-0 tx-white op-7"></i>
                 <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
                   <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel4Achieved">
-                    <%= TotalLevel4Achieved %>
+                    <%= TotalLevel4Achieved %>†
                   </p>
                 </div>
               </div>
             </div>
             <br />
+           
+
+             <div class="rounded overflow-hidden" style="background:#f85353;">
+            <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
+
+            </p>
+
+              <div class="pd-x-10 d-flex align-items-center">
+                <i class="ion ion-alert-circled tx-40 lh-0 tx-white op-7"></i>
+                <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
+                  <p class="tx-20 tx-white tx-lato tx-bold mg-b-0 lh-1" id="labelLevel4Achieved">
+                    † Subject to field verification
+                  </p>
+                </div>
+              </div>
+          
+          </div>
+
+
           <!-- <div class="rounded overflow-hidden" style="background:#f85353;">
             <p class="tx-12 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 counter">
               <% if (lang == 'en') { %>
