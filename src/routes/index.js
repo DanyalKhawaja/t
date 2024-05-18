@@ -19,8 +19,8 @@ var mdlVillages = require('../models/mdlVillages');
 let mdlLookupTables = require('../models/mdlLookupTables');
 let mdlMonitoring = require('../models/mdlMonitoring');
 let mdlDistributedCheques = require('../models/mdlDistributedCheques');
-let LastUpdatedOn = "September 1, 2020";
-
+// let LastUpdatedOn = "September 1, 2020";
+let LastUpdatedOn = "May 16, 2024";
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler
 	// Passport adds this method to request object. A middleware is allowed to add properties to
