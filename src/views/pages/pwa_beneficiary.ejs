@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beneficiary Form</title>
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+  <form id="beneficiaryForm">
+    <label for="CNIC">CNIC:</label>
+    <input type="text" id="CNIC" name="CNIC" required><br>
+
+    <label for="BeneficiaryID">Beneficiary ID:</label>
+    <input type="text" id="BeneficiaryID" name="BeneficiaryID"><br>
+
+    <label for="FirstName">First Name:</label>
+    <input type="text" id="FirstName" name="FirstName" required><br>
+
+    <label for="LastName">Last Name:</label>
+    <input type="text" id="LastName" name="LastName" required><br>
+
+    <label for="FatherName">Father's Name:</label>
+    <input type="text" id="FatherName" name="FatherName"><br>
+
+    <label for="PhonePrimary">Primary Phone:</label>
+    <input type="tel" id="PhonePrimary" name="PhonePrimary" required><br>
+
+    <label for="PhoneSecondary">Secondary Phone:</label>
+    <input type="tel" id="PhoneSecondary" name="PhoneSecondary"><br>
+
+    <label for="Gender">Gender:</label>
+    <select id="Gender" name="Gender">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select><br>
+
+    <label for="VHLatitude">Village Latitude:</label>
+    <input type="text" id="VHLatitude" name="VHLatitude" readonly><br>
+
+    <label for="VHLongitude">Village Longitude:</label>
+    <input type="text" id="VHLongitude" name="VHLongitude" readonly><br>
+
+    <label for="ImageCapture">Image:</label>
+    <input type="file" accept="image/*" capture="environment" id="ImageCapture" name="ImageCapture"><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="installPrompt" style="display: none;">
+    <button id="installButton">Install Beneficiary App</button>
+  </div>
+
+  <script>
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function(registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(function(error) {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+    }
+
+    // Install Button
+    window.addEventListener('beforeinstallprompt', function(event) {
+      event.preventDefault();
+      const installPrompt = document.getElementById('installPrompt');
+      installPrompt.style.display = 'block';
+      const installButton = document.getElementById('installButton');
+      installButton.addEventListener('click', function() {
+        installPrompt.style.display = 'none';
+        event.prompt();
+        event.userChoice.then(function(choiceResult) {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+        });
+      });
+    });
+
+    // Get current coordinates
+    function getCurrentCoordinates() {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        document.getElementById('VHLatitude').value = position.coords.latitude;
+        document.getElementById('VHLongitude').value = position.coords.longitude;
+      }, function(error) {
+        console.error('Error getting current coordinates:', error);
+      });
+    }
+
+    // Trigger getCurrentCoordinates function when the page loads
+    window.addEventListener('load', getCurrentCoordinates);
+
+    // Function to handle image capture
+    document.getElementById('ImageCapture').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      // Handle the captured image
+      // You can upload the image to a server or display it on the page
+    });
+  </script>
+</body>
+</html>

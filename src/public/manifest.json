@@ -1,0 +1,16 @@
+{
+    "name": "Beneficiary Form",
+    "short_name": "Beneficiary",
+    "start_url": "/pwa_beneficiary",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#007bff",
+    "icons": [
+      {
+        "src": "icon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ]
+  }
+  

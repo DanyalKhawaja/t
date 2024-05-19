@@ -3,6 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var auth = require('./auth.js');
 var passport = require('passport');
+
 var async = require('async');
 var db = require('../config/connection');
 const glob = require('glob');
@@ -66,7 +67,9 @@ router.get('/change_lang', function (req, res) {
 	req.session.lang = req.query.lang;
 	res.redirect(`/${req.query.page}`);
 });
-
+router.get('/pwa_beneficiary', function (req, res) {
+	res.render('pages/pwa_beneficiary', { message: req.flash('message'), lang: req.session.lang });
+});
 /* GET MAIN page. */
 router.get('/', isAuthenticated, function (req, res) {
 	// Display the Login page with any flash message, if any
