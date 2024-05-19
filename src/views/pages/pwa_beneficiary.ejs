@@ -1,56 +1,125 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beneficiary Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="manifest" href="/manifest.json">
+  <style>
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    #installButton {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    #installButton:hover {
+      background-color: #218838;
+      border-color: #218838;
+    }
+  </style>
 </head>
 <body>
-  <form id="beneficiaryForm">
-    <label for="CNIC">CNIC:</label>
-    <input type="text" id="CNIC" name="CNIC" required><br>
+  <div class="container">
+    <h2>Beneficiary Form</h2>
+    <form id="beneficiaryForm">
+      <div class="form-group">
+        <label for="CNIC">CNIC:</label>
+        <input type="text" class="form-control" id="CNIC" name="CNIC" required>
+      </div>
 
-    <label for="BeneficiaryID">Beneficiary ID:</label>
-    <input type="text" id="BeneficiaryID" name="BeneficiaryID"><br>
+      <div class="form-group">
+        <label for="BeneficiaryID">Beneficiary ID:</label>
+        <input type="text" class="form-control" id="BeneficiaryID" name="BeneficiaryID">
+      </div>
 
-    <label for="FirstName">First Name:</label>
-    <input type="text" id="FirstName" name="FirstName" required><br>
+      <div class="form-group">
+        <label for="FirstName">First Name:</label>
+        <input type="text" class="form-control" id="FirstName" name="FirstName" required>
+      </div>
 
-    <label for="LastName">Last Name:</label>
-    <input type="text" id="LastName" name="LastName" required><br>
+      <div class="form-group">
+        <label for="LastName">Last Name:</label>
+        <input type="text" class="form-control" id="LastName" name="LastName" required>
+      </div>
 
-    <label for="FatherName">Father's Name:</label>
-    <input type="text" id="FatherName" name="FatherName"><br>
+      <div class="form-group">
+        <label for="FatherName">Father's Name:</label>
+        <input type="text" class="form-control" id="FatherName" name="FatherName">
+      </div>
 
-    <label for="PhonePrimary">Primary Phone:</label>
-    <input type="tel" id="PhonePrimary" name="PhonePrimary" required><br>
+      <div class="form-group">
+        <label for="PhonePrimary">Primary Phone:</label>
+        <input type="tel" class="form-control" id="PhonePrimary" name="PhonePrimary" required>
+      </div>
 
-    <label for="PhoneSecondary">Secondary Phone:</label>
-    <input type="tel" id="PhoneSecondary" name="PhoneSecondary"><br>
+      <div class="form-group">
+        <label for="PhoneSecondary">Secondary Phone:</label>
+        <input type="tel" class="form-control" id="PhoneSecondary" name="PhoneSecondary">
+      </div>
 
-    <label for="Gender">Gender:</label>
-    <select id="Gender" name="Gender">
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select><br>
+      <div class="form-group">
+        <label for="Gender">Gender:</label>
+        <select class="form-control" id="Gender" name="Gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
 
-    <label for="VHLatitude">Village Latitude:</label>
-    <input type="text" id="VHLatitude" name="VHLatitude" readonly><br>
+      <div class="form-group">
+        <label for="VHLatitude">Village Latitude:</label>
+        <input type="text" class="form-control" id="VHLatitude" name="VHLatitude" readonly>
+      </div>
 
-    <label for="VHLongitude">Village Longitude:</label>
-    <input type="text" id="VHLongitude" name="VHLongitude" readonly><br>
+      <div class="form-group">
+        <label for="VHLongitude">Village Longitude:</label>
+        <input type="text" class="form-control" id="VHLongitude" name="VHLongitude" readonly>
+      </div>
 
-    <label for="ImageCapture">Image:</label>
-    <input type="file" accept="image/*" capture="environment" id="ImageCapture" name="ImageCapture"><br>
+      <div class="form-group">
+        <label for="ImageCapture">Image:</label>
+        <input type="file" class="form-control-file" accept="image/*" capture="environment" id="ImageCapture" name="ImageCapture">
+      </div>
 
-    <input type="submit" value="Submit">
-  </form>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
-  <div id="installPrompt" style="display: none;">
-    <button id="installButton">Install Beneficiary App</button>
+    <div id="installPrompt" style="display: none;">
+      <button id="installButton" class="btn btn-success">Install Beneficiary App</button>
+    </div>
   </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
 
   <script>
     // Service Worker Registration

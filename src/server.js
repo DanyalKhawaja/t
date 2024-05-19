@@ -1,5 +1,7 @@
 var compression = require('compression');
 var express = require('express');
+const https = require('https');
+const fs = require('fs');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -12,6 +14,11 @@ var session = require('cookie-session');
 // var mysql = require('mysql');
 
 var app = express();
+
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/www.cyberstate.tech/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/www.cyberstate.tech/fullchain.pem')
+};
 
 // pool = mysql.createPool({
 //       connectionLimit: 10,
@@ -114,6 +121,15 @@ app.use(function(req, res, next) {
 // Start the server
 app.set('port', 8080);
 
-var server = app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + server.address().port);
+// var server = app.listen(app.get('port'), function() {
+//   console.log('Express server listening on port ' + server.address().port);
+// });
+
+
+// Create HTTPS server
+const server = https.createServer(options, app);
+
+// Start server
+server.listen(app.get('port'), () => {
+  console.log('Server running on port 8080');
 });
