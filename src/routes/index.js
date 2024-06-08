@@ -256,15 +256,15 @@ router.get('/api/beneficiary', function (req, res) {
 	});
 });
 
-// router.get('/api/beneficiary_temp', function (req, res) {
-// 	mdlBeneficiary.getAll(req, function (err, result) {
-// 		if (err) {
-// 			res.send(err.message);
-// 		}
-// 		let json = "{\"Beneficiary\": " + JSON.stringify(result) + "}";
-// 		res.send(json);
-// 	});
-// });
+router.get('/api/beneficiary_temp', function (req, res) {
+	mdlBeneficiary.getAll(req, function (err, result) {
+		if (err) {
+			res.send(err.message);
+		}
+		let json = "{\"Beneficiary\": " + JSON.stringify(result) + "}";
+		res.send(json);
+	});
+});
 
 // router.get('/api/benid', function (req, res) {
 // 	mdlBeneficiary.getBenID(req, function (err, result) {
@@ -297,17 +297,17 @@ router.get('/api/villages', function (req, res) {
 	});
 });
 router.post('/api/monitoring', mdlMonitoring.wsPost);
-// router.get('/api/monitoring', function (req, res) {
-// 	mdlMonitoring.getAll(req, function (err, result) {
-// 		if (err) {
-// 			res.send(err.message);
-// 		} else {
-// 			console.log(result.length);
-// 			let json = "{\"Monitoring\": " + JSON.stringify(result) + "}";
-// 			res.send(json);
-// 		}
-// 	});
-// });
+router.get('/api/monitoring', function (req, res) {
+	mdlMonitoring.getAll(req, function (err, result) {
+		if (err) {
+			res.send(err.message);
+		} else {
+			console.log(result.length);
+			let json = "{\"Monitoring\": " + JSON.stringify(result) + "}";
+			res.send(json);
+		}
+	});
+});
 router.post('/api/distributed_cheques', mdlDistributedCheques.wsPost);
 router.get('/api/distributed_cheques', function (req, res) {
 	mdlDistributedCheques.getAll(req, function (err, result) {

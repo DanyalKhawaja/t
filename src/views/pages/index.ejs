@@ -521,7 +521,7 @@ i.fa.fa-university.tx-40.lh-0\.5.tx-white.op-7 {
   <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
   <script src="theme/lib/echarts/echarts.min.js"></script>
   <script src="theme/lib/select2/js/select2.full.min.js"></script>
-  <script src="https://maps.google.com/maps/api/js?key=AIzaSyAtFS563VrFYCkOBmG8J2-noujJ9gP18EM"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyAtFS563VrFYCkOBmG8J2-noujJ9gP18EM"></script>
 
   <script src="theme/lib/gmaps/gmaps.js"></script>
 
@@ -530,6 +530,7 @@ i.fa.fa-university.tx-40.lh-0\.5.tx-white.op-7 {
   <script type="text/javascript" src="tehsil-jhal-jhao.js"></script>
   <script type="text/javascript" src="teshil-gishkore.js"></script>
   <script type="text/javascript" src="tehsil-awaran.js"></script>
+  <script type="text/javascript" src="district-awaran.js"></script>
   <script type="text/javascript" src="tehsil-hoshab.js"></script>
   <script src="theme/js/bracket.js"></script>
   <script src="theme/js/map.shiftworker.js"></script>
@@ -1037,6 +1038,8 @@ i.fa.fa-university.tx-40.lh-0\.5.tx-white.op-7 {
       AwaranBorder.setMap(map);
       var KechBorder = createpoly(Kech, 5);
       KechBorder.setMap(map);
+      // var DistrictAwaranBorder = createpoly(DistrictAwaran,9);
+      // DistrictAwaranBorder.setMap(map);
 
 
       addmouseover(MashkaiBorder, 2);
@@ -1059,6 +1062,11 @@ i.fa.fa-university.tx-40.lh-0\.5.tx-white.op-7 {
       google.maps.event.addListener(KechBorder, "click", function () {
         regionClick('6');
       });
+
+      google.maps.event.addListener(DistrictAwaranBorder, "click", function () {
+        regionClick('9');
+      });
+
 
 
       function createpoly(path, colorIndex) {

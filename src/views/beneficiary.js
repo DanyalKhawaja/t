@@ -596,7 +596,7 @@ router.get('/getBeneficiaryPhotoByCNIC', isAuthenticated, function (req, res) {
 			if (result[0]) {
 				res.send("data:image/jpeg;base64, " + result[0].FaceImage.toString('base64'));
 			} else {
-				res.send("https://maps.google.com/mapfiles/kml/paddle/red-circle.png");
+				res.send("http://maps.google.com/mapfiles/kml/paddle/red-circle.png");
 			}
 		}
 	});

@@ -121,15 +121,15 @@ app.use(function(req, res, next) {
 // Start the server
 app.set('port', 8080);
 
-// var server = app.listen(app.get('port'), function() {
-//   console.log('Express server listening on port ' + server.address().port);
-// });
-
-
-// Create HTTPS server
-const server = https.createServer(options, app);
-
-// Start server
-server.listen(app.get('port'), () => {
-  console.log('Server running on port 8080');
+var server = app.listen(app.get('port'), function() {
+  console.log('Express server listening on port ' + server.address().port);
 });
+
+
+// // Create HTTPS server
+// const server = https.createServer(options, app);
+
+// // Start server
+// server.listen(app.get('port'), () => {
+//   console.log('Server running on port 8080');
+// });
