@@ -67,7 +67,7 @@ router.get('/change_lang', function (req, res) {
 	req.session.lang = req.query.lang;
 	res.redirect(`/${req.query.page}`);
 });
-router.get('/pwa_beneficiary', function (req, res) {
+router.get('/note', function (req, res) {
 	res.render('pages/pwa_beneficiary', { message: req.flash('message'), lang: req.session.lang });
 });
 /* GET MAIN page. */

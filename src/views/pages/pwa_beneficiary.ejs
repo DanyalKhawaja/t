@@ -48,23 +48,12 @@
     <h2>Beneficiary Form</h2>
     <form id="beneficiaryForm">
       <div class="form-group">
+        <label for="Serial">Serial:</label>
+        <input type="text" class="form-control" id="Serial" name="Serial" required>
+      </div>
+      <div class="form-group">
         <label for="CNIC">CNIC:</label>
         <input type="text" class="form-control" id="CNIC" name="CNIC" required>
-      </div>
-
-      <div class="form-group">
-        <label for="BeneficiaryID">Beneficiary ID:</label>
-        <input type="text" class="form-control" id="BeneficiaryID" name="BeneficiaryID">
-      </div>
-
-      <div class="form-group">
-        <label for="FirstName">First Name:</label>
-        <input type="text" class="form-control" id="FirstName" name="FirstName" required>
-      </div>
-
-      <div class="form-group">
-        <label for="LastName">Last Name:</label>
-        <input type="text" class="form-control" id="LastName" name="LastName" required>
       </div>
 
       <div class="form-group">
@@ -73,40 +62,26 @@
       </div>
 
       <div class="form-group">
-        <label for="PhonePrimary">Primary Phone:</label>
-        <input type="tel" class="form-control" id="PhonePrimary" name="PhonePrimary" required>
+        <label for="Phone">Phone:</label>
+        <input type="tel" class="form-control" id="Phone" name="Phone" required>
       </div>
 
       <div class="form-group">
-        <label for="PhoneSecondary">Secondary Phone:</label>
-        <input type="tel" class="form-control" id="PhoneSecondary" name="PhoneSecondary">
+        <label for="Bank">Bank Name:</label>
+        <input type="text" class="form-control" id="Bank" name="Bank">
       </div>
 
       <div class="form-group">
-        <label for="Gender">Gender:</label>
-        <select class="form-control" id="Gender" name="Gender">
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
+        <label for="Account">Account No:</label>
+        <input type="text" class="form-control" id="Account" name="Account">
       </div>
 
       <div class="form-group">
-        <label for="VHLatitude">Village Latitude:</label>
-        <input type="text" class="form-control" id="VHLatitude" name="VHLatitude" readonly>
-      </div>
-
-      <div class="form-group">
-        <label for="VHLongitude">Village Longitude:</label>
-        <input type="text" class="form-control" id="VHLongitude" name="VHLongitude" readonly>
-      </div>
-
-      <div class="form-group">
-        <label for="ImageCapture">Image:</label>
+        <label for="ImageCapture">Cheuqebook:</label>
         <input type="file" class="form-control-file" accept="image/*" capture="environment" id="ImageCapture" name="ImageCapture">
       </div>
 
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" id="save" class="btn btn-primary">Submit</button>
     </form>
 
     <div id="installPrompt" style="display: none;">
@@ -122,6 +97,23 @@
 
 
   <script>
+
+document.getElementById('save').addEventListener('click', function() {
+const blob = new Blob([textData], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  
+  // Create a link element to prompt the user to download the file
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'data.txt';
+  document.body.appendChild(link);
+  link.click();
+  
+  // Cleanup
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+});
+
     // Service Worker Registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
@@ -154,25 +146,20 @@
       });
     });
 
-    // Get current coordinates
-    function getCurrentCoordinates() {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        document.getElementById('VHLatitude').value = position.coords.latitude;
-        document.getElementById('VHLongitude').value = position.coords.longitude;
-      }, function(error) {
-        console.error('Error getting current coordinates:', error);
-      });
-    }
-
-    // Trigger getCurrentCoordinates function when the page loads
-    window.addEventListener('load', getCurrentCoordinates);
-
-    // Function to handle image capture
+       // Function to handle image capture
     document.getElementById('ImageCapture').addEventListener('change', function(event) {
       const file = event.target.files[0];
+
+
+  
+  // Create a FileReader to read the selected file
+  
+    
       // Handle the captured image
       // You can upload the image to a server or display it on the page
     });
+
+
   </script>
 </body>
 </html>
