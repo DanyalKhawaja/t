@@ -99,6 +99,15 @@
   <script>
 
 document.getElementById('save').addEventListener('click', function() {
+
+  const Serial = document.getElementById('Serial').value;
+  const CNIC = document.getElementById('CNIC').value;
+  const FatherName = document.getElementById('FatherName').value;
+  const Phone = document.getElementById('Phone').value;
+  const Bank = document.getElementById('Bank').value;
+  const Account = document.getElementById('Account').value;
+
+ const textData = `${Serial},${CNIC},${FatherName},${Phone},${Bank},${Account}`;
 const blob = new Blob([textData], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   
