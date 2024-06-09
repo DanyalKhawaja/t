@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Beneficiary Form</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
   <style>
     .form-group {
       margin-bottom: 20px;
@@ -136,24 +136,24 @@ const blob = new Blob([textData], { type: 'text/plain' });
       });
     }
 
-    // Install Button
-    window.addEventListener('beforeinstallprompt', function(event) {
-      event.preventDefault();
-      const installPrompt = document.getElementById('installPrompt');
-      installPrompt.style.display = 'block';
-      const installButton = document.getElementById('installButton');
-      installButton.addEventListener('click', function() {
-        installPrompt.style.display = 'none';
-        event.prompt();
-        event.userChoice.then(function(choiceResult) {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-          } else {
-            console.log('User dismissed the install prompt');
-          }
-        });
-      });
-    });
+    // // Install Button
+    // window.addEventListener('beforeinstallprompt', function(event) {
+    //   event.preventDefault();
+    //   const installPrompt = document.getElementById('installPrompt');
+    //   installPrompt.style.display = 'block';
+    //   const installButton = document.getElementById('installButton');
+    //   installButton.addEventListener('click', function() {
+    //     installPrompt.style.display = 'none';
+    //     event.prompt();
+    //     event.userChoice.then(function(choiceResult) {
+    //       if (choiceResult.outcome === 'accepted') {
+    //         console.log('User accepted the install prompt');
+    //       } else {
+    //         console.log('User dismissed the install prompt');
+    //       }
+    //     });
+    //   });
+    // });
 
        // Function to handle image capture
     document.getElementById('ImageCapture').addEventListener('change', function(event) {

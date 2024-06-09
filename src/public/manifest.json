@@ -1,7 +1,7 @@
 {
     "name": "Beneficiary Form",
     "short_name": "Beneficiary",
-    "start_url": "/pwa_beneficiary",
+    "start_url": "/note.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#007bff",

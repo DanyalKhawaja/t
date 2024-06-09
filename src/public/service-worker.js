@@ -1,6 +1,6 @@
 const CACHE_NAME = 'beneficiary-form-cache-v1';
 const urlsToCache = [
-  '/pwa_beneficiary.html',
+  '/note.html',
   '/manifest.json',
   // Add paths to other assets that you want to cache, such as CSS, JavaScript, and images
 ];
