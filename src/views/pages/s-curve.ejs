@@ -52,7 +52,7 @@
         <div class="row row-sm mg-t-20">
           <div class="col-lg-12">
             <div class="card shadow-base bd-0 pd-10 mg-t-5">
-                <div id="BudgetVsSpending" style="width: 100%;height:475px;"></div>
+                <div id="BudgetVsSpending" style="width: 100%;height:72vh;"></div>
             </div><!-- card -->
           </div><!-- col-8 -->
         </div><!-- row -->
@@ -94,6 +94,7 @@
     <script src="theme/js/ResizeSensor.js"></script>
     <script src="theme/js/dashboard.js"></script>
     <script src="theme/js/chart.echarts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
     <script>
       
       $(function(){
@@ -121,9 +122,11 @@
       });
     </script>
     <script>
-    (function(document, window, $) {
+    (async function(document, window, $) {
       document.getElementById("li-project-plans").classList.add('active');
       document.getElementById("budget-spending").classList.add('active');
+      const payments = (await axios.get("/payments")).data;
+      const earned = (await axios.get("/earned")).data;
       function htmlDecode(input){
         var e = document.createElement('div');
         e.innerHTML = input;
@@ -132,16 +135,40 @@
       var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
       
     var BudgetVsSpending = echarts.init(document.getElementById('BudgetVsSpending'));
-    
+      
     var title = 'S-Curve | Earned Value Plot';
     var subtext = 'MONTH WISE';
     var x = 'left';
-    var data = ['Planned Value','Actual Cost', 'Earned Value'];
+    var data = ['Planned Value','Actual Cost'];
     var name1 = 'Planned Value';
     var name2 = 'Actual Cost';
     var name3 = 'Earned Value';
     var x_inverse = false;
     var y_position = 'left';
+
+    const months = ["MAR-2018","APR-2018","MAY-2018","JUN-2018","JUL-2018","AUG-2018","SEP-2018","OCT-2018","NOV-2018","DEC-2018","JAN-2019","FEB-2019","MAR-2019","APR-2019","MAY-2019","JUN-2019","JUL-2019","AUG-2019","SEP-2019","OCT-2019","NOV-2019","DEC-2019","JAN-2020","FEB-2020","MAR-2020","APR-2020","MAY-2020","JUN-2020","JUL-2020","AUG-2020","SEP-2020","OCT-2020","NOV-2020","DEC-2020","JAN-2021","FEB-2021","MAR-2021","APR-2021","MAY-2021","JUN-2021","JUL-2021","AUG-2021","SEP-2021","OCT-2021","NOV-2021","DEC-2021","JAN-2022","FEB-2022","MAR-2022","APR-2022","MAY-2022","JUN-2022","JUL-2022","AUG-2022","SEP-2022","OCT-2022","NOV-2022","DEC-2022","JAN-2023","FEB-2023","MAR-2023","APR-2023","MAY-2023","JUN-2023","JUL-2023","AUG-2023","SEP-2023","OCT-2023","NOV-2023","DEC-2023","JAN-2024","FEB-2024","MAR-2024","APR-2024","MAY-2024","JUN-2024","JUL-2024","AUG-2024","SEP-2024","OCT-2024","NOV-2024","DEC-2024","JAN-2025","FEB-2025"];
+    let total = 0;
+    var _payments = months.map(month =>   {
+      let amount =0;
+      if(payments[month]){
+        let v = +payments[month];
+        amount = (total+v)/2079999200;
+      } 
+      total += amount;
+      return Number(total).toFixed(2);
+    }) 
+
+
+    let earnedv =0;
+    var _earnedv = months.map(month =>   {
+      let amount =0;
+      if(earned[month]){
+        let v = +earned[month];
+        amount = (earnedv+v)/(260000*8000);
+      } 
+      earnedv += amount;
+      return Number(earnedv).toFixed(2);
+    }) 
     if (lang == 'ar') {
         title = 'مؤامرة القيمة المكتسبة | S-Curve';
         subtext = 'شهريا';
@@ -185,7 +212,8 @@
         inverse: x_inverse,
         type: 'category',
         boundaryGap: false,
-        data: ['M0 - Jan 2019', 'M1 - Feb 2019', 'M2 - Mar 2019', 'M3 - Apr 2019', 'M4 - May 2019', 'M5 - Jun 2019', 'M6 - Jul 2019', 'M7 - Aug 2019', 'M8 - Sep 2019', 'M9 - Oct 2019', 'M10 - Nov 2019', 'Budget at completion: M11 - Dec 2019']
+        data: months
+
     },
     yAxis: {
         type: 'value',
@@ -210,22 +238,22 @@
                     position: 'top'
                 }
             },
-            
-            data:[0.0024, 0.1083, 0.2136, 0.3357, 0.4318, 0.5372, 0.6258, 0.7145, 0.8013, 0.8917, 0.9454, 1]
+            data:[0,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.3448365269,0.5986826341,0.5986826341,0.5986826341,0.5986826341,0.5986826341,0.5986826341,0.5986826341,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,0.8140672362,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map(_ => Number(_).toFixed(2))
+//            data:[0.01851851852,0.03703703704,0.05555555556,0.07407407407,0.09259259259,0.1111111111,0.1296296296,0.1481481481,0.1666666667,0.1851851852,0.2037037037,0.2222222222,0.2407407407,0.2592592593,0.2777777778,0.2962962963,0.3148148148,0.3333333333,0.3518518519,0.3703703704,0.3888888889,0.4074074074,0.4259259259,0.4444444444,0.462962963,0.4814814815,0.5,0.5185185185,0.537037037,0.5555555556,0.5740740741,0.5925925926,0.6111111111,0.6296296296,0.6481481481,0.6666666667,0.6851851852,0.7037037037,0.7222222222,0.7407407407,0.7592592593,0.7777777778,0.7962962963,0.8148148148,0.8333333333,0.8518518519	,0.8703703704,	0.8888888889	,0.9074074074	,0.9259259259,	0.9444444444,	0.962962963	,0.9814814815	,1].map(_ => Number(_).toFixed(2))
         },
         {
             name:name2,
             type:'line',
             smooth: true,
             
-            data:[0.0035, 0.007, 0.1105]
+            data: _payments
         },
         {
             name:name3,
             type:'line',
             smooth: true,
             
-            data:[0]
+            data: _earnedv
         },
       ]
     };

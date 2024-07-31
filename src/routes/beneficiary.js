@@ -435,15 +435,17 @@ router.get('/get', isAuthenticated, function (req, res) {
 	db.query('SELECT Beneficiary.*, concat(Beneficiary.FirstName, " ", Beneficiary.LastName) as BeneficiaryName, \
 		LDistricts.DistrictName as District, \
     LTehsils.TehsilName as Tehsil, LUCs.UCName as UC, Villages.VillageName as Village, \
-    LBenStatus.BenStatusDesc as BeneficiaryStatus, Users.UserName as Enumerator \
+	CONCAT("Level-",COALESCE(MM.Level,0)) MonitoringLevel, \
+	payments.FirstPaymentDate FirstPaymentDate,  payments.SecondPaymentDate SecondPaymentDate, payments.ThirdPaymentDate ThirdPaymentDate, payments.FourthPaymentDate FourthPaymentDate, 	payments.FirstPayment FirstPayment,  payments.SecondPayment SecondPayment, payments.ThirdPayment ThirdPayment, payments.FourthPayment FourthPayment, \
+	if( isnull(payments.FirstPayment) and isnull(payments.SecondPayment) and isnull(payments.ThirdPayment) and isnull(payments.FourthPayment), "Unpaid","") Paid  \
     FROM Beneficiary \
+	LEFT JOIN (select CNIC, LevelStatus, Max(MonitoringLevel) Level from Monitoring m group by CNIC, LevelStatus having LevelStatus =2 ) as MM on Beneficiary.CNIC = MM.CNIC  \
     LEFT JOIN LDistricts on Beneficiary.DistrictID = LDistricts.DistrictID \
     LEFT JOIN LTehsils on Beneficiary.TehsilID = LTehsils.TehsilID \
     LEFT JOIN LUCs on Beneficiary.UCID = LUCs.UCID \
     LEFT JOIN Villages on Beneficiary.VillageID = Villages.VillageID \
-    LEFT JOIN LBenStatus on Beneficiary.BenStatusID = LBenStatus.BenStatusID \
-		LEFT JOIN Users on Beneficiary.UpdatedBy = Users.UserID \
-		ORDER BY LBenStatus.BenStatusDesc ASC', null, function (err, result) {
+	LEFT JOIN (select CNIC, max(if(InstallmentType=1, CreateDate, null)) FirstPaymentDate, max(if(InstallmentType=2, CreateDate, null)) SecondPaymentDate , max(if(InstallmentType=3, CreateDate, null)) ThirdPaymentDate , max(if(InstallmentType=4, CreateDate, null)) FourthPaymentDate,  max(if(InstallmentType=1, "1st Payment", null)) FirstPayment,  max(if(InstallmentType=2, "2nd Payment", null)) SecondPayment,  max(if(InstallmentType=3, "3rd Payment", null)) ThirdPayment,  max(if(InstallmentType=4, "4th Payment", null)) FourthPayment   from DistributedCheques dc group by cnic) as payments on Beneficiary.CNIC = payments.CNIC \
+	 where BenStatusID=4 ', null, function (err, result) {
 			res.json(result);
 		});
 });

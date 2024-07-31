@@ -111,10 +111,10 @@
           }
           var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
 
-          var columns = ['CNIC', 'STATUS', 'NAME', 'PRIMARY PHONE NO', 'VILLAGE', 'UNION COUNCIL', 'UPDATED BY', 'VIEW DETAIL'];
+          var columns = ['CNIC',  'NAME', 'LEVEL ACHIEVED','1ST PAYMENT','2ND PAYMENT','3RD PAYMENT','4TH PAYMENT','PAID','UNION COUNCIL', 'VILLAGE', 'PRIMARY PHONE NO', 'VIEW DETAIL'];
 
           if (lang == 'ar') {
-            columns = ['CNIC', 'الحالة', 'اسم المستفيد', 'رقم الهاتف', 'قرية', 'مجلس النقابات', 'تم التحديث بواسطة', ''];
+            columns = ['CNIC',  'اسم المستفيد', '','','','','','رقم الهاتف', 'قرية', 'مجلس النقابات', '','تم التحديث بواسطة'];
           }
           document.getElementById("li-beneficiary").classList.add('active');
           document.getElementById("ben-list").classList.add('active');
@@ -142,12 +142,16 @@
             } ] ,
     				"columns": [
               {"data": "CNIC", "title":columns[0]},
-              {"data": "BeneficiaryStatus", "title":columns[1]},
-              { "data": "BeneficiaryName", "title":columns[2] },
-              { "data": "PhonePrimary", "title":columns[3] },
-              { "data": "Village", "title":columns[4]},
-              { "data": "UC", "title":columns[5]},
-              { "data": "Enumerator", "title": columns[6]},
+              { "data": "BeneficiaryName", "title":columns[1] },
+              { "data": "MonitoringLevel", "title":columns[2] },
+              { "data": "FirstPayment", "title":columns[3] },
+              { "data": "SecondPayment", "title":columns[4] },
+              { "data": "ThirdPayment", "title":columns[5] },
+              { "data": "FourthPayment", "title":columns[6] },
+              { "data": "Paid", "title":columns[7] },
+              { "data": "UC", "title":columns[8]},
+              { "data": "Village", "title":columns[9]},
+              { "data": "PhonePrimary", "title":columns[10] },
               //{ "data": null, "title": columns[7]}
               {data: "CNIC" , render : function ( data, type, row, meta ) {
               return type === 'display'  ?

@@ -50,10 +50,10 @@
       </div>
       <div class="col-sm-5 b-1 t-45">
 
-        <button id="btn-houses" class="btn btn-oblong btn-secondary mg-b-5 mg-t-5 mg-r-5 mg-l-5"
-          style="width: auto;">HOUSES</button>
-        <button id="btn-model-houses" class="btn btn-oblong btn-secondary mg-b-5 mg-t-5 mg-r-5 mg-l-5"
-          style="width: auto;">MODEL HOUSES</button>
+        <!-- <button id="btn-houses" class="btn btn-oblong btn-secondary mg-b-5 mg-t-5 mg-r-5 mg-l-5"
+          style="width: auto;">HOUSES</button> -->
+        <!-- <button id="btn-model-houses" class="btn btn-oblong btn-secondary mg-b-5 mg-t-5 mg-r-5 mg-l-5"
+          style="width: auto;">MODEL HOUSES</button> -->
         
 
       </div>
@@ -414,15 +414,15 @@
             redrawMarkers();
           }
         });
-        $('#btn-model-houses').on('click', function (e) {
-          if ($('#btn-model-houses').hasClass("btn-secondary")) {
-            $("#btn-model-houses").addClass("btn-outline-secondary").removeClass("btn-secondary");
-            clearModelHousesMarkers();
-          } else {
-            $("#btn-model-houses").addClass("btn-secondary").removeClass("btn-outline-secondary");
-            redrawModelHousesMarkers();
-          }
-        });
+        // $('#btn-model-houses').on('click', function (e) {
+        //   if ($('#btn-model-houses').hasClass("btn-secondary")) {
+        //     $("#btn-model-houses").addClass("btn-outline-secondary").removeClass("btn-secondary");
+        //     clearModelHousesMarkers();
+        //   } else {
+        //     $("#btn-model-houses").addClass("btn-secondary").removeClass("btn-outline-secondary");
+        //     redrawModelHousesMarkers();
+        //   }
+        // });
         $('#btn-govt-buildings').on('click', function (e) {
           if ($('#btn-govt-buildings').hasClass("btn-secondary")) {
             $("#btn-govt-buildings").addClass("btn-outline-secondary").removeClass("btn-secondary");
@@ -1052,9 +1052,9 @@
         }
         // Sets the map on all markers in the array.
         function setMapOnAllModelHouses(map) {
-          for (var i = 0; i < ModelHousesMarkers.length; i++) {
-            ModelHousesMarkers[i].setMap(map);
-          }
+          // for (var i = 0; i < ModelHousesMarkers.length; i++) {
+          //   ModelHousesMarkers[i].setMap(map);
+          // }
         }
 
         // Removes the markers from the map, but keeps them in the array.
@@ -1064,7 +1064,7 @@
 
         // Removes the markers from the map, but keeps them in the array.
         function clearModelHousesMarkers() {
-          setMapOnAllModelHouses(null);
+         // setMapOnAllModelHouses(null);
         }
 
         // Removes the markers from the map, but keeps them in the array.
@@ -1074,7 +1074,7 @@
 
         // Removes the markers from the map, but keeps them in the array.
         function redrawModelHousesMarkers() {
-          setMapOnAllModelHouses(map);
+         // setMapOnAllModelHouses(map);
         }
 
         var Level1PieChart = echarts.init(document.getElementById('Level1PieChart'));

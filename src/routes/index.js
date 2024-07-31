@@ -138,6 +138,16 @@ router.get('/s_curve', isAuthenticated, function (req, res) {
 	}
 });
 
+router.get('/survey', isAuthenticated, function (req, res) {
+	// Display the Login page with any flash message, if any
+	//console.log(req.flash);
+	if (req.user.UserTypeID == 4 || req.user.UserTypeID == 6  || req.user.UserTypeID == 7) {
+		res.render('pages/page_not_found', { message: req.flash('message') });
+	} else {
+		res.render('pages/survey_stats', { message: req.flash('message'), lang: req.session.lang, User: req.user });
+	}
+});
+
 router.get('/reports', isAuthenticated, function (req, res) {
 	// Display the Login page with any flash message, if any
 	//console.log(req.flash);
@@ -265,6 +275,29 @@ router.get('/api/beneficiary_temp', function (req, res) {
 		res.send(json);
 	});
 });
+
+router.get('/payments', function (req, res) {
+	db.query("select concat(upper(left(monthname(ChequeDate),3)), '-',year(ChequeDate)) mon,  sum(CASE WHEN InstallmentType=1 then 88000 when InstallmentType=2 then 66000 when InstallmentType=3 then 56000 when InstallmentType=4 then 50000 else 0 end) total from DistributedCheques dc group by mon order by mon", function (err, result) {
+		if (err) {
+			console.log(err.message);
+			res.status(500).send(err.message);
+		} else {
+			res.json(result.reduce((payments, payment)=> { payments[payment.mon] = payment.total; return payments }, {}))
+		}
+	});
+});
+
+router.get('/earned', function (req, res) {
+	db.query("select concat(upper(left(monthname(ChequeDate),3)), '-',year(ChequeDate)) mon,  sum(CASE WHEN InstallmentType=4 then 260000 else 0 end) total from DistributedCheques dc group by mon order by mon", function (err, result) {
+		if (err) {
+			console.log(err.message);
+			res.status(500).send(err.message);
+		} else {
+			res.json(result.reduce((payments, payment)=> { payments[payment.mon] = payment.total; return payments }, {}))
+		}
+	});
+});
+
 
 // router.get('/api/benid', function (req, res) {
 // 	mdlBeneficiary.getBenID(req, function (err, result) {
@@ -409,6 +442,22 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 			TotalLevel2Achieved: function (callback){
 				db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
 				WHERE MonitoringLevel = 2 AND LevelStatus = 2 ', null, callback)
+			},
+			TotalLevel1InProgress: function (callback){
+				db.query('with aa as (SELECT CNIC, MonitoringLevel, max(LevelStatus)  as level \
+					FROM Monitoring group by CNIC, MonitoringLevel having level = 1 and MonitoringLevel = 1) select count(*) as count from aa', null, callback)
+			},
+			TotalLevel2InProgress: function (callback){
+				db.query('with aa as (SELECT CNIC, MonitoringLevel, max(LevelStatus)  as level \
+					FROM Monitoring group by CNIC, MonitoringLevel having level = 1 and MonitoringLevel = 2) select count(*) as count from aa', null, callback)
+			},
+			TotalLevel3InProgress: function (callback){
+				db.query('with aa as (SELECT CNIC, MonitoringLevel, max(LevelStatus)  as level \
+					FROM Monitoring group by CNIC, MonitoringLevel having level = 1 and MonitoringLevel = 3) select count(*) as count from aa', null, callback)
+			},
+			TotalLevel4InProgress: function (callback){
+				db.query('with aa as (SELECT CNIC, MonitoringLevel, max(LevelStatus)  as level \
+					FROM Monitoring group by CNIC, MonitoringLevel having level = 1 and MonitoringLevel = 4) select count(*) as count from aa', null, callback)
 			},
 			// Last2Recomended: function (callback){
 			// 	// db.query('select SubmittedOn, count(*) as count from Recomended \
@@ -586,6 +635,7 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				console.log(err.message);
 				res.render('pages/page_not_found', { message: req.flash('message'), lang: req.session.lang });
 			}
+		
 			res.render('pages/index', {
 				TotalBeneficiaries: results.TotalBeneficiaries[0].count,
 				TotalUnverified: results.TotalUnverified[0].count,
@@ -608,6 +658,30 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				TotalLevel2Achieved: results.TotalLevel2Achieved[0].count,
 				TotalLevel3Achieved: results.TotalLevel3Achieved[0].count,
 				TotalLevel4Achieved: results.TotalLevel4Achieved[0].count,
+
+				TotalLevel1InProgress:  results.TotalLevel1InProgress[0].count+results.TotalLevel1Achieved[0].count,
+				TotalLevel2InProgress:  results.TotalLevel2InProgress[0].count+results.TotalLevel2Achieved[0].count,
+				TotalLevel3InProgress:  results.TotalLevel3InProgress[0].count+results.TotalLevel3Achieved[0].count,
+				TotalLevel4InProgress: results.TotalLevel4InProgress[0].count+results.TotalLevel4Achieved[0].count,
+
+				TotalLevel1Encashedp: (results.TotalLevel1Encashed[0].count/8000)*100,
+				TotalLevel2Encashedp: (results.TotalLevel2Encashed[0].count/8000)*100,
+				TotalLevel3Encashedp: (results.TotalLevel3Encashed[0].count/8000)*100,
+				TotalLevel4Encashedp: (results.TotalLevel4Encashed[0].count/8000)*100,
+				TotalLevel1Achievedp: (results.TotalLevel1Achieved[0].count/8000)*100,
+				TotalLevel2Achievedp: (results.TotalLevel2Achieved[0].count/8000)*100,
+				TotalLevel3Achievedp: (results.TotalLevel3Achieved[0].count/8000)*100,
+				TotalLevel4Achievedp: (results.TotalLevel4Achieved[0].count/8000)*100,
+
+
+				TotalLevel1InProgressp: ((results.TotalLevel1InProgress[0].count+results.TotalLevel1Achieved[0].count)/8000)*100,
+				TotalLevel2InProgressp: ((results.TotalLevel2InProgress[0].count+results.TotalLevel2Achieved[0].count)/8000)*100,
+				TotalLevel3InProgressp: ((results.TotalLevel3InProgress[0].count+results.TotalLevel3Achieved[0].count)/8000)*100,
+				TotalLevel4InProgressp: ((results.TotalLevel4InProgress[0].count+results.TotalLevel4Achieved[0].count)/8000)*100,
+
+
+
+
 				// Last2Recomended: results.Last2Recomended[0].count,
 				NotRecomendedPaymentL2: results.NotRecomendedPaymentL2[0].count,
 				NotRecomendedPaymentL3: results.NotRecomendedPaymentL3[0].count,

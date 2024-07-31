@@ -15,10 +15,10 @@ var session = require('cookie-session');
 
 var app = express();
 
-const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/www.cyberstate.tech/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/www.cyberstate.tech/fullchain.pem')
-};
+//const options = {
+//  key: fs.readFileSync('/etc/letsencrypt/live/www.cyberstate.tech/privkey.pem'),
+//  cert: fs.readFileSync('/etc/letsencrypt/live/www.cyberstate.tech/fullchain.pem')
+//};
 
 // pool = mysql.createPool({
 //       connectionLimit: 10,

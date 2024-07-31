@@ -35,6 +35,23 @@
 </head>
 
 <body>
+  <style>
+    .timeline-item {
+      height: 60vh;
+      border: none;
+      padding: 0px;
+    }
+  .timeline-horizontal .timeline-dots li {
+    width: 74px;
+
+  }
+
+    .timeline-item img {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  </style>
+
+
   <% include ../partials/header %>
 
   <!-- ########## START: MAIN PANEL ########## -->
@@ -431,38 +448,40 @@
                     </div><!-- card -->
                   </div>
                   <div class="col-lg-9">
-                    <div class="card shadow-base bd-0 pd-50 mg-t-5">
+                    <div class="mg-t-5">
                       <div class="timeline-container timeline-theme-2">
                         <div class="timeline js-timeline" style="text-align: center;">
                           <% if (Monitoring.length==0) { %>
+                          
+                           
                           <div data-time="1">
+                     
                             <img src="images/ModelHouses/not_available.png" style="max-width: 100%;
                                               max-height: 100%;" />
                           </div>
                           <% } %>
                           <% for(i=0; i < Monitoring.length; i++) { %>
-                          <div
-                            data-time="<%= Monitoring[i].CreateDate.getDate()%>-<%= Monitoring[i].CreateDate.getMonth()+1 %>">
+                            <% let iname = `/images/monitoring-01/${Monitoring[i].FrontImage.substring(94)}` %>
+                          
 
-                            Captured On:
-                            <%= Monitoring[i].CreateDate.getDate()%>-<%= Monitoring[i].CreateDate.getMonth()+1 %>-<%= Monitoring[i].CreateDate.getFullYear() %>
+                          <div
+                            data-time="<%= Monitoring[i].CreateDate.toLocaleDateString()%>">
+                          
                             <br />
-                            <img src="/images/monitoring-01/<%= Monitoring[i].FrontImage.substring(94) %>"
+                            <img src="<%= iname %>"
                               style="max-width: 100%; max-height: 100%;" />
                           </div>
 
                           <div
-                            data-time="<%= Monitoring[i].CreateDate.getDate()%>-<%= Monitoring[i].CreateDate.getMonth()+1 %>">
-                            Captured On:
-                            <%= Monitoring[i].CreateDate.getDate()%>-<%= Monitoring[i].CreateDate.getMonth()+1 %>-<%= Monitoring[i].CreateDate.getFullYear() %>
+                            data-time="<%= Monitoring[i].CreateDate.toLocaleDateString()%>">
+                            
                             <br />
                             <img src="/images/monitoring-01/<%= Monitoring[i].SideImage.substring(94) %>"
                               style="max-width: 100%; max-height: 100%;" />
                           </div>
                           <div
-                            data-time="<%= Monitoring[i].CreateDate.getDate()%>-<%= Monitoring[i].CreateDate.getMonth()+1 %>">
-                            Captured On:
-                            <%= Monitoring[i].CreateDate.getDate()%>-<%= Monitoring[i].CreateDate.getMonth()+1 %>-<%= Monitoring[i].CreateDate.getFullYear() %>
+                            data-time="<%= Monitoring[i].CreateDate.toLocaleDateString()%>">
+                           
                             <br />
                             <img src="/images/monitoring-01/<%= Monitoring[i].OtherImage.substring(94) %>"
                               style="max-width: 100%; max-height: 100%;" />
@@ -957,7 +976,7 @@
 
           // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
           var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
-            this.setZoom(17);
+            this.setZoom(30);
             google.maps.event.removeListener(boundsListener);
           });
         }
@@ -1028,7 +1047,7 @@
         });
 
         $('.timeline').Timeline({
-          autoplay: true,
+          autoplay: false,
           // value: boolean | Enables Autoplay
           autoplaySpeed: 3000,
           // value: integer | Autoplay Speed in milliseconds

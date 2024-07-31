@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html>
+<%- include ('../partials/head'); %>
+    <style>
+        select.full-width + .select2-container, .select2 {
+            width: 300px !important;
+        }
+        .d3-top-wrapper {
+            display: inline-block;
+        }
+        .wp-select-div {
+            display: inline-block;
+            margin-left: 1em;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .d3-top-wrapper .svg-container-var svg {
+            height: 90% !important;
+        }
+        .bar-label {
+            fill: #c20000;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .svg-container-var {
+            width: 190px;
+            height: 450px;
+            margin-left: 0px;
+            display: inline-block;
+        }
+        div#d3-top-var {
+            font-size: 25px;
+            font-weight: bold;
+            color: #584c8b;
+            text-align: center;
+        }
+        .d3-top-size {
+            margin-left: 5em;
+        }
+        .svg-container-var svg {
+            width: 190px;
+            height: 600px;
+        }
+        .d3-legend-svg {
+            width: 190px;
+            position: absolute;
+            top: 1em;
+            right: 10em;
+        }
+        svg#lg1 {
+            height: 50px;
+            left: 29em;
+            top: 1em;
+        }
+        svg#lg2 {
+            height: 50px;
+            left: 29em;
+            top: 1em;
+        }
+        .legend-text {
+            font-size: 13px;
+        }
+        .planned {
+            fill: #46368c;
+            stroke: #3507ff;
+            stroke-width: 1px;
+        }
+        .tick, .annotation {
+            font-size: 14px !important;
+            font-weight: bold;
+        }
+        .actual {
+            fill: #00a393;
+            stroke: #017d70;
+            stroke-width: 3px;
+        }
+        /*
+        text {
+          font-size: 12px;
+          fill: black;
+        } */
+        .var-arrow-red {
+            stroke: hsla(1, 100%, 50%, 0.776);
+            fill: #ff0000;
+        }
+        .var-arrow-green {
+            stroke: #3dd601;
+            fill: #3dd601;
+        }
+        line#limit {
+            stroke: #FED966;
+            stroke-width: 3;
+            stroke-dasharray: 3 6;
+        }
+        .grid path {
+            stroke-width: 0;
+        }
+        .grid .tick line {
+            stroke: #9FAAAE;
+            stroke-opacity: 0.3;
+        }
+        /* .variance-text tspan {
+          font-size: 12px;
+          font-weight: bold;
+          fill: black;
+        } */
+        text.value {
+            font-size: 12px;
+            font-weight: bold;
+        }
+        text.title {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        text.label {
+            font-size: 14px;
+            font-weight: 400;
+        }
+        text.source {
+            font-size: 10px;
+        }
+    </style>
+<body class="fixed-header menu-pin menu-behind">
+<script>
+    function vlFmt(v) {
+        return Intl.NumberFormat('en-US', {
+            style: 'decimal',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(v);
+    }
+</script>
+<!-- BEGIN SIDEBPANEL-->
+    <%- include ('../partials/menu'); %>
+<div class="page-container ">
+    
+    <%- include ('../partials/header'); %>
+    
+    
+    <div class="page-content-wrapper ">
+        
+        <div class="content ">
+            
+           
+            <div class=" container-fluid   container-fixed-lg">
+                <!-- START card -->
+                <div id="tabs" style="width: 99%;">
+
+                    <div class="row" id="evm">
+                        <div class="col-md-12">
+                            <!-- <div style="height: 600px; width: 100%; overflow-y:hidden; overflow-x: scroll;"> -->
+                            <div id="evmChart" style="height: 550px; width: 95%;"></div>
+                        </div>
+                        <div class="counters row col-md-12">
+                            <div class="col-md-3 ">
+                                <div class="card card-default bg-primary-dark shadow">
+                                    <div class="card-header  separator">
+                                        <div class="card-title text-white">SV
+                                        </div>
+                                    </div>
+                                    <!-- div class="card-body" -->
+                                        <h5>
+                                            <span class="semi-bold text-white"> <%= EVMValues.SV %></span>
+                                        </h5>
+                                        <p class="text-white font-italic"><%= EVMValues.ScheduleStatus %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 ">
+                                <div class="card card-default bg-primary shadow">
+                                    <div class="card-header  separator">
+                                        <div class="card-title text-white">CPI
+                                        </div>
+                                    </div>
+                                    <!-- div class="card-body" -->
+                                        <h5>
+                                            <span class="semi-bold text-white"><%= EVMValues.CPI %></span>
+                                        </h5>
+                                        <p class="text-white font-italic"><%= EVMValues.CostStatus %> </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 ">
+                                <div class="card card-default bg-primary shadow">
+                                    <div class="card-header  separator">
+                                        <div class="card-title text-white">CV
+                                        </div>
+                                    </div>
+                                    <!-- div class="card-body" -->
+                                        <h5>
+                                            <span class="semi-bold  text-white"><%= EVMValues.CV %></span>
+                                        </h5>
+                                        <p class=" text-white font-italic"><%= EVMValues.CostStatus %> </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 ">
+                                <div class="card card-default bg-primary-dark  shadow">
+                                    <div class="card-header separator">
+                                        <div class="card-title  text-white">SPI
+                                        </div>
+                                    </div>
+                                    <!-- div class="card-body" -->
+                                        <h5>
+                                            <span class="semi-bold  text-white"><%= EVMValues.SPI %></span>
+                                        </h5>
+                                        <p class="text-white font-italic"><%= EVMValues.ScheduleStatus %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="counters row  col-md-12">
+                            <div class="col-md-4">
+                                <div class="card card-default bg-primary-dark shadow">
+                                    <div class="card-header  separator">
+                                        <div class="card-title text-white">VARIANCE AT COMPLETION (VAC)
+                                        </div>
+                                    </div>
+                                    <!-- div class="card-body" -->
+                                        <h5>
+                                            <span class="semi-bold text-white"> <%= EVMValues.VAC %></span>
+                                        </h5>
+                                        <p class="text-white font-italic"><%= EVMValues.CostStatus %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card card-default bg-primary shadow">
+                                    <div class="card-header  separator">
+                                        <div class="card-title text-white">TCPI INDEX
+                                        </div>
+                                    </div>
+                                    <!-- div class="card-body" -->
+                                        <h5>
+                                            <span class="semi-bold text-white"><%= EVMValues.TCPI %></span>
+                                        </h5>
+                                        <p class="text-white font-italic">Efficiency required</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card card-default bg-danger-dark shadow">
+                                    <div class="card-header  separator">
+                                        <div class="card-title text-white">ESTIMATE AT COMPLETION (EAC)
+                                        </div>
+                                    </div>
+                                    <!-- div class="card-body" -->
+                                        <h5>
+                                            <span class="semi-bold text-warning"> <%= EVMValues.EAC %></span>
+                                        </h5>
+                                        <p class="text-white font-italic">Projected cost at project finish</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="wpm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- <div class="card card-default bg-white"> -->
+                                <div class="separator">
+                                    
+                                        <div class="wp-select-div">
+                                            <select id='selectWP' data-init-plugin="select2" multiple="multiple"
+                                                    style="width:100%">
+                                            </select></div>
+                                    </div>
+                                </div>
+                                <!-- div class="card-body" -->
+                                    <div>
+                                        <div class="row ">
+                                            <div class="col card card-default bg-white shadow" style="margin-right:1em;">
+                                                <div style="width: 250px;height: 550px; padding:1em;">
+                                                    <canvas id="Duration"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col card card-default bg-white shadow" style="margin-right:1em;">
+                                                <div style="width: 250px;height: 550px; padding:1em;">
+                                                    <canvas id="Cost"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col card card-default bg-white shadow" style="margin-right:1em;">
+                                                <div style="width: 250px;height: 550px; padding:1em;">
+                                                    <canvas id="Resources"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col card card-default bg-white shadow" style="margin-right:1em;">
+                                                <div style="width: 250px;height: 550px; padding:1em;">
+                                                    <canvas id="Completion"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="col card card-default bg-white shadow">
+                                                <div style="width: 250px;height: 550px; padding:1em;">
+                                                    <canvas id="ContractorEquipment"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div style="width: 550px;height: 150px; padding:1em;">
+                                        </div>
+                                        <div style="width: 550px;height: 150px; padding:1em;">
+                                        </div>
+                                         -->
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <div class="card card-default bg-white shadow">
+                                        <div style="width: 550px;height: 150px; padding:1em;">
+                                        </div>
+                                        <div style="width: 550px;height: 150px; padding:1em;">
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" >
+                <!-- <div class="card card-default bg-white"> -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-default bg-white shadow">
+                            <div class="card-header  separator">
+                                <div class="card-title">
+                                    <h6>LABOR & EQUIPMENT VARIANCE</h6>
+                                    <svg id="lg1" class='d3-legend-svg'></svg>
+                                </div>
+                            </div>
+                            <!-- div class="card-body" -->
+                                <div>
+                                    <div class='svg-container-var'>
+                                        <svg/>
+                                    </div>
+                                    <div class='svg-container-var'>
+                                        <svg/>
+                                    </div>
+                                    <div class='svg-container-var'>
+                                        <svg/>
+                                    </div>
+                                    <!-- <div class="d3-top-wrapper">
+                                    <div id="d3-top-var">Top 3 Material Variance</div>
+                                    <div class="d3-top-size"> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-default bg-white shadow">
+                            <div class="card-header  separator">
+                                <div class="card-title">
+                                    <h6>Material Variance (Top 3)</h6>
+                                    <svg id="lg2" class='d3-legend-svg'></svg>
+                                </div>
+                            </div>
+                            <!-- div class="card-body" -->
+                                <div>
+                                    <div class='svg-container-var'>
+                                        <svg/>
+                                    </div>
+                                    <div class='svg-container-var'>
+                                        <svg/>
+                                    </div>
+                                    <div class='svg-container-var'>
+                                        <svg/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="row" id="Cforcast">
+            <div class="col-md-12">
+                <div class="card card-default bg-white">
+                    <!-- div class="card-body" -->
+                        <div id='forecastChart' style="margin-left: 15%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='kpis'>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-default bg-white">
+                        <div class="card-header  separator">
+                            
+                        </div>
+                        <!-- div class="card-body" -->
+                            <div id='performanceCostChart'></div>
+                            <p class="text-default font-italic"> <%= Intl.NumberFormat('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                }).format(PerformanceCostData.ActualCost) %> spent in current month against
+                                the planned budget for this month <%= Intl.NumberFormat('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                }).format(PerformanceCostData.AverageMonthlyCost) %> for a
+                                month</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-default bg-white">
+                        <div class="card-header  separator">
+                            
+                        </div>
+                        <!-- div class="card-body" -->
+                            <div id='performanceBudgetChart'></div>
+                            <p class="text-default font-italic"><%= Intl.NumberFormat('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                }).format(PerformanceBudgetData.TotalActualCost) %> spent till date against
+                                the total budget of <%= Intl.NumberFormat('en-US', {
+                                    style: 'decimal',
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                }).format(PerformanceBudgetData.TotalEstimatedBudget) %> </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-default bg-white">
+                        <div class="card-header  separator">
+                            
+                        </div>
+                        <!-- div class="card-body" -->
+                            <div id='performanceScheduleChart'></div>
+                            <p class="text-default font-italic"><%= PerformanceScheduleData.TotalDaysSpent %>
+                                days spent out of total planned duration
+                                of <%= PerformanceScheduleData.TotalPlannedDays %> days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ <%- include('../partials/footer') %></div>
+<!-- END PAGE CONTENT -->
+<!-- START COPYRIGHT -->
+<!-- START CONTAINER FLUID -->
+<!-- START CONTAINER FLUID --></div></div>
+<!-- END PAGE CONTAINER -->
+    
+</div>
+<%- include('../partials/overlay1') %>
+<script src="assets/plugins/moment/moment.min.js"></script>
+<script src='assets/js/plotly-latest.min.js'></script>
+<script src='assets/plugins/Chart.min.js'></script>
+<script src='assets/plugins/utils.js'></script><script src="assets/js/d3.min.js" type="text/javascript"></script>
+<script src="assets/js/d3-annotation.min.js" type="text/javascript"></script>
+<script src="assets/js/customVarianceGraph-d3js" type="text/javascript"></script>
+<script>
+    let locationTasks = <%- LocationTasks %>;
+    function getValueInUnits(num) {
+        let absValue = Math.abs(num);
+        let valueSign = Math.sign(num);
+        return (absValue > 999999 ? (valueSign * (absValue / 1000000)).toFixed(3) + 'M' : absValue > 999 ? (valueSign * (absValue / 1000)).toFixed(3) + 'K' : (valueSign * absValue).toFixed(3));
+    }
+    let map;
+    var mtype = '';
+    let markersArray = [];
+    let polyline = [];
+    var count = 0;
+    let data = <%- LocationData %>;
+    let center = <%- Center %>;
+    if (data[0][0] !== undefined) mtype = data[0][0].PathType;
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAtFS563VrFYCkOBmG8J2-noujJ9gP18EM&callback=drawMap&libraries=geometry";
+    document.getElementsByTagName("head")[0].appendChild(script);
+    var color = Chart.helpers.color;
+    //#region SingleMap
+    function drawMap() {
+        var mapCanvas = document.getElementById("map");
+        var mapOptions = {
+            center: new google.maps.LatLng(center.Lat, center.Lng),
+            zoom: center.Zom,
+        };
+        var pre, cur;
+        map = new google.maps.Map(mapCanvas, mapOptions);
+        let graphLabels = <%- GraphLabels %>;
+        graphLabels.forEach(lb => {
+            let html = lb.content;
+            var coord = new google.maps.LatLng(lb.lat, lb.lng);
+            var lbl = new google.maps.InfoWindow();
+            lbl.setContent(html);
+            lbl.setPosition(coord);
+            lbl.open(map);
+        });
+        $(data).each(function () {
+            var ct = 0, predis = 0;
+            $(this).each(function () {
+                cur = new google.maps.LatLng(this.Latitude, this.Longitude);
+                if (ct == 0)
+                    pre = cur;
+                var distance = google.maps.geometry.spherical.computeDistanceBetween(pre, cur) + predis;
+                placeMarker(cur, this.ProjectLocationName, this.ProjectLocationID, this.PathID, this.PathSeqNo, distance);
+                console.log(this.ProjectLocationName);
+                console.log(distance);
+                predis = distance;
+//                    alert(distance);
+                pre = cur;
+                ct++;
+            });
+            count++;
+        });
+        /*
+          map = new google.maps.Map(mapCanvas, mapOptions);
+          $(data).each(function () {
+            $(this).each(function () {
+              placeMarker(new google.maps.LatLng(this.Latitude, this.Longitude), this.ProjectLocationName, this.ProjectLocationID, this.PathID, this.PathSeqNo);
+            });
+            count++;
+          });*/
+        if (mtype == "Start")
+            drawPolyline();
+        //### Add a button on Google Maps ...
+        var controlChk = document.createElement('input');
+        controlChk.style.cursor = 'pointer';
+        controlChk.type = 'checkbox';
+        controlChk.style.height = '32px';
+        controlChk.style.width = '32px';
+        controlChk.style.left = '177px';
+        controlChk.id = 'chkWaypoint';
+        controlChk.className = 'removeWaypoint';
+        //myLocationControlDiv.appendChild(controlUI);
+        controlChk.addEventListener('click', showhideWayPoints);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlChk);
+    }
+    function showhideWayPoints(e) {
+        if ($('#chkWaypoint').prop('checked')) {
+            for (i = 0; i < markersArray.length; i++) {
+                count = 0;
+                markersArray[i].forEach(function (e) {
+                    if (count != 0 && count != markersArray[i].length - 1) {
+                        var pinIcon = new google.maps.MarkerImage(
+                            (typeof e.getIcon() == 'object') ? e.getIcon().url : e.getIcon(),
+                            null, null, null, new google.maps.Size(0, 0));
+                        e.setIcon(pinIcon);
+                    }
+                    count++;
+                });
+            }
+        } else {
+            for (i = 0; i < markersArray.length; i++) {
+                count = 0;
+                markersArray[i].forEach(function (e) {
+                    if (count != 0 && count != markersArray[i].length - 1) {
+                        e.setIcon((typeof e.getIcon() == 'object') ? e.getIcon().url : e.getIcon());
+                    }
+                    count++;
+                });
+            }
+        }
+    }
+    function placeMarker(LatLng, name, locid, PathID, seqNo, distance) {
+        var sMarker = new google.maps.Marker({
+            position: LatLng,
+            map: map,
+            title: name,
+            icon: (mtype == 'single' ? 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + getColor(locid) : (mtype == 'multi') ? 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + PathID + getColor(locid) : 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + PathID + getColor(locid)),
+//        label: { color: '#00aaff', fontWeight: 'bold', fontSize: '14px', text: 'Your text here' },
+            opacity: 1,
+            pathid: PathID,
+            distance: distance,
+        });
+        var sinfowindow = new google.maps.InfoWindow({
+            content: formatInfoWindow(locid, distance)
+        });
+        sMarker.addListener('mouseover', function () {
+            sinfowindow.open(map, sMarker);
+        });
+        sMarker.addListener('mouseout', function () {
+            sinfowindow.close();
+        });
+        if (mtype == "Start") {
+            if (!markersArray[count])
+                markersArray[count] = [];
+            markersArray[count].push(sMarker);
+        }
+    }
+    function isInfoWindowOpen(infoWindow) {
+        var map = infoWindow.getMap();
+        return (map !== null && typeof map !== "undefined");
+    }
+    function formatInfoWindow(locationid, distance) {
+        var text = "";
+        $(data).each(function () {
+            $(this).each(function () {
+                if (this.ProjectLocationID == locationid) {
+                    text += "<p><span class='monitoring-field'>Location: </span>" + (this.ProjectLocationName).toUpperCase() + "</p>";
+                    text += "<span>Distance : " + (distance / 1000.00).toFixed(2) + "km</span><br/>";
+                }
+            });
+        });
+        $(mdata).each(function () {
+            if (this.ProjectLocationID == locationid) {
+                text += "<p><span class='monitoring-field'>Actual Start Date : </span>" + this.ActualStartDate + "</p>";
+                text += "<p><span class='monitoring-field'>Completion : </span>" + this.Completion + "% </p>";
+                text += "<a href=''>Images</a>";
+                text += "<hr/>";
+            }
+        });
+        return text;
+    }
+    function drawPolyline() {
+        let markersPositionArray = [];
+        for (i = 0; i < markersArray.length; i++) {
+            // obtain latlng of all markers on map
+            markersArray[i].forEach(function (e) {
+                if (!markersPositionArray[i])
+                    markersPositionArray[i] = [];
+                markersPositionArray[i].push(e.getPosition());
+            });
+            // check if there is already polyline drawn on map
+            // remove the polyline from map before we draw new one
+            if (polyline[i] !== undefined) {
+                polyline[i].setMap(null);
+            }
+            let orangeShades = ["orange", "peru"];
+            var d = locationTasks[markersArray[i][0].pathid];
+            var distance = markersArray[i][markersArray[i].length - 1].distance
+            /*
+                 var info = new google.maps.InfoWindow({
+                     Title: "Coordinates",
+                     content: "<table>" +
+                         "<tr><td colspan=2 class='infowindowtd' style='text-align: center;border-bottom:1px solid black; padding-bottom:10px;'>" + markersArray[i][markersArray[i].length - 1].title +
+                         "</td></tr><tr><td class='infowindowtd'>Total length</td><td class='infowindowinfo'>" + (distance / 1000.00).toFixed(2) + "km" +
+                         "</td></tr><tr><td class='infowindowtd'>Completed</td><td class='infowindowinfo'>" + d.completed.toFixed(0).toString() + "%" +
+                         "</td></tr><tr><td class='infowindowtd'>Planned Cost</td><td class='infowindowinfo'> " + d.plannedCost.toCurrency(Cookies.get("projectCurrency")) +
+                         "</td></tr><tr><td class='infowindowtd'>Actual Cost</td><td class='infowindowinfo'> " + d.actualCost.toCurrency(Cookies.get("projectCurrency")) +
+                         "</td></tr><tr><td class='infowindowtd'>" + (d.actualStartDate ? "Start Date" : "Planned Start Date") + "</td><td class='infowindowinfo'>" + d.plannedStartDate.toString().Date2UIDate() +
+                         "</td></tr><tr><td class='infowindowtd'>" + (d.actualEndDate ? "End Date" : "Planned End Date") + "</td><td class='infowindowinfo'>" + d.plannedEndDate.toString().Date2UIDate() + "</tr></table>",
+                 });
+     */
+            var info = new google.maps.InfoWindow({
+                Title: "Coordinates",
+                content: "<table>" +
+                    "<tr><td colspan=2 class='infowindowtd' style='text-align: center;border-bottom:1px solid black; padding-bottom:10px;'>" + markersArray[i][markersArray[i].length - 1].title +
+                    "</td></tr><tr><td class='infowindowtd'>Total length</td><td class='infowindowinfo'>" + (distance / 1000.00).toFixed(2) + "km"
+            });
+            polyline[i] = new google.maps.Polyline({
+                map: map,
+                path: markersPositionArray[i],
+                geodesic: true,
+                strokeColor: orangeShades[i % 2],
+                strokeOpacity: 1.0,
+                strokeWeight: 9,
+                infoWindow: info,
+            });
+            google.maps.event.addListener(polyline[i], "mouseover", enter);
+            google.maps.event.addListener(polyline[i], "mouseout", leave);
+            google.maps.event.addListener(polyline[i], "mousemove", showInfo);
+        }
+    }
+    String.prototype.Date2UIDate = function () {
+        if (this.length == 0)
+            return null;
+        let dt = new Date(this);
+        let m = dt.getMonth() + 1;
+        let y = dt.getFullYear();
+        let d = dt.getDate();
+        return `${"0".repeat(2 - m.toString().length) + m}-${"0".repeat(2 - d.toString().length) + d}-${y}`;
+    }
+    function enter() {
+        let orangeShades = ["orange", "peru"];
+        let yellowShades = ["yellow", "gold"];
+        this.setOptions({
+            geodesic: true,
+            strokeColor: yellowShades[orangeShades.indexOf(this.strokeColor)],
+            strokeOpacity: 1.0,
+            strokeWeight: 9,
+        });
+    }
+    function leave() {
+        let orangeShades = ["orange", "peru"];
+        let yellowShades = ["yellow", "gold"];
+        this.setOptions({
+            geodesic: true,
+            strokeColor: orangeShades[yellowShades.indexOf(this.strokeColor)],
+            strokeOpacity: 1.0,
+            strokeWeight: 9,
+        });
+        this.infoWindow.close();
+    }
+    function showInfo(event) {
+        this.infoWindow.setPosition(event.latLng);
+        this.infoWindow.open(map);
+    }
+    function getColor(locationid) {
+        var text = "|FF0000|FFFFFF";
+        var exist = false;
+        $(mdata).each(function () {
+            if (this.ProjectLocationID == locationid) {
+                if (this.Completion == 100)
+                    text = "|40FF00|000000";
+                else
+                    text = "|ffff00|000000";
+            }
+        });
+        $(wbs).each(function () {
+            if (this.LocationID == locationid)
+                exist = true;
+        });
+        if (!exist)
+            text = "|000000|FFFFFF";
+        return text;
+    }
+    //#endregion
+    var wbs = <%- WBSData %>;
+    mdata = <%- MonitoringData %>;
+    if (wbs.wp) {
+        var dataWP = <%- WPMData %>;
+        (function ($) {
+            'use strict';
+            var responsiveHelper = undefined;
+            var breakpointDefinition = {
+                tablet: 1024,
+                phone: 480
+            };
+            $("#selectWP").select2({
+                placeholder: "Select WBS"
+            });
+            let EVMValuesPerMonth = <%- EVMValuesPerMonth %>;
+            let EVMValuesPerMonth2 = <%- EVMValuesPerMonth2 %>;
+            let PlannedValueMonths = [];
+            let PLannedValues = [];
+            let ACMonths = [];
+            let ACValues = [];
+            let FVValues = [];
+            let EVValues = [];
+            let FVMonth = true;
+            let renderActualCurve = true;
+            EVMValuesPerMonth.forEach(function (M) {
+                PlannedValueMonths.push(M.RecordDate);
+                PLannedValues.push(M.PV);
+            });
+            EVMValuesPerMonth2.forEach(function (M) {
+                if (renderActualCurve) {
+                    ACMonths.push(M.RecordDate);
+                    ACValues.push(M.AC);
+                    EVValues.push(M.EV);
+                }
+                FVValues.push(M.FV);
+                FVMonth = false;
+                if (M.LastMonitoring) renderActualCurve = false;
+            });
+            let CompletionDate = new Date(<%- CompletionDate %>);
+            let sv = <%- EVMValues.SVV %>;
+            let cv = <%- EVMValues.CVV %>;
+            var tracePV = {
+                x: PlannedValueMonths,
+                y: PLannedValues,
+                type: 'lines+markers',
+                line: {color: '#ffc10791', width: 3, shape: 'linear'},
+                marker: {
+                    color: '#ffc107',
+                    size: 7
+                },
+                hovertemplate: '%{y} <extra>PV</extra>',
+                name: 'PV'
+            };
+            var traceAC = {
+                x: ACMonths,
+                y: ACValues,
+                type: 'lines+markers',
+                line: {color: 'rgb(167 0 210 / 79%)', width: 3, shape: 'linear'},
+                marker: {
+                    color: 'rgb(167 0 210 / 79%)',
+                    size: 3
+                },
+                hovertemplate: '%{y} <extra>AC</extra>',
+                name: 'AC'
+            };
+            var traceEV = {
+                x: ACMonths,
+                y: EVValues,
+                type: 'lines+markers',
+                line: {color: 'rgb(60 50 141 / 62%)', width: 3, shape: 'linear'},
+                marker: {
+                    color: 'rgb(60 50 141 / 62%)',
+                    size: 3
+                },
+                hovertemplate: '%{y} <extra>EV</extra>',
+                name: 'EV'
+            };
+            let eacVal = <%- EVMValues.EACValue ? EVMValues.EACValue : 0 %>;
+            var traceCV = {
+                x: [traceAC.x[traceAC.x.length - 1], traceAC.x[traceAC.x.length - 1]],
+                y: [traceAC.y[traceAC.y.length - 1], traceEV.y[traceEV.y.length - 1]],
+                type: 'lines+markers',
+                line: {color: cv > 0 ? 'green' : 'red', width: 3.5, dash: 'dot', shape: 'dot'},
+                marker: {
+                    color: cv > 0 ? 'green' : 'red',
+                    size: 7
+                },
+                hoverinfo: 'skip',
+                name: 'CV'
+            };
+            let point = tracePV.y.reduce((point, pvy, i) => {
+                let cvar = Math.abs(traceEV.y[traceEV.y.length - 1] - pvy);
+                if (cvar < Math.abs(point.var)) {
+                    point.var = cvar;
+                    point.index = i;
+                }
+                return point;
+            }, {var: Number.NEGATIVE_INFINITY, index: null})
+            var traceSV = {
+                label: {text: 'upper threshold'},
+                x: [traceEV.x[traceEV.x.length - 1], tracePV.x[point.index]],
+                y: [traceEV.y[traceEV.y.length - 1], traceEV.y[traceEV.y.length - 1]],
+                type: 'lines+markers+text',
+                marker: {
+                    color: sv > 0 ? 'green' : 'red',
+                    size: 7
+                },
+                line: {color: sv > 0 ? 'green' : 'red', width: 3.5, dash: 'dot', shape: 'dot'},
+                hoverinfo: 'skip',
+                name: 'SV'
+            };
+            let totalDays = moment(traceSV.x[1]).diff(traceSV.x[0], 'days');
+            let isAfter = moment(traceSV.x[1]).isAfter(traceSV.x[0]) ? -1 : 1;
+            let middate = isAfter ? traceSV.x[0] : traceSV.x[1];
+            let midcv = traceEV.y[traceEV.y.length - 1] - (Math.abs(cv) / 2);
+            var traceEAC = [];
+            let vacDate = moment(PlannedValueMonths[PlannedValueMonths.length - 1]).add('days', -totalDays)._d;
+            if (eacVal != 0) {
+                traceEAC = {
+                    x: [PlannedValueMonths[PlannedValueMonths.length - 1], vacDate],
+                    y: [PLannedValues[PLannedValues.length - 1], eacVal],
+                    type: 'lines+markers',
+                    connectgaps: true,
+                    line: {color: totalDays > 0 ? 'green' : 'red', width: 3, dash: 'dot', shape: 'spline'},
+                    marker: {
+                        color: totalDays > 0 ? 'green' : 'red',
+                        size: 5
+                    },
+                    hovertemplate: '%{y} <extra>EAC</extra>',
+                    name: 'EAC'
+                };
+            }
+            var vac = <%- EVMValues.VVAC %>;
+               var dataEVM = [tracePV, traceAC, traceEV,   traceEAC];
+            if(sv != 0) dataEVM.push(traceSV);
+            if(cv != 0) dataEVM.push(traceCV);
+            //  if (!CompletionDate) dataEVM.push(traceEAC);
+            let svAnno =  {
+                x: middate,
+                y: traceSV.y[1],
+                xref: 'x',
+                yref: 'y',
+                text: totalDays != 0 ? `${Math.abs(totalDays)} days ${totalDays < 0 ? "behind" : "ahead"}` : '',
+                showarrow: false,
+                font: {
+                    family: 'Courier New, monospace',
+                    size: 16,
+                    color: sv > 0 ? 'green' : 'red'
+                },
+                xanchor: "left",
+                xshift: 5,
+                ax: 20,
+                ay: -30,
+                borderwidth: 2,
+                borderpad: 4,
+                bgcolor: 'white',
+                bordercolor: 'rgb(218 216 216)',
+                filter: 'drop-shadow(10px 0 5px red)'
+            };
+            let cvAnno = {
+                x: traceAC.x[traceAC.x.length - 1],
+                y: midcv,
+                xref: 'x',
+                yref: 'y',
+                text: cv != 0 ? `${d3.format(".2s")(Math.abs(cv))} ${cv < 0 ? "excess" : "below"} budget` : '',
+                showarrow: false,
+                font: {
+                    family: 'Courier New, monospace',
+                    size: 16,
+                    color: cv > 0 ? 'green' : 'red'
+                },
+                xanchor: "left",
+                xshift: 5,
+                ax: 20,
+                ay: -30,
+                borderwidth: 2,
+                borderpad: 4,
+                bgcolor: 'white',
+                bordercolor: 'rgb(218 216 216)',
+                filter: 'drop-shadow(10px 0 5px red)'
+            };
+            let perpShape = {
+                type: 'line',
+                x0: tracePV.x[point.index],
+                y0: 0,
+                x1: tracePV.x[point.index],
+                y1: traceEV.y[traceEV.y.length - 1],
+                opacity: 0.5,
+                line: {
+                    color: 'grey',
+                    width: 3,
+                    dash: 'Solid'
+                }
+            };
+            var layout = {
+                dragmode: 'pan',
+                showlegend: true,
+                xaxis: {
+                    title: 'Months',
+                    showgrid: true,
+                    zeroline: false
+                },
+                yaxis: {
+                    title: 'Cost',
+                    showline: true
+                },
+                annotations: [
+                    {
+                        x: vacDate,
+                        y: eacVal,
+                        xref: 'x',
+                        yref: 'y',
+                        text: vac != 0 ? `Estimated Completion with ${d3.format(".2s")(Math.abs(vac))} ${vac < 0 ? "excess" : "below"} budget on ${moment(vacDate).format('MMM DD, YYYY')}` : `Estimated Completion on budget on ${moment(vacDate).format('MMM DD, YYYY')}`,
+                        showarrow: false,
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 16,
+                            color: vac > 0 ? 'green' : 'red'
+                        },
+                        xanchor: "left",
+                        xshift: 5,
+                        ax: 20,
+                        ay: -30,
+                        borderwidth: 2,
+                        borderpad: 4,
+                        bgcolor: 'white',
+                        bordercolor: 'rgb(218 216 216)',
+                        filter: 'drop-shadow(10px 0 5px red)'
+                    }
+                ],
+                shapes: [{
+                    type: 'line',
+                    x0: traceAC.x[traceAC.x.length - 1],
+                    y0: 0,
+                    x1: traceAC.x[traceAC.x.length - 1],
+                    y1: tracePV.y[tracePV.y.length - 1],
+                    opacity: 0.5,
+                    line: {
+                        color: 'rgb(41 146 44 / 70%)',
+                        width: 3,
+                        dash: 'Solid'
+                    }
+                }, {
+                    type: 'line',
+                    x0: vacDate,
+                    y0: 0,
+                    x1: vacDate,
+                    y1: eacVal,
+                    opacity: 0.5,
+                    line: {
+                        color: 'grey',
+                        width: 3,
+                        dash: 'Solid'
+                    }
+                },
+                {
+                    type: 'line',
+                    x0: tracePV.x[0],
+                    y0: 0,
+                    x1: traceEV.x[0],
+                    y1: traceEV.y[0],
+                    opacity: 0.5,
+                    line: {
+                        color: 'rgb(60 50 141 / 62%)',
+                        width: 3,
+                        dash: 'dot'
+                    }
+                },{
+                    type: 'line',
+                    x0: tracePV.x[0],
+                    y0: 0,
+                    x1: traceAC.x[0],
+                    y1: traceAC.y[0],
+                    opacity: 0.5,
+                    line: {
+                        color:'rgb(167 0 210 / 79%)',
+                        width: 3,
+                        dash: 'dot'
+                    }
+                }
+                ]
+            };
+            if(cv!=0) layout.annotations.push(cvAnno);
+            if(sv!=0) {
+                layout.annotations.push(svAnno);
+                layout.shapes.push(perpShape);
+            }
+            let myPlot = document.getElementById('evmChart');
+            Plotly.newPlot('evmChart', dataEVM, layout, {displayModeBar: false, scrollZoom: true});
+            var f1 = {
+                x: ACMonths,
+                y: ACValues,
+                type: 'lines+markers',
+                line: {color: '#6D5CAE', width: 3, shape: 'spline'},
+                marker: {
+                    color: '#6D5CAE',
+                    size: 10,
+                },
+                hovertemplate: '%{y} <extra>ACTUAL COST</extra>',
+                name: 'ACTUAL COST'
+            };
+            var f2 = {
+                x: ACMonths,
+                y: FVValues,
+                type: 'lines+markers',
+                line: {color: '#0DAD9E', width: 3, dash: 'dot', shape: 'spline'},
+                marker: {
+                    color: '#0DAD9E',
+                    size: 10
+                },
+                name: 'FORECAST',
+                hovertemplate: '%{y} <extra>FORECAST</extra>',
+            };
+            var dataForecast = [f1, f2];
+            var layout = {
+                showlegend: true,
+                xaxis: {
+                    title: 'Months',
+                    showgrid: false,
+                    zeroline: false
+                },
+                yaxis: {
+                    title: 'Cost',
+                    showline: false
+                }
+            };
+            Plotly.newPlot('forecastChart', dataForecast, layout, {displayModeBar: false, scrollZoom: false});
+        })(window.jQuery);
+        DurationData = {
+            labels: ['Days'],
+            datasets: [{
+                label: 'Planned',
+                backgroundColor: '#584c8b',
+                borderColor: '#584c8b',
+                borderWidth: 1,
+                maxBarThickness: 10,
+                data: [0]
+            },
+                {
+                    label: 'Actual',
+                    backgroundColor: '#0DAD9E',
+                    borderColor: '#0DAD9E',
+                    maxBarThickness: 10,
+                    data: [0]
+                }]
+        };
+        var ContractorEquipmentData = {
+            labels: ['Contractor'],
+            datasets: [{
+                label: 'Planned',
+                backgroundColor: '#584c8b',
+                borderColor: '#584c8b',
+                borderWidth: 1,
+                maxBarThickness: 10,
+                data: [0]
+            },
+                {
+                    label: 'Actual',
+                    backgroundColor: '#0DAD9E',
+                    borderColor: '#0DAD9E',
+                    maxBarThickness: 10,
+                    data: [0]
+                }]
+        };
+        var CostData = {
+            labels: ['Cost'],
+            datasets: [{
+                label: 'Planned',
+                backgroundColor: '#584c8b',
+                borderColor: '#584c8b',
+                borderWidth: 1,
+                maxBarThickness: 10,
+                data: [0]
+            },
+                {
+                    label: 'Actual',
+                    backgroundColor: '#0DAD9E',
+                    borderColor: '#0DAD9E',
+                    maxBarThickness: 10,
+                    data: [0]
+                }]
+        };
+        var ResourcesData = {
+            labels: ['Resources'],
+            datasets: [{
+                label: 'Planned',
+                backgroundColor: '#584c8b',
+                borderColor: '#584c8b',
+                borderWidth: 1,
+                maxBarThickness: 10,
+                data: [0]
+            },
+                {
+                    label: 'Actual',
+                    backgroundColor: '#0DAD9E',
+                    borderColor: '#0DAD9E',
+                    maxBarThickness: 10,
+                    data: [0]
+                }]
+        };
+        var CompletionData = {
+            labels: ['Completion'],
+            datasets: [{
+                label: 'Planned',
+                backgroundColor: '#584c8b',
+                borderColor: '#584c8b',
+                borderWidth: 1,
+                maxBarThickness: 10,
+                data: [0]
+            }, {
+                label: 'Actual',
+                backgroundColor: '#0DAD9E',
+                borderColor: '#0DAD9E',
+                data: [0]
+            }]
+        };
+        var PriceData = {
+            labels: ['Material Price'],
+            datasets: [
+                //   {
+                //   label: 'Planned',
+                //   backgroundColor: color(window.chartColors.gray).alpha(0.5).rgbString(),
+                //   xAxisID: "bar-x-axis1",
+                //   data: [0],
+                //   stack: "background",
+                // },
+                {
+                    label: 'Actual',
+                    backgroundColor: color('#0DAD9E').alpha(1).rgbString(),
+                    xAxisID: "bar-x-axis2",
+                    data: [0]
+                }]
+        };
+        var QtyData = {
+            labels: ['Material Quantity'],
+            datasets: [
+                //   {
+                //   label: 'Planned',
+                //   backgroundColor: color(window.chartColors.gray).alpha(0.5).rgbString(),
+                //   xAxisID: "bar-x-axis1",
+                //   data: [0],
+                //   stack: "background",
+                // },
+                {
+                    label: 'Actual',
+                    backgroundColor: color('#0DAD9E').alpha(1).rgbString(),
+                    xAxisID: "bar-x-axis2",
+                    data: [0]
+                }]
+        };
+        var RateData = {
+            labels: ['Labor Rate'],
+            datasets: [
+                //   {
+                //   label: 'Planned',
+                //   backgroundColor: color(window.chartColors.gray).alpha(0.5).rgbString(),
+                //   xAxisID: "bar-x-axis1",
+                //   data: [0],
+                //   stack: "background",
+                // },
+                {
+                    label: 'Actual',
+                    backgroundColor: color('#0DAD9E').alpha(1).rgbString(),
+                    xAxisID: "bar-x-axis2",
+                    data: [0]
+                }]
+        };
+        var EfficiencyData = {
+            labels: ['Labor Efficiency'],
+            datasets: [
+                //   {
+                //   label: 'Planned',
+                //   backgroundColor: color(window.chartColors.gray).alpha(0.5).rgbString(),
+                //   xAxisID: "bar-x-axis1",
+                //   data: [0],
+                //   stack: "background"
+                // },
+                {
+                    label: 'Actual',
+                    backgroundColor: color('#0DAD9E').alpha(1).rgbString(),
+                    xAxisID: "bar-x-axis2",
+                    data: [0],
+                }]
+        };
+        window.onload = function () {
+            var fontsize = 14;
+            $.each(dataWP['wp'], function (key, value) {
+                $('#selectWP').append('<option value=' + value.id + '>' + value.taskId + ' - ' + value.description + '</option>');
+            });
+            const margin = 80;
+            const width = 200 - (2 * margin);
+            const height = 680 - (2 * margin);
+            $("#selectWP").change(function () {
+                let selections = $(this).val();
+                DurationData["datasets"][0].data[0] = 0;
+                DurationData["datasets"][1].data[0] = 0;
+                ContractorEquipmentData["datasets"][0].data[0] = 0;
+                ContractorEquipmentData["datasets"][1].data[0] = 0;
+                CostData["datasets"][0].data[0] = 0;
+                CostData["datasets"][1].data[0] = 0;
+                ResourcesData["datasets"][0].data[0] = 0;
+                ResourcesData["datasets"][1].data[0] = 0;
+                CompletionData["datasets"][0].data[0] = 0;
+                CompletionData["datasets"][1].data[0] = 0;
+                material1Planned = 0;
+                material1Actual = 0;
+                material1Variance = 0;
+                material1Title = 0;
+                material2Planned = 0;
+                material2Actual = 0;
+                material2Variance = 0;
+                material2Title = 0;
+                material3Planned = 0;
+                material3Actual = 0;
+                material3Variance = 0;
+                material3Title = 0;
+                laborRatePlanned = 0;
+                laborRateActual = 0;
+                laborRateVariance = 0;
+                laborEfficiencyPlanned = 0;
+                laborEfficiencyActual = 0;
+                laborEfficiencyVariance = 0;
+                equipmentPlanned = 0;
+                equipmentActual = 0;
+                equipmentVariance = 0;
+                selections.forEach(selectedValue => {
+                    DurationData["datasets"][0].data[0] += dataWP[selectedValue]['Duration'].Planned;
+                    DurationData["datasets"][1].data[0] += dataWP[selectedValue]['Duration'].Actual;
+                    ContractorEquipmentData["datasets"][0].data[0] += dataWP[selectedValue]['ContractorEquipment'].Planned;
+                    ContractorEquipmentData["datasets"][1].data[0] += dataWP[selectedValue]['ContractorEquipment'].Actual;
+                    CostData["datasets"][0].data[0] += dataWP[selectedValue]['Cost'].Planned;
+                    CostData["datasets"][1].data[0] += dataWP[selectedValue]['Cost'].Actual;
+                    ResourcesData["datasets"][0].data[0] += dataWP[selectedValue]['Resources'].Planned;
+                    ResourcesData["datasets"][1].data[0] += dataWP[selectedValue]['Resources'].Actual;
+                    CompletionData["datasets"][0].data[0] += dataWP[selectedValue]['Completion'].Weightage;
+                    CompletionData["datasets"][1].data[0] += dataWP[selectedValue]['Completion'].Weightage * (dataWP[selectedValue]['Completion'].Actual / 100);
+                    material1Planned += dataWP[selectedValue]['Material1'].Planned;
+                    material1Actual += dataWP[selectedValue]['Material1'].Actual;
+                    material1Variance += dataWP[selectedValue]['Material1'].Variance;
+                    material1Title += dataWP[selectedValue]['Material1'].Material;
+                    material2Planned += dataWP[selectedValue]['Material2'].Planned;
+                    material2Actual += dataWP[selectedValue]['Material2'].Actual;
+                    material2Variance += dataWP[selectedValue]['Material2'].Variance;
+                    material2Title += dataWP[selectedValue]['Material2'].Material;
+                    material3Planned += dataWP[selectedValue]['Material3'].Planned;
+                    material3Actual += dataWP[selectedValue]['Material3'].Actual;
+                    material3Variance += dataWP[selectedValue]['Material3'].Variance;
+                    material3Title += dataWP[selectedValue]['Material3'].Material;
+                    laborRatePlanned += dataWP[selectedValue]['LaborRate'].Planned;
+                    laborRateActual += dataWP[selectedValue]['LaborRate'].Actual;
+                    laborRateVariance += dataWP[selectedValue]['LaborRate'].Variance;
+                    laborEfficiencyPlanned += dataWP[selectedValue]['LaborEfficiency'].Planned;
+                    laborEfficiencyActual += dataWP[selectedValue]['LaborEfficiency'].Actual;
+                    laborEfficiencyVariance += dataWP[selectedValue]['LaborEfficiency'].Variance;
+                    equipmentPlanned += dataWP[selectedValue]['Equipment'].Planned;
+                    equipmentActual += dataWP[selectedValue]['Equipment'].Actual;
+                    equipmentVariance += dataWP[selectedValue]['Equipment'].Variance;
+                });
+                if (selections.length > 0) {
+                    CompletionData["datasets"][1].data[0] = 100 * (CompletionData["datasets"][1].data[0] / CompletionData["datasets"][0].data[0]).toFixed(0);
+                    CompletionData["datasets"][0].data[0] = 100;
+                }
+                window.DurationBar.update();
+                window.costbar.update();
+                window.resourcesbar.update();
+                window.Completionbar.update();
+                window.ContractorEquipmentBar.update();
+                //Vertical bar data update
+                // PriceData["datasets"][0].data[0] = dataWP[$(this).val()]['Price'].Planned;
+                // PriceData["datasets"][1].data[0] = dataWP[$(this).val()]['Price'].Actual;
+                // QtyData["datasets"][0].data[0] = dataWP[$(this).val()]['Qty'].Planned;
+                // QtyData["datasets"][1].data[0] = dataWP[$(this).val()]['Qty'].Actual;
+                // RateData["datasets"][0].data[0] = dataWP[$(this).val()]['Rate'].Planned;
+                // RateData["datasets"][1].data[0] = dataWP[$(this).val()]['Rate'].Actual;
+                // EfficiencyData["datasets"][0].data[0] = dataWP[$(this).val()]['Efficiency'].Planned;
+                // EfficiencyData["datasets"][1].data[0] = dataWP[$(this).val()]['Efficiency'].Actual;
+                //Vertical bar data update
+                const data = [{
+                    title: 'Labor Rate',
+                    planned: laborRatePlanned,
+                    actual: laborRateActual,
+                    variance: laborRateVariance
+                }, {
+                    title: 'Labor Efficiency',
+                    planned: laborEfficiencyPlanned,
+                    actual: laborEfficiencyActual,
+                    variance: laborEfficiencyVariance
+                }, {
+                    title: 'Equipment',
+                    planned: equipmentPlanned,
+                    actual: equipmentActual,
+                    variance: equipmentVariance
+                }, {
+                    type: 'top3',
+                    title: material1Title,
+                    planned: material1Planned,
+                    actual: material1Actual,
+                    variance: material1Variance
+                }, {
+                    type: 'top3',
+                    title: material2Title,
+                    planned: material2Planned,
+                    actual: material2Actual,
+                    variance: material2Variance
+                }, {
+                    type: 'top3',
+                    title: material3Title,
+                    planned: material3Planned,
+                    actual: material3Actual,
+                    variance: material3Variance
+                }
+                ];
+                renderCustomVariance(data);
+            });
+            Chart.Tooltip.positioners.custom = function (elements, position) {
+                if (!elements.length) {
+                    return false;
+                }
+                var offset = 0;
+                //adjust the offset left or right depending on the event position
+                if (elements[0]._chart.width / 2 > position.x) {
+                    offset = 20;
+                } else {
+                    offset = -20;
+                }
+                return {
+                    x: position.x + offset,
+                    y: position.y
+                }
+            };
+            var options = {
+                // Elements options apply to all of the options unless overridden in a dataset
+                // In this case, we are setting the border of each horizontal bar to be 2px wide
+                elements: {
+                    rectangle: {
+                        borderWidth: 2,
+                    }
+                },
+                responsive: true,
+                legend: {
+                    position: 'right',
+                },
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: fontsize,
+                            min: 1,
+                            callback: function (value, index, values) {
+                                if (value > 1000000)
+                                    return value / 1e6 + 'M';
+                                else if (value > 1000)
+                                    return value / 1e3 + 'K';
+                                else return value;
+                            }
+                        }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            display: false,
+                        },
+                        position: "left",
+                        scaleLabel: {
+                            display: true,
+                            labelString: '',
+                            fontFamily: "Montserrat",
+                            fontColor: "black",
+                        },
+                    }]
+                },
+                tooltips: {
+                    titleFontSize: fontsize,
+                    bodyFontSize: fontsize,
+                    enabled: true,
+                    position: 'custom',
+                    callbacks: {
+                        label: function (tooltipItems, data) {
+                            value = tooltipItems.xLabel;
+                            if (value > 1000000)
+                                value = value / 1e6 + 'M';
+                            else if (value > 1000)
+                                value = value / 1e3 + 'K';
+                            else value = value;
+                            value = data.datasets[tooltipItems.datasetIndex].label + ':' + value;
+                            return value;
+                        }
+                    }
+                },
+                legend: {
+                    display: false,
+                    labels: {
+                        fontSize: fontsize,
+                    },
+                    position: 'right',
+                }
+            };
+            var voptions = {
+                // Elements options apply to all of the options unless overridden in a dataset
+                // In this case, we are setting the border of each horizontal bar to be 2px wide
+                maintainAspectRatio: false,
+                elements: {
+                    rectangle: {
+                        borderWidth: 2,
+                    }
+                },
+                responsive: true,
+                legend: {
+                    position: 'right',
+                },
+                scales: {
+                    yAxes: [
+                        {
+                            id: "bar-x-axis2",
+                            stacked: false,
+                            categoryPercentage: 0.25,
+                            barPercentage: 0.5,
+                            ticks: {
+                                beginAtZero: true,
+                                max: 100,
+                                min: 0,
+                                stepSize: 5,
+                                fontSize: fontsize,
+                            }
+                        },
+                        // {
+                        //   display: false,
+                        //   stacked: true,
+                        //   id: "bar-x-axis1",
+                        //   type: 'category',
+                        //   categoryPercentage: 0.5,
+                        //   barPercentage: 1,
+                        //   gridLines: {
+                        //     offsetGridLines: true
+                        //   }
+                        // }
+                    ],
+                    xAxes: [{
+                        id: "bar-y-axis1",
+                        stacked: false,
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0,
+                            callback: function (value, index, values) {
+                                if (value > 1000000)
+                                    return value / 1e6 + 'M';
+                                else if (value > 1000)
+                                    return value / 1e3 + 'K';
+                                else return value;
+                            }
+                        }
+                    }]
+                },
+                tooltips: {
+                    titleFontSize: fontsize,
+                    bodyFontSize: fontsize,
+                },
+                legend: {
+                    display: true,
+                    labels: {
+                        fontSize: fontsize,
+                    },
+                    position: 'top',
+                },
+            };
+            var ctx = document.getElementById('Duration').getContext('2d');
+            options["scales"]['xAxes'][0]['scaleLabel']['labelString'] = DurationData["labels"][0];
+            window.DurationBar = new Chart(ctx, {
+                type: 'bar',
+                data: DurationData,
+                options: options,
+            });
+            ctx = document.getElementById('ContractorEquipment').getContext('2d');
+            options["scales"]['xAxes'][0]['scaleLabel']['labelString'] = ContractorEquipmentData["labels"][0];
+            window.ContractorEquipmentBar = new Chart(ctx, {
+                type: 'bar',
+                data: ContractorEquipmentData,
+                options: options,
+            });
+            ctx = document.getElementById('Cost').getContext('2d');
+            options["scales"]['xAxes'][0]['scaleLabel']['labelString'] = CostData["labels"][0];
+            window.costbar = new Chart(ctx,
+                {
+                    type: 'bar',
+                    data: CostData,
+                    options: options,
+                });
+            ctx = document.getElementById('Resources').getContext('2d');
+            options["scales"]['xAxes'][0]['scaleLabel']['labelString'] = ResourcesData["labels"][0];
+            window.resourcesbar = new Chart(ctx,
+                {
+                    type: 'bar',
+                    data: ResourcesData,
+                    options: options,
+                });
+            ctx = document.getElementById('Completion').getContext('2d');
+            options["scales"]['xAxes'][0]['scaleLabel']['labelString'] = CompletionData["labels"][0];
+            window.Completionbar = new Chart(ctx,
+                {
+                    type: 'bar',
+                    data: CompletionData,
+                    options: options,
+                });
+        };
+        let PCD = <%- JSON.stringify(PerformanceCostData) %>;
+        let PBD = <%- JSON.stringify(PerformanceBudgetData) %>;
+        let PSD = <%- JSON.stringify(PerformanceScheduleData) %>;
+        var performanceCostData = [
+            {
+                type: "indicator",
+                mode: "gauge+number+delta",
+                value: PCD.ActualCost,
+                delta: {
+                    reference: PCD.AverageMonthlyCost,
+                    increasing: {color: "#c54847"},
+                    decreasing: {color: "#0DAD9E"}
+                },
+                gauge: {
+                    axis: {range: [null, PCD.RedRange[1]], tickwidth: 1, tickcolor: "darkblue"},
+                    //  axis: { range: [null, 3], tickwidth: 1, tickcolor: "darkblue" },
+                    bar: {color: "#0DAD9E"},
+                    bgcolor: "white",
+                    borderwidth: 2,
+                    bordercolor: "gray",
+                    steps: [
+                        {range: PCD.PurpleRange, color: "#584c8b"},
+                        {range: PCD.YellowRange, color: "#f7cf5f"},
+                        {range: PCD.RedRange, color: "#c54847"}
+                    ],
+                    threshold: {
+                        line: {color: "f7cf5f", width: 4},
+                        thickness: 1,
+                        value: 3
+                    }
+                }
+            }
+        ];
+        var performanceCostLayout = {
+            height: 200,
+            margin: {t: 25, r: 25, l: 25, b: 25},
+            font: {color: "darkblue", family: "Arial"}
+        };
+        Plotly.newPlot('performanceCostChart', performanceCostData, performanceCostLayout);
+        var performanceScheduleData = [
+            {
+                type: "indicator",
+                mode: "gauge+number+delta",
+                value: PSD.TotalDaysSpent,
+                delta: {
+                    reference: PSD.TotalPlannedDays,
+                    increasing: {color: "#c54847"},
+                    decreasing: {color: "#0DAD9E"}
+                },
+                gauge: {
+                    axis: {range: [null, PSD.RedRange[1]], tickwidth: 1, tickcolor: "darkblue"},
+                    bar: {color: "#0DAD9E"},
+                    bgcolor: "white",
+                    borderwidth: 2,
+                    bordercolor: "gray",
+                    steps: [
+                        {range: PSD.PurpleRange, color: "#584c8b"},
+                        {range: PSD.YellowRange, color: "#f7cf5f"},
+                        {range: PSD.RedRange, color: "#c54847"}
+                    ],
+                    threshold: {
+                        line: {color: "0DAD9E", width: 4},
+                        thickness: 1,
+                        value: PSD.YellowRange[1]
+                    }
+                }
+            }
+        ];
+        var performanceScheduleLayout = {
+            height: 200,
+            margin: {t: 25, r: 25, l: 25, b: 25},
+            font: {color: "darkblue", family: "Arial"}
+        };
+        Plotly.newPlot('performanceScheduleChart', performanceScheduleData, performanceScheduleLayout);
+        var performanceBudgetData = [
+            {
+                type: "indicator",
+                mode: "gauge+number+delta",
+                value: PBD.TotalActualCost,
+                delta: {
+                    reference: PBD.TotalEstimatedBudget,
+                    increasing: {color: "#c54847"},
+                    decreasing: {color: "#0DAD9E"}
+                },
+                gauge: {
+                    axis: {range: [null, PBD.RedRange[1]], tickwidth: 1, tickcolor: "darkblue"},
+                    bar: {color: "#0DAD9E"},
+                    bgcolor: "white",
+                    borderwidth: 2,
+                    bordercolor: "gray",
+                    steps: [
+                        {range: PBD.PurpleRange, color: "#584c8b"},
+                        {range: PBD.YellowRange, color: "#f7cf5f"},
+                        {range: PBD.RedRange, color: "#c54847"}
+                    ],
+                    threshold: {
+                        line: {color: "f7cf5f", width: 4},
+                        thickness: 1,
+                        value: PBD.RedRange[1]
+                    }
+                }
+            }
+        ];
+        var performanceBudgetLayout = {
+            height: 200,
+            margin: {t: 25, r: 25, l: 25, b: 25},
+            font: {color: "darkblue", family: "Arial"}
+        };
+        Plotly.newPlot('performanceBudgetChart', performanceBudgetData, performanceBudgetLayout);
+    }
+    $("#tabs").tabs({active: 0});
+</script>
+</body>
+</html>
