@@ -298,6 +298,38 @@ router.get('/earned', function (req, res) {
 	});
 });
 
+router.get('/surveys', function (req, res) {
+	db.query('select l.UCName uc, concat(upper(left(MONTHNAME(m.CreateDate),3)),"-",year(m.CreateDate)) month_year, count(*) total from Monitoring m , LUCs l where m.UCID = l.UCID group by uc, month_year  order by month_year', function (err, result) {
+		if (err) {
+			console.log(err.message);
+			res.status(500).send(err.message);
+		} else {
+			res.json(result.reduce((surveys, survey)=> { 
+				if(!surveys[survey.uc]){
+					surveys[survey.uc] = { [survey.month_year] : survey.total };
+				} else {
+					surveys[survey.uc][survey.month_year] = survey.total;
+				}
+
+				 return surveys;
+			 }
+				 , {}))
+		}
+	});
+});
+
+
+router.get('/ucs', function (req, res) {
+	db.query("select UCName from LUCs l ", function (err, result) {
+		if (err) {
+			console.log(err.message);
+			res.status(500).send(err.message);
+		} else {
+			res.json(result)
+		}
+	});
+});
+
 
 // router.get('/api/benid', function (req, res) {
 // 	mdlBeneficiary.getBenID(req, function (err, result) {
