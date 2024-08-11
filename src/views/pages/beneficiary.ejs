@@ -27,6 +27,36 @@
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="theme/css/bracket.css">
+
+
+    <style>
+      /* Tooltip container */
+.tooltipm {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltipm .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltipm:hover .tooltiptext {
+  visibility: visible;
+}
+    </style>
   </head>
 
   <body>
@@ -144,10 +174,29 @@
               {"data": "CNIC", "title":columns[0]},
               { "data": "BeneficiaryName", "title":columns[1] },
               { "data": "MonitoringLevel", "title":columns[2] },
-              { "data": "FirstPayment", "title":columns[3] },
-              { "data": "SecondPayment", "title":columns[4] },
-              { "data": "ThirdPayment", "title":columns[5] },
-              { "data": "FourthPayment", "title":columns[6] },
+              { "data": "FirstPayment", "title": columns[3] ,  render : function ( data, type, row, meta ) {
+              return type === 'display'  ?
+                `<div class="tooltipm">${data}<span class="tooltiptext">${row["FirstPaymentDate"]?.split("T")[0]}</span></div>` :
+                data;
+            } },
+
+              
+
+              { "data": "SecondPayment", "title":columns[4],  render : function ( data, type, row, meta ) {
+              return type === 'display'  ?
+                `<div class="tooltipm">${data}<span class="tooltiptext">${row["SecondPaymentDate"]?.split("T")[0]}</span></div>` :
+                data;
+            } },
+              { "data": "ThirdPayment", "title":columns[5] ,  render : function ( data, type, row, meta ) {
+              return type === 'display'  ?
+                `<div class="tooltipm">${data}<span class="tooltiptext">${row["ThirdPaymentDate"]?.split("T")[0]}</span></div>` :
+                data;
+            }},
+              { "data": "FourthPayment", "title":columns[6],  render : function ( data, type, row, meta ) {
+              return type === 'display'  ?
+                `<div class="tooltipm">${data}<span class="tooltiptext">${row["FourthPaymentDate"]?.split("T")[0]}</span></div>` :
+                data;
+            } },
               { "data": "Paid", "title":columns[7] },
               { "data": "UC", "title":columns[8]},
               { "data": "Village", "title":columns[9]},

@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 var db = require('../config/connection');
 var async = require('async');
-const uuidv1 = require('uuid/v1');
-
 let mdlBeneficiary = require('../models/mdlBeneficiary');
 
 var isAuthenticated = function (req, res, next) {

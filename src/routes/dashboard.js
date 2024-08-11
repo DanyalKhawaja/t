@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../config/connection');
-//var async = require('async');
-const uuidv1 = require('uuid/v1');
 var passport = require('passport');
 
 var isAuthenticated = function (req, res, next) {

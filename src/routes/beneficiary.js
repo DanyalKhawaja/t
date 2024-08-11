@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var db = require('../config/connection');
 var async = require('async');
-const uuidv1 = require('uuid/v1');
 var ByteBuffer = require('byte-buffer');
 var resizeImage = require('resize-image');
 

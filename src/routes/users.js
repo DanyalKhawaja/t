@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../config/connection');
 var async = require('async');
-const uuidv1 = require('uuid/v1');
+const {v4: uuidv1} = require('uuid');
 
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler
