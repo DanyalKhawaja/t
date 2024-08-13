@@ -439,9 +439,21 @@
                             <% } %>
                             <label class="form-control-label" style="color:<%=c %>"><%= Level4Status %></label>
                           </div>
+                          <% let image = ''; %>
+                          <% if (Level4Status == 'Achieved'){ %>
+                            <%  image = './L4.png'; %>
+                            <% } else if (Level3Status == 'Achieved') { %>
+                              <%  image = './L3.png'; %>
+                            <% } else if (Level2Status == 'Achieved') { %>
+                              <%  image= './L2.png'; %>  
+                              <% } else if (Level1Status == 'Achieved') { %>
+                                <%  image= './L1.png'; %>
+                                <% } else { %>
+                                  <% image = './L0.png'; %>
+                                  <% } %>
+                          <span class="house-image" ><img src="<%= image %>" /></span>
 
-                          <span class="donut"
-                            data-peity='{ "fill": ["orange", "#eeeeee"], "innerRadius": 50, "radius": 100 }'><%= Progress %>/100</span>
+                        
                         </div>
 
                       </div><!-- row -->

@@ -16,7 +16,8 @@
   <title>HRA | GIS</title>
 
   <!-- vendor css -->
-  <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- <link href="theme/lib/font-awesome/css/font-awesome.css" rel="stylesheet"> -->
   <link href="theme/lib/Ionicons/css/ionicons.css" rel="stylesheet">
   <link href="theme/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
   <link href="theme/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
@@ -25,6 +26,7 @@
 
   <!-- Bracket CSS -->
   <link rel="stylesheet" href="theme/css/bracket.css">
+
 </head>
 
 <body class="collapsed-menu">
@@ -73,7 +75,6 @@
                 </select>
               </div>
             </div><!-- col-4 -->
-
           </div>
         </div>
       </div>
@@ -92,20 +93,20 @@
             <div class="rounded overflow-hidden" style="background: #1D2939">
               <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
                 <% if (lang == 'en') { %>
-                BUDGET ALLOCATED
+                  Funds Released by SFD
                 <% } else { %>
                 العدد الإجمالي
                 <% } %>
               </p>
               <p class="tx-16 tx-center tx-white tx-lato tx-bold mg-b-5 lh-1" id="labelBudgetAllocated">Rs.
-                <%= (Beneficiaries.length * 260000).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
+                <%= (2079999200).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
             </div>
             <br />
             <div class=" rounded overflow-hidden" style="background: #1D2939">
               <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">
 
                 <% if (lang == 'en') { %>
-                BUDGET DISBURSED
+                  Funds Disbursed by HRA
                 <% } else { %>
                 التحقق
                 <% } %>
@@ -113,135 +114,6 @@
               <p class="tx-14 tx-center tx-white tx-lato tx-bold mg-b-5 lh-1" id="labelBudgetDisbursed">Rs.
                 <%= ((CountLevel1InProgress * 88000)+(CountLevel2InProgress * 66000)).toLocaleString(undefined, {maximumFractionDigits:2}) %>
               </p>
-            </div>
-            <br />
-            <div class="rounded" style="background:#1D2939;">
-
-              <div class="dropdown">
-                <a href="" class="tx-gray-800 d-inline-block" data-toggle="dropdown">
-                  <div class="ht-45 pd-x-20 bd d-flex align-items-center justify-content-center">
-                    <span class="tx-14 tx-center tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-1">MAP LEGEND
-                    </span>
-                    <img src="http://via.placeholder.com/280x280" class="wd-20 rounded-circle" alt="">
-                    <i class="fa fa-angle-down mg-l-10"></i>
-                  </div>
-                </a>
-                <div class="dropdown-menu pd-10 wd-200" style="background:#1D2939;">
-                  <nav class="nav nav-style-2 flex-column">
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/red-circle.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Not Started</p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/blu-circle.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-1 In-Progress
-                        </p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-1 Completed
-                        </p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/ltblu-circle.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-2 In-Progress
-                        </p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/pink-circle.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-2 Completed
-                        </p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/wht-circle.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-3 In-Progress
-                        </p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/purple-circle.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-3 Completed
-                        </p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/orange-circle.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-4 In-Progress
-                        </p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/paddle/grn-stars.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Level-4 Completed
-                        </p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Model House - Not
-                          started</p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Model House - In
-                          Progress</p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Model House -
-                          Completed</p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/pal3/icon32.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Govt Building - In
-                          progress</p>
-                      </div>
-                    </div>
-                    <div class="pd-x-5 d-flex align-items-center">
-                      <img style="-webkit-user-select: none;height:30px;"
-                        src="http://maps.google.com/mapfiles/kml/pal3/icon28.png">
-                      <div class=<%= (lang=="en") ? "mg-l-20" : "mg-r-20" %>>
-                        <p class="tx-12 tx-white tx-lato tx-bold mg-b-1 lh-1" id="labelDubiousCount">Govt Building -
-                          Completed</p>
-                      </div>
-                    </div>
-                  </nav>
-                </div><!-- dropdown-menu -->
-              </div><!-- dropdown -->
             </div>
             <br />
             <div class=" rounded " style="background: #1D2939">
@@ -384,7 +256,7 @@
   <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
   <script src="theme/lib/echarts/echarts.min.js"></script>
   <script src="theme/lib/select2/js/select2.min.js"></script>
-  <script src="http://maps.google.com/maps/api/js?key=AIzaSyAtFS563VrFYCkOBmG8J2-noujJ9gP18EM"></script>
+  <script src="http://maps.google.com/maps/api/js?key=AIzaSyAtFS563VrFYCkOBmG8J2-noujJ9gP18EM&libraries=marker"></script>
 
 
   <script src="theme/lib/gmaps/gmaps.js"></script>
@@ -404,6 +276,38 @@
         var zoomLevel = 9;
         var markers = [];
         var ModelHousesMarkers = [];
+        const ucColorPalette =  ["#33a8c7","#52e3e1","#a0e426","#fdf148","#ffab00","#f77976","#f050ae","#d883ff","#9336fd"];
+        const ucColorPalette2=  ["f77976","f050ae","d883ff","9336fd","33a8c7","52e3e1","a0e426","fdf148","ffab00"];
+
+       const getPin = function(monitoringLevel, levelStatus, ucId = 0) {
+        let  pin = null;
+
+                if (monitoringLevel > 0 && levelStatus == 2) {
+                  // A marker using a Font Awesome icon for the glyph.
+                  const icon = document.createElement('div');
+                  icon.innerHTML = `<i class="fa fa-${monitoringLevel} fa-lg"></i>`;
+                  pin = new google.maps.marker.PinElement({
+                      glyph: icon,
+                      glyphColor: 'black',
+                      background: ucColorPalette[ucId],
+                      borderColor: '#28231d',
+                  }).element
+                  //check if level-1 is achieved
+                } else {
+                 const icon = document.createElement('div');
+                  icon.innerHTML = `<i class="fa fa-0 fa-lg"></i>`;
+                  pin = new google.maps.marker.PinElement({
+                      glyph: icon,
+                      glyphColor: 'black',
+                      background:  ucColorPalette[ucId],
+                      borderColor: '#28231d',
+                  }).element
+                }
+
+                return pin;
+
+              
+       }
 
         $('#btn-houses').on('click', function (e) {
           if ($('#btn-houses').hasClass("btn-secondary")) {
@@ -414,24 +318,16 @@
             redrawMarkers();
           }
         });
-        // $('#btn-model-houses').on('click', function (e) {
-        //   if ($('#btn-model-houses').hasClass("btn-secondary")) {
-        //     $("#btn-model-houses").addClass("btn-outline-secondary").removeClass("btn-secondary");
-        //     clearModelHousesMarkers();
+
+        // $('#btn-govt-buildings').on('click', function (e) {
+        //   if ($('#btn-govt-buildings').hasClass("btn-secondary")) {
+        //     $("#btn-govt-buildings").addClass("btn-outline-secondary").removeClass("btn-secondary");
+        //     //clearMarkers();
         //   } else {
-        //     $("#btn-model-houses").addClass("btn-secondary").removeClass("btn-outline-secondary");
-        //     redrawModelHousesMarkers();
+        //     $("#btn-govt-buildings").addClass("btn-secondary").removeClass("btn-outline-secondary");
+        //     //redrawMarkers();
         //   }
         // });
-        $('#btn-govt-buildings').on('click', function (e) {
-          if ($('#btn-govt-buildings').hasClass("btn-secondary")) {
-            $("#btn-govt-buildings").addClass("btn-outline-secondary").removeClass("btn-secondary");
-            //clearMarkers();
-          } else {
-            $("#btn-govt-buildings").addClass("btn-secondary").removeClass("btn-outline-secondary");
-            //redrawMarkers();
-          }
-        });
 
         $('#select2-UC').on('select2:select', function (e) {
           var data = e.params.data;
@@ -465,9 +361,9 @@
             success: function (data) {   // A function to be called if request succeeds
               console.log(data.CountLevel1InProgress[0].count);
               clearMarkers();
-              clearModelHousesMarkers();
+              // clearModelHousesMarkers();
               Beneficiaries = data.Beneficiary;
-              ModelHouses = data.ModelHouses;
+              // ModelHouses = data.ModelHouses;
               markers = [];
 
               $("#labelBudgetAllocated").html("Rs. " + (data.Beneficiary.length * 260000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -517,56 +413,21 @@
                 var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
                 bounds.extend(position);
 
-                let icon = "";
-                if (Beneficiaries[i].InstallmentType == 1) {
-                  icon = "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png";
-                  //check if level-1 is achieved
-
-                }
-                if (Beneficiaries[i].InstallmentType == 2) {
-                  icon = "http://maps.google.com/mapfiles/kml/paddle/ltblu-circle.png";
-                  //check if level-1 is achieved
-                }
-                if (Beneficiaries[i].InstallmentType == 3) {
-                  icon = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png";
-                  //check if level-1 is achieved
-                }
-                if (Beneficiaries[i].InstallmentType == 4) {
-                  icon = "http://maps.google.com/mapfiles/kml/paddle/orange-circle.png";
-                  //check if level-1 is achieved
-                }
-                if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 2) {
-                  icon = "http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png";
-                  //check if level-1 is achieved
-                }
-
-                if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 2) {
-                  icon = "http://maps.google.com/mapfiles/kml/paddle/pink-circle.png";
-                  //check if level-1 is achieved
-                }
-                if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 2) {
-                  icon = "http://maps.google.com/mapfiles/kml/paddle/purple-circle.png";
-                  //check if level-1 is achieved
-                }
-                if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 2) {
-                  icon = "http://maps.google.com/mapfiles/kml/paddle/grn-stars.png";
-                  //check if level-1 is achieved
-                }
-
-
-                var marker = new google.maps.Marker({
+                var marker = new google.maps.marker.AdvancedMarkerElement({
                   position: position,
                   map: map,
                   title: Beneficiaries[i].FirstName,
-                  icon: icon
+                  content: getPin(Beneficiaries[i].MonitoringLevel, Beneficiaries[i].LevelStatus, Beneficiaries[i].UCID+0)
                 });
                 markers.push(marker);
                 map.setZoom(11);
                 // Automatically center the map fitting all markers on the screen
                 map.fitBounds(bounds);
-                map.setCenter(marker.getPosition());
+                map.setCenter(marker.position);
 
                 function load_content(marker, CNIC) {
+                  infowindow.setContent();
+                  infowindow.setHeaderContent('Loading...');
                   let temp = '<strong style="color:red;">NONE</strong><br>';
                   if (Beneficiaries[i].InstallmentType == 1) {
                     temp = '<strong style="color:blue;">1st</strong><br>'
@@ -603,9 +464,10 @@
                         progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 ACHIEVED' + '</strong>';
                       }
                       infowindow.setContent('<div id="iw-container">' +
-                        '<div class="iw-title">' + Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName + '</div>' +
-                        '<div class="iw-content">' +
-                        '<img src="' + data + '"  height="120" width="100">' +
+                        '<div class="iw-content" style="max-height: none">' +
+                      
+                       
+                        '<img src="' + data + '"  width="43%">' +
                         '<div class="iw-subTitle">CNIC: ' + Beneficiaries[i].CNIC + '</div>' +
                         '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>' +
                         'INSTALLMENT PAID: ' + temp + '<br>' + progress1 +
@@ -613,6 +475,9 @@
                         '<a href="/beneficiary/detail?CNIC=' + Beneficiaries[i].CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
                         '</div>' +
                         '</div>');
+                        const header = document.createElement("h3");
+                        header.textContent = Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName;
+                        infowindow.setHeaderContent(header);
                       infowindow.open(map, marker);
                     }
                   });
@@ -624,7 +489,7 @@
                   }
                 })(marker, i));
               }
-
+ /** remove model houses
               for (let i = 0; i < ModelHouses.length; i++) {
 
                 if (ModelHouses[i].Latitude == 0 || !ModelHouses[i].Longitude) {
@@ -634,22 +499,30 @@
                 var position = new google.maps.LatLng(ModelHouses[i].Latitude, ModelHouses[i].Longitude);
                 bounds.extend(position);
 
-                let icon = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
+                //let icon = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
                 // if (Beneficiaries[i].Level == 1){
                 //   console.log(Beneficiaries[i].CNIC);
                 //   icon = "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png";
                 // };
 
-                var marker = new google.maps.Marker({
+                const icon = document.createElement('div');
+                  icon.innerHTML = '<i class="fa fa-house fa-lg"></i>';
+                const  pin = new google.maps.marker.PinElement({
+                      glyph: icon,
+                      glyphColor: '#ff8300',
+                      background: 'yellow', //pushpin
+                      borderColor: '#ff8300',
+                  }).element
+                var marker = new google.maps.marker.AdvancedMarkerElement({
                   position: position,
                   map: map,
                   title: ModelHouses[i].ID,
-                  icon: icon
+                  content: pin
                 });
                 ModelHousesMarkers.push(marker);
                 // Automatically center the map fitting all markers on the screen
                 map.fitBounds(bounds);
-                map.setCenter(marker.getPosition());
+                map.setCenter(marker.position);
                 function load_content(marker, CNIC) {
                   infowindow.setContent('<div id="iw-container">' +
                     '<div class="iw-title">' + ModelHouses[i].MHName + '</div>' +
@@ -693,6 +566,8 @@
                   }
                 })(marker, i));
               }
+
+              */
             },
             error: function (data) {
               console.log('Couldn\'t GET the Beneficiaries');
@@ -762,7 +637,7 @@
                 var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
                 bounds.extend(position);
 
-                var marker = new google.maps.Marker({
+                var marker = new google.maps.marker.AdvancedMarkerElement({
                   position: position,
                   map: map,
                   title: Beneficiaries[i].FirstName
@@ -770,7 +645,7 @@
                 markers.push(marker);
                 // Automatically center the map fitting all markers on the screen
                 map.fitBounds(bounds);
-                map.setCenter(marker.getPosition());
+                map.setCenter(marker.position);
 
                 google.maps.event.addListener(marker, 'click', (function (marker, i) {
                   return function () {
@@ -799,7 +674,7 @@
         var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
 
         var Beneficiaries = JSON.parse('<%- JSON.stringify(Beneficiaries) %>');
-        var ModelHouses = JSON.parse('<%- JSON.stringify(ModelHouses) %>');
+        // var ModelHouses = JSON.parse('<%- JSON.stringify(ModelHouses) %>');
         var CountLevel1InProgress = JSON.parse('<%- JSON.stringify(CountLevel1InProgress) %>');
         var CountLevel1Achieved = JSON.parse('<%- JSON.stringify(CountLevel1Achieved) %>');
         var CountLevel2InProgress = JSON.parse('<%- JSON.stringify(CountLevel2InProgress) %>');
@@ -812,16 +687,18 @@
         var myLatLng = new google.maps.LatLng(Beneficiaries[0].VHLatitude, Beneficiaries[0].VHLongitude);
 
         var myOptions = {
+          mapId: "gis", 
           zoom: 12,
           center: myLatLng,
           scrollwheel: false,
           zoomControl: true,
           navigationControl: false,
           mapTypeControl: false,
-          mapTypeId: 'hybrid',
+          _mapTypeId: 'hybrid',
+  
           scaleControl: false,
           draggable: true,
-          styles: [
+          s_tyles: [
             {
               featureType: 'all',
               stylers: [
@@ -859,55 +736,21 @@
           var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
           bounds.extend(position);
 
-          var icon = "";
-          //var progress = 'PROGRESS: <strong style="color:red;">'+'0'+'%</strong>';
+        
 
-          if (Beneficiaries[i].InstallmentType == 1) {
-            icon = "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png";
-            //check if level-1 is achieved
-
-          }
-          if (Beneficiaries[i].InstallmentType == 2) {
-            icon = "http://maps.google.com/mapfiles/kml/paddle/ltblu-circle.png";
-            //check if level-1 is achieved
-          }
-          if (Beneficiaries[i].InstallmentType == 3) {
-            icon = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png";
-            //check if level-1 is achieved
-          }
-          if (Beneficiaries[i].InstallmentType == 4) {
-            icon = "http://maps.google.com/mapfiles/kml/paddle/orange-circle.png";
-            //check if level-1 is achieved
-          }
-          if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 2) {
-            icon = "http://maps.google.com/mapfiles/kml/paddle/ylw-circle.png";
-            //check if level-1 is achieved
-          }
-
-          if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 2) {
-            icon = "http://maps.google.com/mapfiles/kml/paddle/pink-circle.png";
-            //check if level-1 is achieved
-          }
-          if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 2) {
-            icon = "http://maps.google.com/mapfiles/kml/paddle/purple-circle.png";
-            //check if level-1 is achieved
-          }
-          if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 2) {
-            icon = "http://maps.google.com/mapfiles/kml/paddle/grn-stars.png";
-            //check if level-1 is achieved
-          }
-
-          var marker = new google.maps.Marker({
+          var marker = new google.maps.marker.AdvancedMarkerElement({
             position: position,
             map: map,
             title: Beneficiaries[i].FirstName,
-            icon: icon
+            content: getPin(Beneficiaries[i].MonitoringLevel, Beneficiaries[i].LevelStatus, Beneficiaries[i].UCID+0)
           });
           markers.push(marker);
           // Automatically center the map fitting all markers on the screen
           map.fitBounds(bounds);
-          map.setCenter(marker.getPosition());
+          map.setCenter(marker.position);
           function load_content(marker, CNIC) {
+            infowindow.setContent();
+            infowindow.setHeaderContent('Loading...');
             $.ajax({
               url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
               success: function (data) {
@@ -949,16 +792,19 @@
 
 
                 infowindow.setContent('<div id="iw-container">' +
-                  '<div class="iw-title">' + Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName + '</div>' +
-                  '<div class="iw-content">' +
-                  '<img src="' + data + '"  height="120" width="100">' +
-                  '<div class="iw-subTitle">CNIC: ' + Beneficiaries[i].CNIC + '</div>' +
+                  
+                  '<div class="iw-content" style="max-height: none">' +
+                      
+                        '<img src="' + data + '"  width="43%">' +
                   '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>' +
                   'INSTALLMENT PAID: ' + temp + '<br>' + progress1 +
                   '<br>PHONE: ' + Beneficiaries[i].PhonePrimary +
                   '<a href="/beneficiary/detail?CNIC=' + Beneficiaries[i].CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
                   '</div>' +
                   '</div>');
+                  const header = document.createElement("h3");
+                        header.textContent = Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName;
+                        infowindow.setHeaderContent(header);
                 infowindow.open(map, marker);
               }
             });
@@ -971,7 +817,7 @@
             }
           })(marker, i));
         }
-
+/**
         for (let i = 0; i < ModelHouses.length; i++) {
 
           if (ModelHouses[i].Latitude == 0 || !ModelHouses[i].Longitude) {
@@ -981,21 +827,41 @@
           var position = new google.maps.LatLng(ModelHouses[i].Latitude, ModelHouses[i].Longitude);
           bounds.extend(position);
 
-          let icon = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
-          if (ModelHouses[i].Progress == 100) {
-            icon = "http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png";
-          };
+         
 
-          var marker = new google.maps.Marker({
+          let icon = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
+          let pin = null;
+          if (ModelHouses[i].Progress == 100) {
+            // icon = "http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png";
+             icon = document.createElement('div');
+                  icon.innerHTML = '<i class="fa fa-house fa-lg"></i>';
+                  pin = new google.maps.marker.PinElement({
+                      glyph: icon,
+                      glyphColor: '#ff8300',
+                      background: 'green', //push pin
+                      borderColor: '#ff8300',
+                  }).element
+          } else {
+             icon = document.createElement('div');
+                  icon.innerHTML = '<i class="fa fa-house fa-lg"></i>';
+                  pin = new google.maps.marker.PinElement({
+                      glyph: icon,
+                      glyphColor: '#ff8300',
+                      background: 'yellow', //push pin
+                      borderColor: '#ff8300',
+                  }).element
+          }
+
+          var marker = new google.maps.marker.AdvancedMarkerElement({
             position: position,
             map: map,
             title: ModelHouses[i].ID,
-            icon: icon
+            content: pin
           });
           ModelHousesMarkers.push(marker);
           // Automatically center the map fitting all markers on the screen
           map.fitBounds(bounds);
-          map.setCenter(marker.getPosition());
+          map.setCenter(marker.position);
           function load_content(marker, CNIC) {
             infowindow.setContent('<div id="iw-container">' +
               '<div class="iw-title">' + ModelHouses[i].MHName + '</div>' +
@@ -1038,7 +904,7 @@
               infowindow.open(map, marker);
             }
           })(marker, i));
-        }
+        } */
         // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
         var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
           //this.setZoom(zoomLevel);
@@ -1050,32 +916,32 @@
             markers[i].setMap(map);
           }
         }
-        // Sets the map on all markers in the array.
-        function setMapOnAllModelHouses(map) {
-          // for (var i = 0; i < ModelHousesMarkers.length; i++) {
-          //   ModelHousesMarkers[i].setMap(map);
-          // }
-        }
+        // // Sets the map on all markers in the array.
+        // function setMapOnAllModelHouses(map) {
+        //   // for (var i = 0; i < ModelHousesMarkers.length; i++) {
+        //   //   ModelHousesMarkers[i].setMap(map);
+        //   // }
+        // }
 
         // Removes the markers from the map, but keeps them in the array.
         function clearMarkers() {
           setMapOnAll(null);
         }
 
-        // Removes the markers from the map, but keeps them in the array.
-        function clearModelHousesMarkers() {
-         // setMapOnAllModelHouses(null);
-        }
+        // // Removes the markers from the map, but keeps them in the array.
+        // function clearModelHousesMarkers() {
+        //  // setMapOnAllModelHouses(null);
+        // }
 
         // Removes the markers from the map, but keeps them in the array.
         function redrawMarkers() {
           setMapOnAll(map);
         }
 
-        // Removes the markers from the map, but keeps them in the array.
-        function redrawModelHousesMarkers() {
-         // setMapOnAllModelHouses(map);
-        }
+        // // Removes the markers from the map, but keeps them in the array.
+        // function redrawModelHousesMarkers() {
+        //  // setMapOnAllModelHouses(map);
+        // }
 
         var Level1PieChart = echarts.init(document.getElementById('Level1PieChart'));
         var option = {

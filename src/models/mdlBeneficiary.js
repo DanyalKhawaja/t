@@ -30,7 +30,7 @@ var mdlBeneficiary = {
 
     db.query('SELECT \
     Beneficiary.CNIC, Beneficiary.FirstName, Beneficiary.LastName, Beneficiary.PhonePrimary, Beneficiary.PhoneSecondary,\
-      Beneficiary.VHLatitude, Beneficiary.VHLongitude, Beneficiary.BenStatusID, \
+      Beneficiary.VHLatitude, Beneficiary.VHLongitude, Beneficiary.BenStatusID, Beneficiary.UCID, \
       m3.MonitoringLevel, m3.LevelStatus, InstallmentType \
     FROM \
 	Beneficiary \
@@ -63,7 +63,7 @@ WHERE \
 	BenStatusID = 4 \
 GROUP BY \
 	Beneficiary.CNIC, Beneficiary.FirstName, Beneficiary.LastName, Beneficiary.PhonePrimary, Beneficiary.PhoneSecondary,\
-  Beneficiary.VHLatitude, Beneficiary.VHLongitude, Beneficiary.BenStatusID, \
+  Beneficiary.VHLatitude, Beneficiary.VHLongitude, Beneficiary.BenStatusID, Beneficiary.UCID, \
   m3.MonitoringLevel, m3.LevelStatus, InstallmentType', [req.UCID], function (err, result) {
       if (err) {
         console.log(err.message);
