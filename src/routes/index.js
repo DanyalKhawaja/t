@@ -936,7 +936,7 @@ router.get('/levelAchieved', isAuthenticated, function(req, res) {
 			},
 			
 			TotalCountLevelAcheivedByUC: function (callback) {
-				db.query('SELECT count(UCID) as Count, UCID, MonitoringLevel FROM Monitoring where LevelStatus=2  group by UCID, MonitoringLevel order by UCID, MonitoringLevel', null, callback)
+				db.query('select Count, UCName ,	MonitoringLevel from (SELECT count(UCID) as Count, UCID, MonitoringLevel FROM Monitoring where LevelStatus=2  group by UCID, MonitoringLevel order by UCID, MonitoringLevel) as ll, LUCs where ll.UCID = LUCs.UCID', null, callback)
 			},
 			TotalCountLevelAcheivedByMonth: function (callback) {
 				db.query('SELECT count(CreateDate) as Count, upper(Date_format(CreateDate, \'%b-%Y\')) as CD, MonitoringLevel FROM Monitoring where LevelStatus=2 group by CD, MonitoringLevel order by CD, MonitoringLevel', null, callback)

@@ -594,6 +594,9 @@ router.get('/disbursments', isAuthenticated, function (req, res) {
 					WHERE DistributedCheques.InstallmentType = 3 \
 					GROUP BY Beneficiary.UCID', null, callback)
 			},
+			TotalCountInstallment_DisbursementByUC: function (callback) {
+				db.query('select Count, UCName , InstallmentType from (SELECT count(UCID) as Count, UCID, InstallmentType FROM (select dc.*, b.UCID from DistributedCheques dc left join Beneficiary b on dc.CNIC = b.CNIC) AS PP  group by UCID, InstallmentType HAVING UCID >0 order by UCID, InstallmentType) as ll, LUCs where ll.UCID = LUCs.UCID', null, callback)
+			},
 			TotalCountsInstallment_DisbursementByMonth: function (callback) {
 				db.query('SELECT upper(Date_format(ChequeDate, \'%b-%Y\')) as CD, InstallmentType, Count(ChequeDate) as count \
 				FROM DistributedCheques group by CD, InstallmentType order by CD, InstallmentType', null, callback)
@@ -619,6 +622,7 @@ router.get('/disbursments', isAuthenticated, function (req, res) {
 					lang: req.session.lang,
 					TotalCountInstallment_: results.TotalCounts[0].TotalCountInstallment3,
 					User: req.user,
+					TotalCountInstallment_DisbursementByUC: results.TotalCountInstallment_DisbursementByUC,
 					TotalCounts: results.TotalCounts[0],
 					TotalCount: results.TotalCounts[0].TotalCountInstallment1 + results.TotalCounts[0].TotalCountInstallment2 + results.TotalCounts[0].TotalCountInstallment3 + results.TotalCounts[0].TotalCountInstallment4,
 					TotalCountInstallment_ByUC: results.TotalCountInstallment_ByUC[0],

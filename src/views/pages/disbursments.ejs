@@ -48,42 +48,19 @@
 
     <div class="br-pagebody">
       <div class="row row-sm mg-t-20">
-        <div class="col-lg-4">
-          <div class="card shadow-base card-body pd-25 bd-0">
-            <div class="row">
-              <div class="col-sm-12">
-                <h6 class="card-title tx-uppercase tx-12"> Summary</h6>
-                <p class="display-4 tx-medium tx-inverse mg-b-5 tx-lato">
-                  <%= (TotalCountInstallment_/TotalCountApproved*100).toFixed(2) %>%
-                </p>
-                <div class="progress mg-b-10">
-                  <div class="progress-bar bg-primary progress-bar-xs wd-75p " role="progressbar" aria-valuenow="1"
-                    aria-valuemin="20" aria-valuemax="100"></div>
-                </div><!-- progress -->
-                <p class="tx-14"><%= TotalCountInstallment_ %> beneficiaries out of <%= TotalCountApproved %> approved beneficiaires have
-                  encashed the <%= Installment %> installment cheques
-                  of Rs. <%= InstallmentAmount %> as per Bank Reconciliation report till <%= LastDisbursementOn %></p>
-                <br />
-                <p class="tx-14 lh-3 mg-b-0">You can also see the progress of cheque encashment <a href="#">chart
-                    below</a>.</p>
-              </div><!-- col-6 -->
-            </div><!-- row -->
-          </div><!-- card -->
-        </div><!-- col-6 -->
-        <div class="col-lg-8 mg-t-30 mg-lg-t-0">
-          <div class="card shadow-base card-body pd-25 bd-0">
-            <div class="row">
-              <div class="col-sm-12">
-                <h6 class="card-title tx-uppercase tx-12 tx-inverse">Statistics - UC WISE ENCASHMENT</h6>
-                <canvas id="PaymentsDisbursedMonthwise" style="width: 100%;height:60%;"></canvas>
-              </div><!-- col-6 -->
-
-            </div><!-- row -->
-          </div><!-- card -->
-        </div><!-- col-6 -->
-      </div>
-
-
+        <div class="col-lg-6">
+          <div class="card shadow-base bd-0 pd-10 mg-t-5">
+            <h4 class="card-title tx-uppercase tx-12 tx-inverse">UC Wise</h4>
+            <div id="DisbursmentByUC" style="width: 100%;height:65vh;"></div>
+          </div>
+        </div><!-- col-8 -->
+        <div class="col-lg-6">
+          <div class="card shadow-base bd-0 pd-10 mg-t-5">
+            <h4 class="card-title tx-uppercase tx-12 tx-inverse">Overall</h4>
+            <div id="DisbursmentAll" style="width: 100%;height:65vh;"></div>
+          </div>
+        </div><!-- col-8 -->
+      </div><!-- row -->
       <div class="row row-sm mg-t-20">
         <div class="col-lg-12">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
@@ -125,39 +102,42 @@
   <script src="theme/js/map.shiftworker.js"></script>
   <script src="theme/js/ResizeSensor.js"></script>
   <script src="theme/js/dashboard.js"></script>
-  
-  <script>
-function fillMonths(md){
-var months =['2019-03','2019-04','2019-05','2019-06','2019-07','2019-08','2019-09','2019-10','2019-11','2019-12','2020-01','2020-02','2020-03','2020-04','2020-05','2020-06','2020-07','2020-08']
-var i=0;
-var d=[];
-months.forEach(m=>{ 
-if(md[i] && m==md[i].Month) {
-d.push(md[i++]);
-} else {
-d.push({Month: m,
-TotalCountInstallment_Awaran: 0,
-TotalCountInstallment_Dandar: 0,
-TotalCountInstallment_Gajjar: 0,
-TotalCountInstallment_Gishkore: 0,
-TotalCountInstallment_Nokjo: 0,
-TotalCountInstallment_Parwar: 0,
-TotalCountInstallment_Teertaje: 0});
-}
- });
-return d;
-}
 
-    $(function () {
+  <script>
+    function fillMonths(md) {
+      var months = ['2019-03', '2019-04', '2019-05', '2019-06', '2019-07', '2019-08', '2019-09', '2019-10', '2019-11', '2019-12', '2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06', '2020-07', '2020-08']
+      var i = 0;
+      var d = [];
+      months.forEach(m => {
+        if (md[i] && m == md[i].Month) {
+          d.push(md[i++]);
+        } else {
+          d.push({
+            Month: m,
+            TotalCountInstallment_Awaran: 0,
+            TotalCountInstallment_Dandar: 0,
+            TotalCountInstallment_Gajjar: 0,
+            TotalCountInstallment_Gishkore: 0,
+            TotalCountInstallment_Nokjo: 0,
+            TotalCountInstallment_Parwar: 0,
+            TotalCountInstallment_Teertaje: 0
+          });
+        }
+      });
+      return d;
+    }
+
+    $(function() {
       'use strict'
       // FOR DEMO ONLY
       // menu collapsed by default during first page load or refresh with screen
       // having a size between 992px and 1299px. This is intended on this page only
       // for better viewing of widgets demo.
-      $(window).resize(function () {
+      $(window).resize(function() {
         minimizeMenu();
       });
       minimizeMenu();
+
       function minimizeMenu() {
         if (window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
           // show only the icons and hide left menu label by default
@@ -173,65 +153,81 @@ return d;
     });
   </script>
   <script>
-    (function (document, window, $) {
-      
+    (function(document, window, $) {
+
 
       function generateMonthYearSeries(startDate, endDate) {
-   
-   // Array to hold the month-year strings
-   let monthYearStrings = [];
-   
-   // Validate the dates
-   if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-       throw new Error('Invalid date format. Please provide valid dates.');
-   }
-   
-   // Ensure startDate is before endDate
-   if (startDate > endDate) {
-       throw new Error('The "from" date must be before the "to" date.');
-   }
-   
-   // Function to format date as "Month-Year"
-   function formatMonthYear(date) {
-       const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-                        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-       let month = months[date.getMonth()];
-       let year = date.getFullYear();
-       return `${month}-${year}`;
-   }
-   
-   // Iterate through the months from startDate to endDate
-   let currentDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
-   while (currentDate <= endDate) {
-       monthYearStrings.push(formatMonthYear(currentDate));
-       // Move to the next month
-       currentDate.setMonth(currentDate.getMonth() + 1);
-   }
-   
-   return monthYearStrings;
-}
-    
 
+        // Array to hold the month-year strings
+        let monthYearStrings = [];
+
+        // Validate the dates
+        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+          throw new Error('Invalid date format. Please provide valid dates.');
+        }
+
+        // Ensure startDate is before endDate
+        if (startDate > endDate) {
+          throw new Error('The "from" date must be before the "to" date.');
+        }
+
+        // Function to format date as "Month-Year"
+        function formatMonthYear(date) {
+          const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+            "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+          ];
+          let month = months[date.getMonth()];
+          let year = date.getFullYear();
+          return `${month}-${year}`;
+        }
+
+        // Iterate through the months from startDate to endDate
+        let currentDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+        while (currentDate <= endDate) {
+          monthYearStrings.push(formatMonthYear(currentDate));
+          // Move to the next month
+          currentDate.setMonth(currentDate.getMonth() + 1);
+        }
+
+        return monthYearStrings;
+      }
       document.getElementById("li-financials").classList.add('active');
       document.getElementById("disbursments").classList.add('active');
+
       function htmlDecode(input) {
         var e = document.createElement('div');
         e.innerHTML = input;
         return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
       }
       var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
-      var TotalCountInstallment_ByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment_ByUC) %>"));
+      var TotalCountInstallment_DisbursementByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment_DisbursementByUC) %>"));
       var TotalCountInstallment_ByUCnMonth = fillMonths(JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment_ByUCnMonth) %>")));
-      const TotalCountsInstallment_DisbursementByMonth  = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountsInstallment_DisbursementByMonth) %>"));
+      const TotalCountsInstallment_DisbursementByMonth = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountsInstallment_DisbursementByMonth) %>"));
 
-      var timeSeries = generateMonthYearSeries(new Date("2019-01-01"),new Date())
-      
+      var timeSeries = generateMonthYearSeries(new Date("2019-01-01"), new Date())
+
+
+      const totalUCDisbursments = TotalCountInstallment_DisbursementByUC.reduce((l, c) => {
+        if (!l[c.UCName]) l[c.UCName] = {
+          [c.InstallmentType]: c.Count
+        };
+        else l[c.UCName][c.InstallmentType] = c.Count;
+        return l;
+      }, {})
+
       const totalDisbursments = TotalCountsInstallment_DisbursementByMonth.reduce((l, c) => {
-        if (!l[c.CD]) l[c.CD] = { [c.InstallmentType] : c.count };
+        if (!l[c.CD]) l[c.CD] = {
+          [c.InstallmentType]: c.count
+        };
         else l[c.CD][c.InstallmentType] = c.count;
         return l;
       }, {})
 
+      const totalLevelWiseDisbursment = TotalCountInstallment_DisbursementByUC.reduce((l, c) => {
+        if (!l[c.InstallmentType]) l[c.InstallmentType] = c.Count;
+        else l[c.InstallmentType] += c.Count;
+        return l;
+      }, {})
 
 
       const labelOption = {
@@ -244,26 +240,53 @@ return d;
       };
       var LabelMonths = [];
       var ChartData = [];
-      const levelValue={[1]:[],[2]:[],[3]:[],[4]:[]};
+      const levelValue = {
+        [1]: [],
+        [2]: [],
+        [3]: [],
+        [4]: []
+      };
+
+      const levelValueUC = {
+        [1]: [],
+        [2]: [],
+        [3]: [],
+        [4]: []
+      };
+
+      Object.keys(totalUCDisbursments).forEach(uc => {
+        levelValueUC[1].push(totalUCDisbursments?.[uc]?.[1] ?? 0);
+        levelValueUC[2].push(totalUCDisbursments?.[uc]?.[2] ?? 0);
+        levelValueUC[3].push(totalUCDisbursments?.[uc]?.[3] ?? 0);
+        levelValueUC[4].push(totalUCDisbursments?.[uc]?.[4] ?? 0);
+      });
       timeSeries.forEach(period => {
         let value = totalDisbursments?.[period]?.[1];
         levelValue[1].push(totalDisbursments?.[period]?.[1] ?? 0);
         levelValue[2].push(totalDisbursments?.[period]?.[2] ?? 0);
         levelValue[3].push(totalDisbursments?.[period]?.[3] ?? 0);
         levelValue[4].push(totalDisbursments?.[period]?.[4] ?? 0);
-      })
-     
+      });
 
+      var divByUC = document.getElementById('DisbursmentByUC');
+      var divAll = document.getElementById('DisbursmentAll');
+      var divByMonth = document.getElementById('PaymentsDisbursedChart');
 
-      var ctx = document.getElementById('PaymentsDisbursedChart');
-     
+      const min = timeSeries[timeSeries.length - 4];
+      const max = timeSeries[timeSeries.length - 1];
 
-      const min = timeSeries[timeSeries.length-4];
-     const max = timeSeries[timeSeries.length-1];
-   
-      var p2 = new echarts.init(ctx,null, { renderer: 'canvas' });
+      var chartByMonth = new echarts.init(divByMonth, null, {
+        renderer: 'canvas'
+      });
+      var chartByUC = new echarts.init(divByUC, null, {
+        renderer: 'canvas'
+      });
 
-      option = {
+      var chartAll = new echarts.init(divAll, null, {
+        renderer: 'canvas'
+      });
+
+      let optionByMonth = {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -277,53 +300,61 @@ return d;
           left: 'right',
           top: 'center',
           feature: {
-            mark: { show: true },
-            magicType: { show: true, type: ['line', 'bar', 'stack'] },
-            restore: { show: true },
-            saveAsImage: { show: true }
+            mark: {
+              show: true
+            },
+            magicType: {
+              show: true,
+              type: ['line', 'bar', 'stack']
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
           }
         },
-          legend: {
-            data: ["Level 1","Level 2","Level 3","Level 4"],
-            display: true,
+        legend: {
+          data: ["Level 1", "Level 2", "Level 3", "Level 4"],
+          display: true,
 
+        },
+        dataZoom: {
+          show: true
+        },
+        aria: {
+          enabled: true,
+          decal: {
+            show: true
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+
+        xAxis: [{
+          type: 'category',
+          axisTick: {
+            show: true
           },
-          dataZoom: {show: true},
-          aria: {
-    enabled: true,
-    decal: {
-      show: true
-    }
- },
- grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    
-          xAxis: [
-          {
-            type: 'category',
-            axisTick: { show: true },
-            data: timeSeries,
-            boundaryGap: true,
-            // min,
-            // max
-          }
-        ],
-        yAxis: [
-          {
-            type: 'value',
-            position: "right"
-          }
-        ],
-        series: [
-          {
+          data: timeSeries,
+          boundaryGap: true,
+          // min,
+          // max
+        }],
+        yAxis: [{
+          type: 'value',
+          position: "right"
+        }],
+        series: [{
             name: 'Level 1',
             type: 'bar',
             barGap: 0,
-       //     label: labelOption,
+            //     label: labelOption,
             emphasis: {
               focus: 'series'
             },
@@ -333,7 +364,7 @@ return d;
             name: 'Level 2',
             type: 'bar',
             barGap: 0,
-       //     label: labelOption,
+            //     label: labelOption,
             emphasis: {
               focus: 'series'
             },
@@ -343,7 +374,7 @@ return d;
             name: 'Level 3',
             type: 'bar',
             barGap: 0,
-       //     label: labelOption,
+            //     label: labelOption,
             emphasis: {
               focus: 'series'
             },
@@ -353,20 +384,162 @@ return d;
             name: 'Level 4',
             type: 'bar',
             barGap: 0,
-         //   label: labelOption,
+            //   label: labelOption,
             emphasis: {
               focus: 'series'
             },
             data: levelValue[4]
-          }]
-         
-        }
-         
-     
-   
-       p2.setOption(option);
+          }
+        ]
 
- 
+      }
+
+      chartByMonth.setOption(optionByMonth);
+
+      let optionByUC = {
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            mark: {
+              show: true
+            },
+            magicType: {
+              show: true,
+              type: ['line', 'bar', 'stack','tiled']
+            },
+            restore: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        angleAxis: {
+          type: 'category',
+          data: Object.keys(totalUCDisbursments)
+        },
+        radiusAxis: {},
+        polar: {},
+        series: [{
+            type: 'bar',
+            data: levelValueUC[1],
+            coordinateSystem: 'polar',
+            name: 'Level 1',
+            stack: 'a',
+            emphasis: {
+              focus: 'series'
+            }
+          },
+          {
+            type: 'bar',
+            data: levelValueUC[2],
+            coordinateSystem: 'polar',
+            name: 'Level 2',
+            stack: 'a',
+            emphasis: {
+              focus: 'series'
+            }
+          },
+          {
+            type: 'bar',
+            data: levelValueUC[3],
+            coordinateSystem: 'polar',
+            name: 'Level 3',
+            stack: 'a',
+            emphasis: {
+              focus: 'series'
+            }
+          },
+          {
+            type: 'bar',
+            data: levelValueUC[4],
+            coordinateSystem: 'polar',
+            name: 'Level 4',
+            stack: 'a',
+            emphasis: {
+              focus: 'series'
+            }
+          }
+        ],
+        legend: {
+          show: true,
+          data: ['Level 1', 'Level 2', 'Level 3', 'Level 4']
+        }
+      };
+      
+      
+      chartByUC.setOption(optionByUC);
+
+      let optionAll = {
+        tooltip: {
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          show: true
+        },
+        toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            mark: {
+              show: true
+            },
+            saveAsImage: {
+              show: true
+            }
+          }
+        },
+        series: [{
+          type: 'pie',
+          radius: [50, 250],
+          center: ['50%', '50%'],
+          roseType: 'area',
+          itemStyle: {
+            borderRadius: 8
+          },
+          data: [{
+              value: totalLevelWiseDisbursment[1],
+              name: 'Level 1'
+            },
+            {
+              value: totalLevelWiseDisbursment[2],
+              name: 'Level 2'
+            },
+            {
+              value: totalLevelWiseDisbursment[3],
+              name: 'Level 3'
+            },
+            {
+              value: totalLevelWiseDisbursment[4],
+              name: 'Level 4'
+            },
+
+          ]
+        }]
+      };
+   
+      chartAll.setOption(optionAll);
+
     })(document, window, jQuery);
   </script>
 </body>

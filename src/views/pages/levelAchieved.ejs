@@ -37,7 +37,7 @@
       <i class="icon ion-ios-pulse"></i>
       <div>
         <% if (lang == 'en') { %>
-        <h4>Construction of 8000 Houses | Level Achieved</h4>
+        <h4>Construction of 8000 Houses | Physical Progress</h4>
         <p class="mg-b-0" id="labelRegion">LAST UPDATED ON: <%= LastUpdatedOn %></p>
         <% } else { %>
         <h3> الشيكات المستنيرة من قبل المستفيدين | بناء 8000 منزل</h3>
@@ -47,50 +47,17 @@
     </div><!-- d-flex -->
 
     <div class="br-pagebody">
-      <div class="row row-sm mg-t-20">
-        <div class="col-lg-4">
-          <div class="card shadow-base card-body pd-25 bd-0" style="width: 100%;height:100%;">
-            <div class="row">
-              <div class="col-sm-12">
-                <h6 class="card-title tx-uppercase tx-12"> Summary</h6>
-                <p class="display-4 tx-medium tx-inverse mg-b-5 tx-lato">
-                  <%= (TotalCount/TotalCountEncashed*100).toFixed(2) %>%
-                </p>
-                <div class="progress mg-b-10">
-                  <div class="progress-bar bg-primary progress-bar-xs wd-95p " role="progressbar" aria-valuenow="1" aria-valuemin="20" aria-valuemax="100"></div>
-                </div><!-- progress -->
-                <p class="tx-14"><%= TotalCount %> beneficiaries out of <%= TotalCountEncashed %> beneficiaires (who have encashed their 1st installment cheques) have achieved the door band Level. </p>
-
-                <p>This is from the data received from 14 enumerators till <%= LastDataReceivedOn %></p>
-                <br />
-                <p style="display:none" class="tx-14 lh-3 mg-b-0">You can also see the progress of Level acheivement <a href="#">chart below</a>.</p>
-              </div><!-- col-6 -->
-            </div><!-- row -->
-          </div><!-- card -->
-        </div><!-- col-6 -->
-        <div class="col-lg-8 mg-t-30 mg-lg-t-0">
-          <div class="card shadow-base card-body pd-25 bd-0">
-            <div class="row">
-              <div class="col-sm-12">
-                <h6 class="card-title tx-uppercase tx-12 tx-inverse">UC WISE LEVEL ACHIEVEMENT</h6>
-                <canvas id="PaymentsDisbursedByUCChart" style="width: 100%;height:250px;"></canvas>
-              </div><!-- col-6 -->
-
-            </div><!-- row -->
-          </div><!-- card -->
-        </div><!-- col-6 -->
-      </div>
 
       <div class="row row-sm mg-t-20">
         <div class="col-lg-6">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h4 class="card-title tx-uppercase tx-12 tx-inverse">UC Wise Level Achievement</h4>
+            <h4 class="card-title tx-uppercase tx-12 tx-inverse">UC Wise</h4>
             <div id="LevelAchievedByUC" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
         <div class="col-lg-6">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h4 class="card-title tx-uppercase tx-12 tx-inverse">Overall Level Achieved</h4>
+            <h4 class="card-title tx-uppercase tx-12 tx-inverse">Overall</h4>
             <div id="LevelAchievedAll" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
@@ -99,7 +66,7 @@
       <div class="row row-sm mg-t-20">
         <div class="col-lg-12">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h4 class="card-title tx-uppercase tx-12 tx-inverse">MONTH WISE LEVEL ACHIEVEMENT</h4>
+            <h4 class="card-title tx-uppercase tx-12 tx-inverse">Month Wise</h4>
             <div id="LevelAchievedByMonthChart" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
@@ -219,10 +186,10 @@
       var timeSeries = generateMonthYearSeries(new Date("2019-01-01"), new Date())
 
       const totalUCAchieved = TotalCountLevelAcheivedByUC.reduce((l, c) => {
-        if (!l[c.UCID]) l[c.UCID] = {
+        if (!l[c.UCName]) l[c.UCName] = {
           [c.MonitoringLevel]: c.Count
         };
-        else l[c.UCID][c.MonitoringLevel] = c.Count;
+        else l[c.UCName][c.MonitoringLevel] = c.Count;
         return l;
       }, {})
 
@@ -470,6 +437,7 @@
           data: ['Level 1', 'Level 2', 'Level 3', 'Level 4']
         }
       };
+      
       chartByUC.setOption(optionByUC)
 
       let optionAll = {
@@ -482,7 +450,7 @@
           }
         },
         legend: {
-          top: 'bottom'
+          show: true
         },
         toolbox: {
           show: true,
@@ -526,6 +494,7 @@
           ]
         }]
       };
+     
       chartAll.setOption(optionAll);
 
       let optionByMonth = {
