@@ -77,7 +77,8 @@
     <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
     <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
     <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
-    <script src="theme/lib/echarts/echarts.min.js"></script>
+    <!-- <script src="theme/lib/echarts/echarts.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
     <script src="theme/lib/select2/js/select2.full.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyDw_FHu8ftIuC-35k9ViKlnp63L2vnGiLU"></script>
 
@@ -93,7 +94,7 @@
     <script src="theme/js/map.shiftworker.js"></script>
     <script src="theme/js/ResizeSensor.js"></script>
     <script src="theme/js/dashboard.js"></script>
-    <script src="theme/js/chart.echarts.js"></script>
+    <!-- <script src="theme/js/chart.echarts.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
     <script>
       
@@ -139,7 +140,7 @@
     var title = 'UC-Wise Survey Chart';
     var subtext = 'MONTH WISE';
     var x = 'left';
-    var data = ucs;;
+    var data = ucs;
     var x_inverse = false;
     var y_position = 'left';
 
@@ -162,15 +163,27 @@
         subtext: subtext,
         x:x
     },
-    tooltip : {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'cross',
-            label: {
-                backgroundColor: '#6a7985'
-            }
-        }
-    },
+    // tooltip : {
+    //     trigger: 'axis',
+    //     axisPointer: {
+    //         type: 'cross',
+    //         label: {
+    //             backgroundColor: '#6a7985'
+    //         }
+    //     }
+    // },
+    toolbox: {
+          show: true,
+          orient: 'vertical',
+          left: 'right',
+          top: 'center',
+          feature: {
+            mark: { show: true },
+            magicType: { show: true, type: ['line', 'bar', 'stack'] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
     color: ["#b30000", "#7c1158", "#4421af", "#1a53ff", "#0d88e6", "#00b7c7", "#5ad45a", "#8be04e", "#ebdc78"],
     legend: {
         data: data,
@@ -219,7 +232,7 @@
 
       return {  name: uc,
              type: 'bar',
-            stack: x,
+            // stack: x,
 
             label: {
                 normal: {

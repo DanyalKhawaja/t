@@ -390,7 +390,7 @@ router.get('/second_installment', isAuthenticated, function (req, res) {
 	}
 });
 
-router.get('/third_installment', isAuthenticated, function (req, res) {
+router.get('/third_installment3', isAuthenticated, function (req, res) {
 	// Display the Login page with any flash message, if any
 	//console.log(req.flash);
 	if (req.user.UserTypeID == 4 || req.user.UserTypeID == 6 || req.user.UserTypeID == 7) {
@@ -515,6 +515,117 @@ router.get('/third_installment', isAuthenticated, function (req, res) {
 					TotalCountInstallment_ByUCnMonth: results.TotalCountInstallment_ByUCnMonth,
 					Installment_DisbursementByUCnMonth: results.Installment_DisbursementByUCnMonth,
 					TotalCountsInstallment_DisbursementByMonth: results.TotalCountsInstallment_DisbursementByMonth[0],
+					LastDisbursementOn: results.LastDisbursementOn[0].LD
+				});
+			}
+		});
+
+	}
+});
+router.get('/disbursments', isAuthenticated, function (req, res) {
+	// Display the Login page with any flash message, if any
+	//console.log(req.flash);
+	if (req.user.UserTypeID == 4 || req.user.UserTypeID == 6 || req.user.UserTypeID == 7) {
+		res.render('pages/page_not_found', { message: req.flash('message') });
+	} else {
+		async.parallel({
+			TotalCountApproved: function (callback) {
+				db.query('SELECT count(CNIC) as TotalCountApproved from Beneficiary\
+				WHERE BenStatusID = 4 ', null, callback)
+			},
+			TotalCounts: function (callback) {
+				db.query('SELECT \
+					SUM(CASE WHEN InstallmentType = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment1,\
+					SUM(CASE WHEN InstallmentType = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment2,\
+					SUM(CASE WHEN InstallmentType = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment3,\
+					SUM(CASE WHEN InstallmentType = 4 THEN 1 ELSE 0 END) AS TotalCountInstallment4 \
+				 FROM DistributedCheques ', null, callback)
+			},
+			TotalCountInstallment_ByUC: function (callback) {
+				db.query('SELECT \
+					SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment_Awaran,\
+					SUM(CASE WHEN Beneficiary.UCID = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment_Gishkore,\
+					SUM(CASE WHEN Beneficiary.UCID = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment_Teertaje,\
+					SUM(CASE WHEN Beneficiary.UCID = 6 THEN 1 ELSE 0 END) AS TotalCountInstallment_Gajjar,\
+					SUM(CASE WHEN Beneficiary.UCID = 7 THEN 1 ELSE 0 END) AS TotalCountInstallment_Nokjo,\
+					SUM(CASE WHEN Beneficiary.UCID = 8 THEN 1 ELSE 0 END) AS TotalCountInstallment_Parwar,\
+					SUM(CASE WHEN Beneficiary.UCID = 9 THEN 1 ELSE 0 END) AS TotalCountInstallment_Dandar \
+					 FROM DistributedCheques \
+					 LEFT JOIN Beneficiary on DistributedCheques.CNIC = Beneficiary.CNIC \
+					 WHERE DistributedCheques.InstallmentType = 3', null, callback)
+			},
+			TotalCountInstallment_ByUCnMonth: function (callback) {
+				db.query('SELECT CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) as Month,\
+				SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment_Awaran,\
+				SUM(CASE WHEN Beneficiary.UCID = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment_Gishkore,\
+				SUM(CASE WHEN Beneficiary.UCID = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment_Teertaje,\
+				SUM(CASE WHEN Beneficiary.UCID = 6 THEN 1 ELSE 0 END) AS TotalCountInstallment_Gajjar,\
+				SUM(CASE WHEN Beneficiary.UCID = 7 THEN 1 ELSE 0 END) AS TotalCountInstallment_Nokjo,\
+				SUM(CASE WHEN Beneficiary.UCID = 8 THEN 1 ELSE 0 END) AS TotalCountInstallment_Parwar,\
+				SUM(CASE WHEN Beneficiary.UCID = 9 THEN 1 ELSE 0 END) AS TotalCountInstallment_Dandar \
+				 FROM DistributedCheques \
+				 LEFT JOIN Beneficiary on DistributedCheques.CNIC = Beneficiary.CNIC \
+				 WHERE DistributedCheques.InstallmentType = 3 \
+				 GROUP BY Month', null, callback)
+			},
+			Installment_DisbursementByUCnMonth: function (callback) {
+				db.query('SELECT LUCs.UCName, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-03" THEN 1 ELSE 0 END) AS TotalCount0319, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-04" THEN 1 ELSE 0 END) AS TotalCount0419, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-05" THEN 1 ELSE 0 END) AS TotalCount0519, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-06" THEN 1 ELSE 0 END) AS TotalCount0619, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-07" THEN 1 ELSE 0 END) AS TotalCount0719, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-08" THEN 1 ELSE 0 END) AS TotalCount0819, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-09" THEN 1 ELSE 0 END) AS TotalCount0919, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-10" THEN 1 ELSE 0 END) AS TotalCount1019, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-11" THEN 1 ELSE 0 END) AS TotalCount1119, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2019-12" THEN 1 ELSE 0 END) AS TotalCount1219, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2020-01" THEN 1 ELSE 0 END) AS TotalCount0120, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2020-02" THEN 1 ELSE 0 END) AS TotalCount0220, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2020-03" THEN 1 ELSE 0 END) AS TotalCount0320, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2020-04" THEN 1 ELSE 0 END) AS TotalCount0420, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2020-05" THEN 1 ELSE 0 END) AS TotalCount0520, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2020-06" THEN 1 ELSE 0 END) AS TotalCount0620, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2020-07" THEN 1 ELSE 0 END) AS TotalCount0720, \
+				SUM(CASE WHEN CONCAT(DATE_FORMAT(ChequeDate, "%Y"),"-", DATE_FORMAT(ChequeDate, "%m")) = "2020-08" THEN 1 ELSE 0 END) AS TotalCount0820 \
+					FROM DistributedCheques \
+					LEFT JOIN Beneficiary on DistributedCheques.CNIC = Beneficiary.CNIC \
+					LEFT JOIN LUCs on Beneficiary.UCID = LUCs.UCID \
+					WHERE DistributedCheques.InstallmentType = 3 \
+					GROUP BY Beneficiary.UCID', null, callback)
+			},
+			TotalCountsInstallment_DisbursementByMonth: function (callback) {
+				db.query('SELECT upper(Date_format(ChequeDate, \'%b-%Y\')) as CD, InstallmentType, Count(ChequeDate) as count \
+				FROM DistributedCheques group by CD, InstallmentType order by CD, InstallmentType', null, callback)
+			},
+			LastDisbursementOn: function (callback) {
+				db.query('SELECT Date_format(max(CreateDate), \'%M %d, %Y\') as LD FROM DistributedCheques where InstallmentType=3', null, callback)
+			},
+
+		}, function (err, results) {
+			if (err) {
+				console.log(err.message);
+				res.render('pages/not_authorized', { error_flag: true, save_error: err.message });
+			} else {
+				//if (req.user.UserTypeID == 1) {
+				res.render('pages/disbursments', {
+					GraphTitle: '3rd Installment Disbursement By Month',
+					TableTitle: "Monthly Disbursement of 3rd Installment",
+					PointLabel: "Cheques disbursed to # of beneficiaries",
+					Installment: "3rd",
+					InstallmentAmount: "56,000.00",
+					message: req.flash('message'),
+					Permission: 1,
+					lang: req.session.lang,
+					TotalCountInstallment_: results.TotalCounts[0].TotalCountInstallment3,
+					User: req.user,
+					TotalCounts: results.TotalCounts[0],
+					TotalCount: results.TotalCounts[0].TotalCountInstallment1 + results.TotalCounts[0].TotalCountInstallment2 + results.TotalCounts[0].TotalCountInstallment3 + results.TotalCounts[0].TotalCountInstallment4,
+					TotalCountInstallment_ByUC: results.TotalCountInstallment_ByUC[0],
+					TotalCountApproved: results.TotalCountApproved[0].TotalCountApproved,
+					TotalCountInstallment_ByUCnMonth: results.TotalCountInstallment_ByUCnMonth,
+					Installment_DisbursementByUCnMonth: results.Installment_DisbursementByUCnMonth,
+					TotalCountsInstallment_DisbursementByMonth: results.TotalCountsInstallment_DisbursementByMonth,
 					LastDisbursementOn: results.LastDisbursementOn[0].LD
 				});
 			}

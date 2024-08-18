@@ -918,7 +918,7 @@ router.get('/getIndicatorsByTehsil', isAuthenticated, function (req, res) {
 	});
 });
 
-router.get('/level1', isAuthenticated, function(req, res) {
+router.get('/levelAchieved', isAuthenticated, function(req, res) {
 	// Display the Login page with any flash message, if any
   //console.log(req.flash);
   if(req.user.UserTypeID == 4  || req.user.UserTypeID == 6 || req.user.UserTypeID == 7){
@@ -935,21 +935,11 @@ router.get('/level1', isAuthenticated, function(req, res) {
 				 		FROM Monitoring WHERE MonitoringLevel = 1 AND LevelStatus = 2 ', null, callback)
 			},
 			
-			TotalCountLevel1AcheivedByUC: function (callback) {
-				db.query('SELECT \
-				SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment1Awaran,\
-				SUM(CASE WHEN Beneficiary.UCID = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gishkore,\
-				SUM(CASE WHEN Beneficiary.UCID = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment1Teertaje,\
-				SUM(CASE WHEN Beneficiary.UCID = 6 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gajjar,\
-				SUM(CASE WHEN Beneficiary.UCID = 7 THEN 1 ELSE 0 END) AS TotalCountInstallment1Nokjo,\
-				SUM(CASE WHEN Beneficiary.UCID = 8 THEN 1 ELSE 0 END) AS TotalCountInstallment1Parwar,\
-				SUM(CASE WHEN Beneficiary.UCID = 9 THEN 1 ELSE 0 END) AS TotalCountInstallment1Dandar \
-				 FROM Monitoring \
-				 LEFT JOIN Beneficiary on Monitoring.CNIC = Beneficiary.CNIC \
-				 WHERE Monitoring.MonitoringLevel = 1 AND Monitoring.LevelStatus = 2', null, callback)
+			TotalCountLevelAcheivedByUC: function (callback) {
+				db.query('SELECT count(UCID) as Count, UCID, MonitoringLevel FROM Monitoring where LevelStatus=2  group by UCID, MonitoringLevel order by UCID, MonitoringLevel', null, callback)
 			},
-			TotalCountLevel1AcheivedByMonth: function (callback) {
-				db.query('SELECT count(CreateDate) as Count, Date_format(CreateDate, \'%Y-%m\') as CD FROM Monitoring where LevelStatus=2 and MonitoringLevel=1 group by CD', null, callback)
+			TotalCountLevelAcheivedByMonth: function (callback) {
+				db.query('SELECT count(CreateDate) as Count, upper(Date_format(CreateDate, \'%b-%Y\')) as CD, MonitoringLevel FROM Monitoring where LevelStatus=2 group by CD, MonitoringLevel order by CD, MonitoringLevel', null, callback)
 			},
 			LastDataReceivedOn: function (callback) {
 				db.query('SELECT Date_format(max(CreateDate), \'%M %d, %Y\') as LD FROM Monitoring ', null, callback)
@@ -962,15 +952,15 @@ router.get('/level1', isAuthenticated, function(req, res) {
 			} else {
 				//if (req.user.UserTypeID == 1) {
 
-					res.render('pages/level1', {
+					res.render('pages/levelAchieved', {
 						message: req.flash('message'),
 						Permission: 1,
 						lang: req.session.lang,
 						User: req.user,
 						TotalCountEncashed: results.TotalCountEncashed[0].count,
 						TotalCount: results.TotalCount[0].count,
-						TotalCountLevel1AcheivedByUC: results.TotalCountLevel1AcheivedByUC[0],
-						TotalCountLevel1AcheivedByMonth: results.TotalCountLevel1AcheivedByMonth,
+						TotalCountLevelAcheivedByUC: results.TotalCountLevelAcheivedByUC,
+						TotalCountLevelAcheivedByMonth: results.TotalCountLevelAcheivedByMonth,
 						LastUpdatedOn: LastUpdatedOn,
 						LastDataReceivedOn: results.LastDataReceivedOn[0].LD
 						
@@ -980,187 +970,5 @@ router.get('/level1', isAuthenticated, function(req, res) {
 	  
   }
 });
-router.get('/level2', isAuthenticated, function(req, res) {
-	// Display the Login page with any flash message, if any
-  //console.log(req.flash);
-  if(req.user.UserTypeID == 4  || req.user.UserTypeID == 6 || req.user.UserTypeID == 7){
-	  res.render('pages/page_not_found', { message: req.flash('message') });
-  } else {
-		async.parallel({
-			TotalCountEncashed: function (callback) {
-				db.query('SELECT count(DISTINCT(CNIC)) as count from DistributedCheques \
-				WHERE InstallmentType = 2 ', null, callback)
-			},
-			TotalCount: function (callback) {
-				db.query('SELECT \
-						count(DISTINCT(CNIC)) as count \
-				 		FROM Monitoring WHERE MonitoringLevel = 2 AND LevelStatus = 2 ', null, callback)
-			},
-			
-			TotalCountLevel1AcheivedByUC: function (callback) {
-				db.query('SELECT \
-				SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment1Awaran,\
-				SUM(CASE WHEN Beneficiary.UCID = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gishkore,\
-				SUM(CASE WHEN Beneficiary.UCID = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment1Teertaje,\
-				SUM(CASE WHEN Beneficiary.UCID = 6 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gajjar,\
-				SUM(CASE WHEN Beneficiary.UCID = 7 THEN 1 ELSE 0 END) AS TotalCountInstallment1Nokjo,\
-				SUM(CASE WHEN Beneficiary.UCID = 8 THEN 1 ELSE 0 END) AS TotalCountInstallment1Parwar,\
-				SUM(CASE WHEN Beneficiary.UCID = 9 THEN 1 ELSE 0 END) AS TotalCountInstallment1Dandar \
-				 FROM Monitoring \
-				 LEFT JOIN Beneficiary on Monitoring.CNIC = Beneficiary.CNIC \
-				 WHERE Monitoring.MonitoringLevel = 2 AND Monitoring.LevelStatus = 2', null, callback)
-			},
 
-			TotalCountLevel1AcheivedByMonth: function (callback) {
-				db.query('SELECT count(CreateDate) as Count, Date_format(CreateDate, \'%Y-%m\') as CD FROM Monitoring where LevelStatus=2 and MonitoringLevel=2 group by CD', null, callback)
-			},
-			LastDataReceivedOn: function (callback) {
-				db.query('SELECT Date_format(max(CreateDate), \'%M %d, %Y\') as LD FROM Monitoring ', null, callback)
-			},
-
-		}, function (err, results) {
-			if (err) {
-				console.log(err.message);
-				res.render('pages/not_authorized', {error_flag: true, save_error: err.message});
-			} else {
-				//if (req.user.UserTypeID == 1) {
-					res.render('pages/level2', {
-						message: req.flash('message'),
-						Permission: 1,
-						lang: req.session.lang,
-						User: req.user,
-						TotalCountEncashed: results.TotalCountEncashed[0].count,
-						TotalCount: results.TotalCount[0].count,
-						TotalCountLevel1AcheivedByUC: results.TotalCountLevel1AcheivedByUC[0],
-						TotalCountLevel1AcheivedByMonth: results.TotalCountLevel1AcheivedByMonth,
-						LastUpdatedOn: LastUpdatedOn,
-						LastDataReceivedOn: results.LastDataReceivedOn[0].LD
-						
-					});
-			}
-		});	
-	  
-  }
-});
-router.get('/level3', isAuthenticated, function(req, res) {
-	// Display the Login page with any flash message, if any
-  //console.log(req.flash);
-  if(req.user.UserTypeID == 4  || req.user.UserTypeID == 6 || req.user.UserTypeID == 7){
-	  res.render('pages/page_not_found', { message: req.flash('message') });
-  } else {
-		async.parallel({
-			TotalCountEncashed: function (callback) {
-				db.query('SELECT count(DISTINCT(CNIC)) as count from DistributedCheques \
-				WHERE InstallmentType = 3 ', null, callback)
-			},
-			TotalCount: function (callback) {
-				db.query('SELECT \
-						count(DISTINCT(CNIC)) as count \
-				 		FROM Monitoring WHERE MonitoringLevel = 3 AND LevelStatus = 2 ', null, callback)
-			},
-			
-			TotalCountLevel1AcheivedByUC: function (callback) {
-				db.query('SELECT \
-				SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment1Awaran,\
-				SUM(CASE WHEN Beneficiary.UCID = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gishkore,\
-				SUM(CASE WHEN Beneficiary.UCID = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment1Teertaje,\
-				SUM(CASE WHEN Beneficiary.UCID = 6 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gajjar,\
-				SUM(CASE WHEN Beneficiary.UCID = 7 THEN 1 ELSE 0 END) AS TotalCountInstallment1Nokjo,\
-				SUM(CASE WHEN Beneficiary.UCID = 8 THEN 1 ELSE 0 END) AS TotalCountInstallment1Parwar,\
-				SUM(CASE WHEN Beneficiary.UCID = 9 THEN 1 ELSE 0 END) AS TotalCountInstallment1Dandar \
-				 FROM Monitoring \
-				 LEFT JOIN Beneficiary on Monitoring.CNIC = Beneficiary.CNIC \
-				 WHERE Monitoring.MonitoringLevel = 3 AND Monitoring.LevelStatus = 2', null, callback)
-			},
-			TotalCountLevel1AcheivedByMonth: function (callback) {
-				db.query('SELECT count(CreateDate) as Count, Date_format(CreateDate, \'%Y-%m\') as CD FROM Monitoring where LevelStatus=2 and MonitoringLevel=3 group by CD', null, callback)
-			},
-			LastDataReceivedOn: function (callback) {
-				db.query('SELECT Date_format(max(CreateDate), \'%M %d, %Y\') as LD FROM Monitoring ', null, callback)
-			},
-
-		}, function (err, results) {
-			if (err) {
-				console.log(err.message);
-				res.render('pages/not_authorized', {error_flag: true, save_error: err.message});
-			} else {
-				//if (req.user.UserTypeID == 1) {
-					res.render('pages/level3', {
-						message: req.flash('message'),
-						Permission: 1,
-						lang: req.session.lang,
-						User: req.user,
-						TotalCountEncashed: results.TotalCountEncashed[0].count,
-						TotalCount: results.TotalCount[0].count,
-						TotalCountLevel1AcheivedByUC: results.TotalCountLevel1AcheivedByUC[0],
-						TotalCountLevel1AcheivedByMonth: results.TotalCountLevel1AcheivedByMonth,
-						LastUpdatedOn: LastUpdatedOn,
-						LastDataReceivedOn: results.LastDataReceivedOn[0].LD
-					});
-			}
-		});	
-	  
-  }
-});
-
-router.get('/level4', isAuthenticated, function(req, res) {
-	// Display the Login page with any flash message, if any
-  //console.log(req.flash);
-  if(req.user.UserTypeID == 4  || req.user.UserTypeID == 6 || req.user.UserTypeID == 7){
-	  res.render('pages/page_not_found', { message: req.flash('message') });
-  } else {
-		async.parallel({
-			TotalCountEncashed: function (callback) {
-				db.query('SELECT count(DISTINCT(CNIC)) as count from DistributedCheques \
-				WHERE InstallmentType = 4 ', null, callback)
-			},
-			TotalCount: function (callback) {
-				db.query('SELECT \
-						count(DISTINCT(CNIC)) as count \
-				 		FROM Monitoring WHERE MonitoringLevel = 4 AND LevelStatus = 2 ', null, callback)
-			},
-			
-			TotalCountLevel1AcheivedByUC: function (callback) {
-				db.query('SELECT \
-				SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment1Awaran,\
-				SUM(CASE WHEN Beneficiary.UCID = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gishkore,\
-				SUM(CASE WHEN Beneficiary.UCID = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment1Teertaje,\
-				SUM(CASE WHEN Beneficiary.UCID = 6 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gajjar,\
-				SUM(CASE WHEN Beneficiary.UCID = 7 THEN 1 ELSE 0 END) AS TotalCountInstallment1Nokjo,\
-				SUM(CASE WHEN Beneficiary.UCID = 8 THEN 1 ELSE 0 END) AS TotalCountInstallment1Parwar,\
-				SUM(CASE WHEN Beneficiary.UCID = 9 THEN 1 ELSE 0 END) AS TotalCountInstallment1Dandar \
-				 FROM Monitoring \
-				 LEFT JOIN Beneficiary on Monitoring.CNIC = Beneficiary.CNIC \
-				 WHERE Monitoring.MonitoringLevel = 4 AND Monitoring.LevelStatus = 2', null, callback)
-			},
-			TotalCountLevel1AcheivedByMonth: function (callback) {
-				db.query('SELECT count(CreateDate) as Count, Date_format(CreateDate, \'%Y-%m\') as CD FROM Monitoring where LevelStatus=2 and MonitoringLevel=4 group by CD', null, callback)
-			},
-			LastDataReceivedOn: function (callback) {
-				db.query('SELECT Date_format(max(CreateDate), \'%M %d, %Y\') as LD FROM Monitoring ', null, callback)
-			},
-
-		}, function (err, results) {
-			if (err) {
-				console.log(err.message);
-				res.render('pages/not_authorized', {error_flag: true, save_error: err.message});
-			} else {
-				//if (req.user.UserTypeID == 1) {
-					res.render('pages/level4', {
-						message: req.flash('message'),
-						Permission: 1,
-						lang: req.session.lang,
-						User: req.user,
-						TotalCountEncashed: results.TotalCountEncashed[0].count,
-						TotalCount: results.TotalCount[0].count,
-						TotalCountLevel1AcheivedByUC: results.TotalCountLevel1AcheivedByUC[0],
-						TotalCountLevel1AcheivedByMonth: results.TotalCountLevel1AcheivedByMonth,
-						LastUpdatedOn: LastUpdatedOn,
-						LastDataReceivedOn: results.LastDataReceivedOn[0].LD
-					});
-			}
-		});	
-	  
-  }
-});
 module.exports = router;
