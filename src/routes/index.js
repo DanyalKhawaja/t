@@ -733,11 +733,6 @@ router.get('/gis', isAuthenticated, function (req, res) {
 			},
 			CountLevel4Achieved: function (callback) {
 				db.query('SELECT count(CNIC) as count from Monitoring where MonitoringLevel = 4 AND LevelStatus = 2', null, callback)
-			},
-			ModelHouses: function (callback) {
-				db.query('SELECT ModelHouses.*, LUCs.UCName from ModelHouses \
-				LEFT JOIN LUCs on ModelHouses.UCID = LUCs.UCID \
-				WHERE ModelHouses.Latitude != \'\'', null, callback)
 			}
 		}, function (err, results) {
 			console.log("queries done");
@@ -759,7 +754,6 @@ router.get('/gis', isAuthenticated, function (req, res) {
 					CountLevel4Achieved: results.CountLevel4Achieved[0].count,
 					UCs: results.Lookups.lookups.LUCs,
 					Villages: results.Villages,
-					ModelHouses: results.ModelHouses,
 					lang: req.session.lang,
 					User: req.user,
 					LastUpdatedOn: LastUpdatedOn

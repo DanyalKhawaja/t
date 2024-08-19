@@ -27,6 +27,16 @@
   <!-- Bracket CSS -->
   <link rel="stylesheet" href="theme/css/bracket.css">
 
+  <style>
+    .l-top {
+      margin-top: 1em;
+    }
+    .top-row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  </style>
+
 </head>
 
 <body class="collapsed-menu">
@@ -35,205 +45,116 @@
 
   <!-- ########## START: MAIN PANEL ########## -->
   <div class="br-mainpanel">
-    <div class="row">
-      <div class="col-md-4">
+    <div class="row top-row">
+      <div class="col-md-3">
         <div class="br-pagetitle">
           <i class="icon ion-android-map"></i>
           <div>
             <% if (lang == 'en') { %>
             <h3>GIS Dashboard </h3>
-            <h6 class="mg-b-0">LAST UPDATED ON: <%= LastUpdatedOn %></h6>
+            <h6 class="mg-b-0">Last Updated on: <%= LastUpdatedOn %></h6>
             <% } else { %>
             <h3>GIS </h3>
             <% } %>
-
           </div>
         </div><!-- d-flex -->
       </div>
-      <div class="col-sm-5 b-1 t-45">
+     
+      <div class="col-md-9">
+        <div class="row">
+      <div class="col-md-2">
+        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+            <% if (lang == 'en') { %>
+            APPROVED <br/>BENEFICIARIES
+            <% } else { %>
 
-        <!-- <button id="btn-houses" class="btn btn-oblong btn-secondary mg-b-5 mg-t-5 mg-r-5 mg-l-5"
-          style="width: auto;">HOUSES</button> -->
-        <!-- <button id="btn-model-houses" class="btn btn-oblong btn-secondary mg-b-5 mg-t-5 mg-r-5 mg-l-5"
-          style="width: auto;">MODEL HOUSES</button> -->
-        
+            <% } %>
+          </p>
+          <p class="tx-20 tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelTotalCount">
+            <%= Beneficiaries.length  %> / 8000</p>
+        </div>
+      </div><!-- col-8 -->
+      <div class="col-md-2">
+        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center" >
+            <% if (lang == 'en') { %>
+            NOT <br/>STARTED
+            <% } else { %>
 
+            <% } %>
+          </p>
+          <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted" >
+            <%= Beneficiaries.length - CountLevel1InProgress  %>
+            / <%= Beneficiaries.length %></p>
+        </div>
       </div>
-      <div class="col-sm-3">
-        <div class="form-layout form-layout-2">
-          <div class="row no-gutters">
+      <div class="col-md-2">
+        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center" >
+            <% if (lang == 'en') { %>
+              Funds Released <br/>  by SFD 
+                          <% } else { %>
 
-            <div class="col-md-12">
-              <div class="form-group mg-md-l--1 bd-t-0-force">
-                <label class="form-control-label mg-b-10-force">Union Council (UC):<span
-                    class="tx-danger">*</span></label>
-                <select id="select2-UC" class="form-control" data-placeholder="Select a UC" style="width:100%">
-                  <option value="0">Select a UC</option>
-                  <% UCs.forEach(function(uc) { %>
-                  <option value="<%= uc.UCID %> "><%= uc.UCName %></option>
-                  <% }) %>
-                </select>
-              </div>
-            </div><!-- col-4 -->
+            <% } %>
+          </p>
+          <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted" >
+            Rs.
+                <%= (2079999200).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+            <% if (lang == 'en') { %>
+              Funds Disbursed <br/> by HRA
+            <% } else { %>
+
+            <% } %>
+          </p>
+          <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted">
+            Rs.
+                <%= (2079999200*0.88).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center" >
+            <% if (lang == 'en') { %>
+              Funds <br/> Untilized 
+            <% } else { %>
+
+            <% } %>
+          </p>
+          <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted" >
+            Rs.
+                <%= (2079999200*(1-0.88)).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="row no-gutters l-top" style="background: #1D2939">
+          <div class="form-group mg-md-l--1 bd-t-0-force">
+            <label class="form-control-label mg-b-10-force tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Union Council (UC):<span class="tx-danger">*</span></label>
+            <select id="select2-UC" class="form-control" data-placeholder="Select a UC" style="width:100%">
+              <option value="0">Select a UC</option>
+              <% UCs.forEach(function(uc) { %>
+              <option value="<%= uc.UCID %> "><%= uc.UCName %></option>
+              <% }) %>
+            </select>
           </div>
         </div>
       </div>
+    </div>
+  </div>
     </div>
     <div class="br-pagebody">
       <div class="br-section-wrapper">
 
         <div class="row row-sm">
-          <div class="col-lg-10">
-
-            <div class="card shadow-base bd-0 pd-5 mg-t-0">
-              <div id="map" style="width:100%;height:750px;"></div>
-            </div><!-- card -->
-          </div><!-- col-8 -->
-          <div class="col-lg-2 col-xl-2">
-            <div class="rounded overflow-hidden" style="background: #1D2939">
-              <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
-                <% if (lang == 'en') { %>
-                  Funds Released by SFD
-                <% } else { %>
-                العدد الإجمالي
-                <% } %>
-              </p>
-              <p class="tx-16 tx-center tx-white tx-lato tx-bold mg-b-5 lh-1" id="labelBudgetAllocated">Rs.
-                <%= (2079999200).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
-            </div>
-            <br />
-            <div class=" rounded overflow-hidden" style="background: #1D2939">
-              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">
-
-                <% if (lang == 'en') { %>
-                  Funds Disbursed by HRA
-                <% } else { %>
-                التحقق
-                <% } %>
-              </p>
-              <p class="tx-14 tx-center tx-white tx-lato tx-bold mg-b-5 lh-1" id="labelBudgetDisbursed">Rs.
-                <%= (2079999200*0.88).toLocaleString(undefined, {maximumFractionDigits:2}) %>
-              </p>
-            </div>
-            <br />
-            <div class=" rounded " style="background: #1D2939">
-              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-1">
-                <% if (lang == 'en') { %>
-                LEVEL 1 - DOOR BAND
-                <% } else { %>
-
-                <% } %>
-              </p>
-              <div class="card shadow-base bd-0 pd-1 mg-t-1" style="background: #1D2939">
-                <div id="Level1PieChart" style="width: 100%;height:100px;"></div>
-              </div><!-- card -->
-            </div>
-            <br />
-            <div class=" rounded" style="background: #1D2939">
-              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-1">
-
-                <% if (lang == 'en') { %>
-                LEVEL 2 - ROOF BAND
-                <% } else { %>
-
-                <% } %>
-              </p>
-              <div class="card shadow-base bd-0 pd-1 mg-t-1" style="background: #1D2939">
-                <div id="Level2PieChart" style="width: 100%;height:100px;"></div>
-              </div><!-- card -->
-            </div>
-            <br />
-            <div class=" rounded " style="background: #1D2939">
-              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-bold tx-uppercase tx-white-8 mg-b-1">
-
-                <% if (lang == 'en') { %>
-                LEVEL 3
-                <% } else { %>
-
-                <% } %>
-              </p>
-              <div class="card shadow-base bd-0 pd-1 mg-t-1" style="background: #1D2939">
-                <div id="Level3PieChart" style="width: 100%;height:100px;"></div>
-              </div><!-- card -->
-            </div>
-            <br />
-            <div class=" rounded " style="background: #1D2939">
-              <p class="tx-14 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-1">
-
-                <% if (lang == 'en') { %>
-                LEVEL 4
-                <% } else { %>
-
-                <% } %>
-              </p>
-              <div class="card shadow-base bd-0 pd-1 mg-t-1" style="background: #1D2939">
-                <div id="Level4PieChart" style="width: 100%;height:100px;"></div>
-              </div><!-- card -->
-            </div>
-            <br />
-          </div><!-- col-3 -->
-
+          <div class="col-lg-12">
+            <div id="map" style="width:100%;height:80vh"></div>
+          </div>
         </div><!-- row -->
-        <div class="row row-sm">
-          <div class="col-lg-3">
-            <div class="rounded overflow-hidden" style="background: #1D2939">
-              <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
-                <% if (lang == 'en') { %>
-                  APPROVED BENEFICIARIES
-                <% } else { %>
-
-                <% } %>
-              </p>
-              <p class="tx-36 tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelTotalCount">
-                <%= Beneficiaries.length  %> / 8000</p>
-            </div>
-          </div><!-- col-8 -->
-          <div class="col-lg-3">
-            <div class=" rounded overflow-hidden" style="background: #1D2939">
-              <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center"
-                style="color:#cc2a36">
-                <% if (lang == 'en') { %>
-                NOT STARTED
-                <% } else { %>
-
-                <% } %>
-              </p>
-              <p class="tx-36  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted"
-                style="color:#cc2a36">
-                <%= Beneficiaries.length - CountLevel1InProgress  %>
-                / <%= Beneficiaries.length %></p>
-            </div>
-          </div><!-- col-8 -->
-          <div class="col-lg-3">
-            <div class="rounded overflow-hidden" style="background:#1D2939">
-              <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center"
-                style="color:#edc951">
-                <% if (lang == 'en') { %>
-                IN PROGRESS
-                <% } else { %>
-
-                <% } %>
-              </p>
-              <p class="tx-36 tx-center tx-white tx-lato tx-bold mg-b-10 lh-1" id="labelInProgress"
-                style="color:#edc951">
-                <%= CountLevel1InProgress - CountLevel4Achieved   %>
-            </div>
-          </div><!-- col-8 -->
-          <div class="col-lg-3">
-            <div class=" rounded overflow-hidden" style="background:#1D2939">
-              <p class="tx-16 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center"
-                style="color:#00a0b0">
-                <% if (lang == 'en') { %>
-                COMPLETED
-                <% } else { %>
-
-                <% } %>
-              </p>
-              <p class="tx-36 tx-center tx-white tx-lato tx-bold mg-b-10 lh-1" id="labelCompleted"
-                style="color:#00a0b0"> <%= CountLevel4Achieved %></p>
-            </div>
-          </div><!-- col-8 -->
-        </div>
       </div>
     </div><!-- br-pagebody -->
     <% include ../partials/footer %>
@@ -254,7 +175,6 @@
   <script src="theme/lib/Flot/jquery.flot.resize.js"></script>
   <script src="theme/lib/flot-spline/jquery.flot.spline.js"></script>
   <script src="theme/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
-  <script src="theme/lib/echarts/echarts.min.js"></script>
   <script src="theme/lib/select2/js/select2.min.js"></script>
   <script src="http://maps.google.com/maps/api/js?key=AIzaSyAtFS563VrFYCkOBmG8J2-noujJ9gP18EM&libraries=marker"></script>
 
@@ -266,8 +186,8 @@
 
 
   <script async>
-    $(function () {
-      $(document).ready(function () {
+    $(function() {
+      $(document).ready(function() {
         'use strict'
         $('#select2-a, #select2-UC, #select2-Village').select2({
           minimumResultsForSearch: Infinity
@@ -275,61 +195,42 @@
         var selectedID = "";
         var zoomLevel = 9;
         var markers = [];
-        var ModelHousesMarkers = [];
-        const ucColorPalette =  ["#33a8c7","#52e3e1","#a0e426","#fdf148","#ffab00","#f77976","#f050ae","#d883ff","#9336fd"];
-        const ucColorPalette2=  ["f77976","f050ae","d883ff","9336fd","33a8c7","52e3e1","a0e426","fdf148","ffab00"];
+        const ucColorPalette = ["#33a8c7", "#52e3e1", "#a0e426", "#fdf148", "#ffab00", "#f77976", "#f050ae", "#d883ff", "#9336fd"];
+        const ucColorPalette2 = ["f77976", "f050ae", "d883ff", "9336fd", "33a8c7", "52e3e1", "a0e426", "fdf148", "ffab00"];
 
-       const getPin = function(monitoringLevel, levelStatus, ucId = 0) {
-        let  pin = null;
+        const getPin = function(monitoringLevel, levelStatus, ucId = 0) {
+          let pin = null;
 
-                if (monitoringLevel > 0 && levelStatus == 2) {
-                  // A marker using a Font Awesome icon for the glyph.
-                  const icon = document.createElement('div');
-                  icon.innerHTML = `<i class="fa fa-${monitoringLevel} fa-lg"></i>`;
-                  pin = new google.maps.marker.PinElement({
-                      glyph: icon,
-                      glyphColor: 'black',
-                      background: ucColorPalette[ucId],
-                      borderColor: '#28231d',
-                  }).element
-                  //check if level-1 is achieved
-                } else {
-                 const icon = document.createElement('div');
-                  icon.innerHTML = `<i class="fa fa-0 fa-lg"></i>`;
-                  pin = new google.maps.marker.PinElement({
-                      glyph: icon,
-                      glyphColor: 'black',
-                      background:  ucColorPalette[ucId],
-                      borderColor: '#28231d',
-                  }).element
-                }
-
-                return pin;
-
-              
-       }
-
-        $('#btn-houses').on('click', function (e) {
-          if ($('#btn-houses').hasClass("btn-secondary")) {
-            $("#btn-houses").addClass("btn-outline-secondary").removeClass("btn-secondary");
-            clearMarkers();
+          if (monitoringLevel > 0 && levelStatus == 2) {
+            // A marker using a Font Awesome icon for the glyph.
+            const icon = document.createElement('div');
+            icon.innerHTML = `<i class="fa fa-${monitoringLevel} fa-lg"></i>`;
+            pin = new google.maps.marker.PinElement({
+              glyph: icon,
+              glyphColor: 'black',
+              background: ucColorPalette[ucId],
+              borderColor: '#28231d',
+            }).element
+            //check if level-1 is achieved
           } else {
-            $("#btn-houses").addClass("btn-secondary").removeClass("btn-outline-secondary");
-            redrawMarkers();
+            const icon = document.createElement('div');
+            icon.innerHTML = `<i class="fa fa-0 fa-lg"></i>`;
+            pin = new google.maps.marker.PinElement({
+              glyph: icon,
+              glyphColor: 'black',
+              background: ucColorPalette[ucId],
+              borderColor: '#28231d',
+            }).element
           }
-        });
 
-        // $('#btn-govt-buildings').on('click', function (e) {
-        //   if ($('#btn-govt-buildings').hasClass("btn-secondary")) {
-        //     $("#btn-govt-buildings").addClass("btn-outline-secondary").removeClass("btn-secondary");
-        //     //clearMarkers();
-        //   } else {
-        //     $("#btn-govt-buildings").addClass("btn-secondary").removeClass("btn-outline-secondary");
-        //     //redrawMarkers();
-        //   }
-        // });
+          return pin;
 
-        $('#select2-UC').on('select2:select', function (e) {
+
+        }
+
+
+
+        $('#select2-UC').on('select2:select', function(e) {
           var data = e.params.data;
           selectedID = data.id;
           if (selectedID == 0) {
@@ -339,31 +240,32 @@
           $.ajax({
             url: '/beneficiary/getVillagesByUC?UCID=' + data.id,
             type: 'GET',
-            success: function (Villages) {   // A function to be called if request succeeds
+            success: function(Villages) { // A function to be called if request succeeds
               console.log(Villages);
 
               $("#select2-Village").prop("disabled", false);
               $('#select2-Village').empty().trigger("change");
               $('#select2-Village').select2({
-                data: [{ id: 0, text: 'Select a Village' }]
+                data: [{
+                  id: 0,
+                  text: 'Select a Village'
+                }]
               });
               $('#select2-Village').select2({
                 data: Villages
               });
             },
-            error: function (data) {
+            error: function(data) {
               console.log('Couldn\'t GET the Beneficiaries');
             }
           });
           $.ajax({
             url: '/beneficiary/getBeneficiaryByUC?UCID=' + data.id,
             type: 'GET',
-            success: function (data) {   // A function to be called if request succeeds
+            success: function(data) { // A function to be called if request succeeds
               console.log(data.CountLevel1InProgress[0].count);
               clearMarkers();
-              // clearModelHousesMarkers();
               Beneficiaries = data.Beneficiary;
-              // ModelHouses = data.ModelHouses;
               markers = [];
 
               $("#labelBudgetAllocated").html("Rs. " + (data.Beneficiary.length * 260000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -372,44 +274,14 @@
               $("#labelNotStarted").html(data.Beneficiary.length - data.CountLevel1InProgress[0].count);
               $("#labelInProgress").html(data.CountLevel1InProgress[0].count);
               $("#labelCompleted").html(0);
-              Level1PieChart.setOption({
-                series: [{
-                  data: [
-                    { value: (data.Beneficiary.length - data.CountLevel1InProgress[0].count), name: 'Not Started' },
-                    { value: data.CountLevel1InProgress[0].count, name: 'In Progress' },
-                    { value: data.CountLevel1Achieved[0].count, name: 'Completed' },
-                  ]
-                }]
-              });
-              Level2PieChart.setOption({
-                series: [{
-                  data: [{ value: data.Beneficiary.length, name: 'Not Started' },
-                  { value: 0, name: 'In Progress' },
-                  { value: 0, name: 'Completed' },]
-                }]
-              });
-              Level3PieChart.setOption({
-                series: [{
-                  data: [{ value: data.Beneficiary.length, name: 'Not Started' },
-                  { value: 0, name: 'In Progress' },
-                  { value: 0, name: 'Completed' },]
-                }]
-              });
-              Level4PieChart.setOption({
-                series: [{
-                  data: [
-                    { value: data.Beneficiary.length, name: 'Not Started' },
-                    { value: 0, name: 'In Progress' },
-                    { value: 0, name: 'Completed' },
-                  ]
-                }]
-              });
 
               for (let i = 0; i < Beneficiaries.length; i++) {
                 if (Beneficiaries[i].VHLatitude == 0 || !Beneficiaries[i].VHLatitude) {
                   continue;
                 }
-                var infowindow = new google.maps.InfoWindow({ content: Beneficiaries[i].FirstName });
+                var infowindow = new google.maps.InfoWindow({
+                  content: Beneficiaries[i].FirstName
+                });
                 var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
                 bounds.extend(position);
 
@@ -417,7 +289,7 @@
                   position: position,
                   map: map,
                   title: Beneficiaries[i].FirstName,
-                  content: getPin(Beneficiaries[i].MonitoringLevel, Beneficiaries[i].LevelStatus, Beneficiaries[i].UCID+0)
+                  content: getPin(Beneficiaries[i].MonitoringLevel, Beneficiaries[i].LevelStatus, Beneficiaries[i].UCID + 0)
                 });
                 markers.push(marker);
                 map.setZoom(11);
@@ -434,7 +306,7 @@
                   }
                   $.ajax({
                     url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
-                    success: function (data) {
+                    success: function(data) {
                       let temp = '<strong style="color:red;">NONE</strong><br>';
                       var progress1 = 'PROGRESS: <strong style="color:red;">' + '0' + '%</strong>';
 
@@ -465,8 +337,8 @@
                       }
                       infowindow.setContent('<div id="iw-container">' +
                         '<div class="iw-content" style="max-height: none">' +
-                      
-                       
+
+
                         '<img src="' + data + '"  width="43%">' +
                         '<div class="iw-subTitle">CNIC: ' + Beneficiaries[i].CNIC + '</div>' +
                         '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>' +
@@ -475,119 +347,42 @@
                         '<a href="/beneficiary/detail?CNIC=' + Beneficiaries[i].CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
                         '</div>' +
                         '</div>');
-                        const header = document.createElement("h3");
-                        header.textContent = Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName;
-                        infowindow.setHeaderContent(header);
+                      const header = document.createElement("h3");
+                      header.textContent = Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName;
+                      infowindow.setHeaderContent(header);
                       infowindow.open(map, marker);
                     }
                   });
                 }
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                  return function () {
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                  return function() {
                     load_content(marker, Beneficiaries[i].CNIC);
                     infowindow.open(map, marker);
                   }
                 })(marker, i));
               }
- /** remove model houses
-              for (let i = 0; i < ModelHouses.length; i++) {
-
-                if (ModelHouses[i].Latitude == 0 || !ModelHouses[i].Longitude) {
-                  continue;
-                }
-                var infowindow = new google.maps.InfoWindow({ content: ModelHouses[i].ID });
-                var position = new google.maps.LatLng(ModelHouses[i].Latitude, ModelHouses[i].Longitude);
-                bounds.extend(position);
-
-                //let icon = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
-                // if (Beneficiaries[i].Level == 1){
-                //   console.log(Beneficiaries[i].CNIC);
-                //   icon = "http://maps.google.com/mapfiles/kml/paddle/blu-circle.png";
-                // };
-
-                const icon = document.createElement('div');
-                  icon.innerHTML = '<i class="fa fa-house fa-lg"></i>';
-                const  pin = new google.maps.marker.PinElement({
-                      glyph: icon,
-                      glyphColor: '#ff8300',
-                      background: 'yellow', //pushpin
-                      borderColor: '#ff8300',
-                  }).element
-                var marker = new google.maps.marker.AdvancedMarkerElement({
-                  position: position,
-                  map: map,
-                  title: ModelHouses[i].ID,
-                  content: pin
-                });
-                ModelHousesMarkers.push(marker);
-                // Automatically center the map fitting all markers on the screen
-                map.fitBounds(bounds);
-                map.setCenter(marker.position);
-                function load_content(marker, CNIC) {
-                  infowindow.setContent('<div id="iw-container">' +
-                    '<div class="iw-title">' + ModelHouses[i].MHName + '</div>' +
-                    '<div class="iw-content">' +
-                    '<img src="/images/ModelHouses/' + ModelHouses[i].MHName + '/01.jpg" height="120" width="160">' +
-                    '<div class="iw-subTitle">UC: ' + ModelHouses[i].UCName + '</div>' +
-                    '<p> STATUS: <strong style="color:orange;">' + ModelHouses[i].Status + '</strong><br>' +
-                    'PROGRESS: <strong style="color:red;">' + ModelHouses[i].Progress + '%</strong>' +
-                    '<br/><br/><a target="_blank" href="/modelhouse/detail?ID=' + ModelHouses[i].ID + '"><br> DETAIL</a>' + '</p>' +
-                    '</div>' +
-                    '</div>');
-                  infowindow.open(map, marker);
-                  // $.ajax({
-                  //   url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
-                  //   success: function(data){
-                  //     let temp = '<strong style="color:red;">NONE</strong><br>';
-                  //     if (Beneficiaries[i].Level == 1){
-                  //       temp = '<strong style="color:blue;">1st</strong><br>'
-                  //     }
-                  //     infowindow.setContent('<div id="iw-container">' +
-                  //         '<div class="iw-title">'+Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName+'</div>' +
-                  //         '<div class="iw-content">' +
-                  //           '<img src="'+data+'"  height="120" width="100">' +
-                  //           '<div class="iw-subTitle">CNIC: '+Beneficiaries[i].CNIC+'</div>' +
-                  //           '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>'+
-                  //             'INSTALLMENT PAID: '+temp+''+
-                  //               'PROGRESS: <strong style="color:red;">0%</strong>'+
-                  //           '<br>PHONE: '+Beneficiaries[i].PhonePrimary+
-                  //           '<a href="/beneficiary/detail?CNIC='+Beneficiaries[i].CNIC+'"><br>MONITORING DETAIL</a>'+'</p>'+
-                  //         '</div>' +
-                  //       '</div>');
-                  //     infowindow.open(map, marker);
-                  //   }
-                  // });
-                }
-
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                  return function () {
-                    load_content(marker, ModelHouses[i].ID);
-                    infowindow.open(map, marker);
-                  }
-                })(marker, i));
-              }
-
-              */
             },
-            error: function (data) {
+            error: function(data) {
               console.log('Couldn\'t GET the Beneficiaries');
             }
           });
         });
 
-        $('#select2-Village').on('select2:select', function (e) {
+        $('#select2-Village').on('select2:select', function(e) {
           var data = e.params.data;
           if (data.id == 0) {
             console.log(selectedID);
             $("#select2-UC").select2("trigger", "select", {
-              data: { id: selectedID }
+              data: {
+                id: selectedID
+              }
             });
             return;
           }
           $.ajax({
             url: '/beneficiary/getBeneficiaryByVillage?VillageID=' + data.id,
             type: 'GET',
-            success: function (data) {   // A function to be called if request succeeds
+            success: function(data) { // A function to be called if request succeeds
               console.log(data.length);
               clearMarkers();
               Beneficiaries = data;
@@ -599,41 +394,12 @@
               $("#labelInProgress").html(0);
               $("#labelCompleted").html(0);
 
-              Level1PieChart.setOption({
-                series: [{
-                  data: [
-                    { value: data.length, name: 'Not Started' },
-                    { value: 0, name: 'In Progress' },
-                    { value: 0, name: 'Completed' },
-                  ]
-                }]
-              });
-              Level2PieChart.setOption({
-                series: [{
-                  data: [{ value: data.length, name: 'Not Started' },
-                  { value: 0, name: 'In Progress' },
-                  { value: 0, name: 'Completed' },]
-                }]
-              });
-              Level3PieChart.setOption({
-                series: [{
-                  data: [{ value: data.length, name: 'Not Started' },
-                  { value: 0, name: 'In Progress' },
-                  { value: 0, name: 'Completed' },]
-                }]
-              });
-              Level4PieChart.setOption({
-                series: [{
-                  data: [
-                    { value: data.length, name: 'Not Started' },
-                    { value: 0, name: 'In Progress' },
-                    { value: 0, name: 'Completed' },
-                  ]
-                }]
-              });
+
               for (let i = 0; i < Beneficiaries.length; i++) {
 
-                var infowindow = new google.maps.InfoWindow({ content: Beneficiaries[i].FirstName });
+                var infowindow = new google.maps.InfoWindow({
+                  content: Beneficiaries[i].FirstName
+                });
                 var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
                 bounds.extend(position);
 
@@ -647,15 +413,15 @@
                 map.fitBounds(bounds);
                 map.setCenter(marker.position);
 
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                  return function () {
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                  return function() {
                     infowindow.setContent(Beneficiaries[i].CNIC);
                     infowindow.open(map, marker);
                   }
                 })(marker, i));
               }
             },
-            error: function (data) {
+            error: function(data) {
               console.log('Couldn\'t GET the Beneficiaries');
             }
           });
@@ -674,7 +440,6 @@
         var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
 
         var Beneficiaries = JSON.parse('<%- JSON.stringify(Beneficiaries) %>');
-        // var ModelHouses = JSON.parse('<%- JSON.stringify(ModelHouses) %>');
         var CountLevel1InProgress = JSON.parse('<%- JSON.stringify(CountLevel1InProgress) %>');
         var CountLevel1Achieved = JSON.parse('<%- JSON.stringify(CountLevel1Achieved) %>');
         var CountLevel2InProgress = JSON.parse('<%- JSON.stringify(CountLevel2InProgress) %>');
@@ -687,7 +452,7 @@
         var myLatLng = new google.maps.LatLng(Beneficiaries[0].VHLatitude, Beneficiaries[0].VHLongitude);
 
         var myOptions = {
-          mapId: "gis", 
+          mapId: "gis",
           zoom: 12,
           center: myLatLng,
           scrollwheel: false,
@@ -695,30 +460,31 @@
           navigationControl: false,
           mapTypeControl: false,
           _mapTypeId: 'hybrid',
-  
+
           scaleControl: false,
           draggable: true,
-          s_tyles: [
-            {
-              featureType: 'all',
-              stylers: [
-                { saturation: -80 }
-              ]
-            }, {
-              featureType: 'road.arterial',
-              elementType: 'geometry',
-              stylers: [
-                { hue: '#00ffee' },
-                { saturation: 50 }
-              ]
-            }, {
-              featureType: 'poi.business',
-              elementType: 'labels',
-              stylers: [
-                { visibility: 'off' }
-              ]
-            }
-          ]
+          s_tyles: [{
+            featureType: 'all',
+            stylers: [{
+              saturation: -80
+            }]
+          }, {
+            featureType: 'road.arterial',
+            elementType: 'geometry',
+            stylers: [{
+                hue: '#00ffee'
+              },
+              {
+                saturation: 50
+              }
+            ]
+          }, {
+            featureType: 'poi.business',
+            elementType: 'labels',
+            stylers: [{
+              visibility: 'off'
+            }]
+          }]
           //mapTypeId: google.maps.MapTypeId.TERRAIN
         };
         map = new google.maps.Map(document.getElementById('map'), myOptions);
@@ -732,28 +498,31 @@
           if (Beneficiaries[i].VHLatitude == 0 || !Beneficiaries[i].VHLatitude) {
             continue;
           }
-          var infowindow = new google.maps.InfoWindow({ content: Beneficiaries[i].FirstName });
+          var infowindow = new google.maps.InfoWindow({
+            content: Beneficiaries[i].FirstName
+          });
           var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
           bounds.extend(position);
 
-        
+
 
           var marker = new google.maps.marker.AdvancedMarkerElement({
             position: position,
             map: map,
             title: Beneficiaries[i].FirstName,
-            content: getPin(Beneficiaries[i].MonitoringLevel, Beneficiaries[i].LevelStatus, Beneficiaries[i].UCID+0)
+            content: getPin(Beneficiaries[i].MonitoringLevel, Beneficiaries[i].LevelStatus, Beneficiaries[i].UCID + 0)
           });
           markers.push(marker);
           // Automatically center the map fitting all markers on the screen
           map.fitBounds(bounds);
           map.setCenter(marker.position);
+
           function load_content(marker, CNIC) {
             infowindow.setContent();
             infowindow.setHeaderContent('Loading...');
             $.ajax({
               url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
-              success: function (data) {
+              success: function(data) {
                 let temp = '<strong style="color:red;">NONE</strong><br>';
                 var progress1 = 'PROGRESS: <strong style="color:red;">' + '0' + '%</strong>';
 
@@ -792,121 +561,34 @@
 
 
                 infowindow.setContent('<div id="iw-container">' +
-                  
+
                   '<div class="iw-content" style="max-height: none">' +
-                      
-                        '<img src="' + data + '"  width="43%">' +
+
+                  '<img src="' + data + '"  width="43%">' +
                   '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>' +
                   'INSTALLMENT PAID: ' + temp + '<br>' + progress1 +
                   '<br>PHONE: ' + Beneficiaries[i].PhonePrimary +
                   '<a href="/beneficiary/detail?CNIC=' + Beneficiaries[i].CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
                   '</div>' +
                   '</div>');
-                  const header = document.createElement("h3");
-                        header.textContent = Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName;
-                        infowindow.setHeaderContent(header);
+                const header = document.createElement("h3");
+                header.textContent = Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName;
+                infowindow.setHeaderContent(header);
                 infowindow.open(map, marker);
               }
             });
           }
 
-          google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
+          google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
               load_content(marker, Beneficiaries[i].CNIC);
               infowindow.open(map, marker);
             }
           })(marker, i));
         }
-/**
-        for (let i = 0; i < ModelHouses.length; i++) {
 
-          if (ModelHouses[i].Latitude == 0 || !ModelHouses[i].Longitude) {
-            continue;
-          }
-          var infowindow = new google.maps.InfoWindow({ content: ModelHouses[i].ID });
-          var position = new google.maps.LatLng(ModelHouses[i].Latitude, ModelHouses[i].Longitude);
-          bounds.extend(position);
-
-         
-
-          let icon = "http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png";
-          let pin = null;
-          if (ModelHouses[i].Progress == 100) {
-            // icon = "http://maps.google.com/mapfiles/kml/pushpin/grn-pushpin.png";
-             icon = document.createElement('div');
-                  icon.innerHTML = '<i class="fa fa-house fa-lg"></i>';
-                  pin = new google.maps.marker.PinElement({
-                      glyph: icon,
-                      glyphColor: '#ff8300',
-                      background: 'green', //push pin
-                      borderColor: '#ff8300',
-                  }).element
-          } else {
-             icon = document.createElement('div');
-                  icon.innerHTML = '<i class="fa fa-house fa-lg"></i>';
-                  pin = new google.maps.marker.PinElement({
-                      glyph: icon,
-                      glyphColor: '#ff8300',
-                      background: 'yellow', //push pin
-                      borderColor: '#ff8300',
-                  }).element
-          }
-
-          var marker = new google.maps.marker.AdvancedMarkerElement({
-            position: position,
-            map: map,
-            title: ModelHouses[i].ID,
-            content: pin
-          });
-          ModelHousesMarkers.push(marker);
-          // Automatically center the map fitting all markers on the screen
-          map.fitBounds(bounds);
-          map.setCenter(marker.position);
-          function load_content(marker, CNIC) {
-            infowindow.setContent('<div id="iw-container">' +
-              '<div class="iw-title">' + ModelHouses[i].MHName + '</div>' +
-              '<div class="iw-content">' +
-              '<img src="/images/ModelHouses/' + ModelHouses[i].MHName + '/01.jpg" height="120" width="160">' +
-              '<div class="iw-subTitle">UC: ' + ModelHouses[i].UCName + '</div>' +
-              '<p> STATUS: <strong style="color:orange;">' + ModelHouses[i].Status + '</strong><br>' +
-              'PROGRESS: <strong style="color:red;">' + ModelHouses[i].Progress + '%</strong>' +
-              '<br/><br/><a target="_blank" href="/modelhouse/detail?ID=' + ModelHouses[i].ID + '"><br> DETAIL</a>' + '</p>' +
-              '</div>' +
-              '</div>');
-            infowindow.open(map, marker);
-            // $.ajax({
-            //   url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
-            //   success: function(data){
-            //     let temp = '<strong style="color:red;">NONE</strong><br>';
-            //     if (Beneficiaries[i].Level == 1){
-            //       temp = '<strong style="color:blue;">1st</strong><br>'
-            //     }
-            //     infowindow.setContent('<div id="iw-container">' +
-            //         '<div class="iw-title">'+Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName+'</div>' +
-            //         '<div class="iw-content">' +
-            //           '<img src="'+data+'"  height="120" width="100">' +
-            //           '<div class="iw-subTitle">CNIC: '+Beneficiaries[i].CNIC+'</div>' +
-            //           '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>'+
-            //             'INSTALLMENT PAID: '+temp+''+
-            //               'PROGRESS: <strong style="color:red;">0%</strong>'+
-            //           '<br>PHONE: '+Beneficiaries[i].PhonePrimary+
-            //           '<a href="/beneficiary/detail?CNIC='+Beneficiaries[i].CNIC+'"><br>MONITORING DETAIL</a>'+'</p>'+
-            //         '</div>' +
-            //       '</div>');
-            //     infowindow.open(map, marker);
-            //   }
-            // });
-          }
-
-          google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-              load_content(marker, ModelHouses[i].ID);
-              infowindow.open(map, marker);
-            }
-          })(marker, i));
-        } */
         // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
           //this.setZoom(zoomLevel);
           google.maps.event.removeListener(boundsListener);
         });
@@ -916,192 +598,22 @@
             markers[i].setMap(map);
           }
         }
-        // // Sets the map on all markers in the array.
-        // function setMapOnAllModelHouses(map) {
-        //   // for (var i = 0; i < ModelHousesMarkers.length; i++) {
-        //   //   ModelHousesMarkers[i].setMap(map);
-        //   // }
-        // }
 
         // Removes the markers from the map, but keeps them in the array.
         function clearMarkers() {
           setMapOnAll(null);
         }
 
-        // // Removes the markers from the map, but keeps them in the array.
-        // function clearModelHousesMarkers() {
-        //  // setMapOnAllModelHouses(null);
-        // }
-
         // Removes the markers from the map, but keeps them in the array.
         function redrawMarkers() {
           setMapOnAll(map);
         }
 
-        // // Removes the markers from the map, but keeps them in the array.
-        // function redrawModelHousesMarkers() {
-        //  // setMapOnAllModelHouses(map);
-        // }
-
-        var Level1PieChart = echarts.init(document.getElementById('Level1PieChart'));
-        var option = {
-          tooltip: {
-            trigger: 'item',
-            formatter: "{b}: <br/> {c} ({d}%)"
-          },
-          color: ['#cc2a36', '#edc951', '#00a0b0', '#9B1D20', '#0B1D20', '#A0C1B5', '#E45A19'],
-          series: [
-            {
-
-              name: 'Level 1',
-              type: 'pie',
-              radius: ['50%', '80%'],
-              center: ['50%', '50%'],
-              avoidLabelOverlap: true,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  show: true,
-                  textStyle: {
-                    fontSize: '10',
-                    fontWeight: 'bold'
-                  }
-                }
-              },
-              data: [
-                { value: Beneficiaries.length - CountLevel1InProgress, name: 'Not Started' },
-                { value: CountLevel1InProgress - CountLevel1Achieved, name: 'In Progress' },
-                { value: CountLevel1Achieved, name: 'Completed' },
-              ]
-            }
-          ]
-        };
-
-        Level1PieChart.setOption(option);
-
-        var Level2PieChart = echarts.init(document.getElementById('Level2PieChart'));
-        var option = {
-          tooltip: {
-            trigger: 'item',
-            formatter: "{b}: <br/> {c} ({d}%)"
-          },
-          color: ['#cc2a36', '#edc951', '#00a0b0', '#9B1D20', '#0B1D20', '#A0C1B5', '#E45A19'],
-          series: [
-            {
-
-              name: 'Level 1',
-              type: 'pie',
-              radius: ['0%', '80%'],
-              center: ['50%', '50%'],
-              avoidLabelOverlap: true,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  show: true,
-                  textStyle: {
-                    fontSize: '10',
-                    fontWeight: 'bold'
-                  }
-                }
-              },
-              data: [
-                { value: Beneficiaries.length - CountLevel2InProgress, name: 'Not Started' },
-                { value: CountLevel2InProgress - CountLevel2Achieved, name: 'In Progress' },
-                { value: CountLevel2Achieved, name: 'Completed' },
-              ]
-            }
-          ]
-        };
-        Level2PieChart.setOption(option);
-
-        var Level3PieChart = echarts.init(document.getElementById('Level3PieChart'));
-        var option = {
-          tooltip: {
-            trigger: 'item',
-            formatter: "{b}: <br/> {c} ({d}%)"
-          },
-          color: ['#cc2a36', '#edc951', '#00a0b0', '#9B1D20', '#0B1D20', '#A0C1B5', '#E45A19'],
-          series: [
-            {
-
-              name: 'Level 1',
-              type: 'pie',
-              radius: ['50%', '80%'],
-              center: ['50%', '50%'],
-              avoidLabelOverlap: true,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  show: true,
-                  textStyle: {
-                    fontSize: '10',
-                    fontWeight: 'bold'
-                  }
-                }
-              },
-              data: [
-                { value: Beneficiaries.length - CountLevel3InProgress - CountLevel3Achieved, name: 'Not Started' },
-                { value: CountLevel3InProgress - CountLevel3Achieved, name: 'In Progress' },
-                { value: CountLevel3Achieved, name: 'Completed' },
-              ]
-            }
-          ]
-        };
-
-        Level3PieChart.setOption(option);
-        var Level4PieChart = echarts.init(document.getElementById('Level4PieChart'));
-        var option = {
-          tooltip: {
-            trigger: 'item',
-            formatter: "{b}: <br/> {c} ({d}%)"
-          },
-          color: ['#cc2a36', '#edc951', '#00a0b0', '#9B1D20', '#0B1D20', '#A0C1B5', '#E45A19'],
-          series: [
-            {
-
-              name: 'Level 1',
-              type: 'pie',
-              radius: ['0%', '80%'],
-              center: ['50%', '50%'],
-              avoidLabelOverlap: true,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  show: true,
-                  textStyle: {
-                    fontSize: '10',
-                    fontWeight: 'bold'
-                  }
-                }
-              },
-              data: [
-                { value: Beneficiaries.length - CountLevel4InProgress - CountLevel4Achieved, name: 'Not Started' },
-                { value: CountLevel4InProgress - CountLevel4Achieved, name: 'In Progress' },
-                { value: CountLevel4Achieved, name: 'Completed' },
-              ]
-            }
-          ]
-        };
-
-        Level4PieChart.setOption(option);
-
         // FOR DEMO ONLY
         // menu collapsed by default during first page load or refresh with screen
         // having a size between 992px and 1299px. This is intended on this page only
         // for better viewing of widgets demo.
-        $(window).resize(function () {
+        $(window).resize(function() {
           minimizeMenu();
         });
 
