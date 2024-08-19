@@ -20,8 +20,9 @@ var mdlVillages = require('../models/mdlVillages');
 let mdlLookupTables = require('../models/mdlLookupTables');
 let mdlMonitoring = require('../models/mdlMonitoring');
 let mdlDistributedCheques = require('../models/mdlDistributedCheques');
-// let LastUpdatedOn = "September 1, 2020";
-let LastUpdatedOn = "May 16, 2024";
+let currDate = new Date();
+currDate.setHours(-72);
+let LastUpdatedOn = currDate.toDateString().substr(4);
 var isAuthenticated = function (req, res, next) {
 	// if user is authenticated in the session, call the next() to call the next request handler
 	// Passport adds this method to request object. A middleware is allowed to add properties to
@@ -516,67 +517,6 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
 				WHERE MonitoringLevel = 4 AND LevelStatus = 2 ', null, callback)
 			},
-			VerifiedCountByUC: function (callback) {
-				db.query('SELECT IFNULL(count(CNIC),0) as count, LUCs.UCName from Beneficiary \
-				LEFT JOIN LUCs on Beneficiary.UCID = LUCs.UCID \
-				WHERE Beneficiary.BenStatusID = 4 \
-				GROUP BY Beneficiary.UCID ', null, callback)
-			},
-			VerifiedMaleCountByUC: function (callback) {
-				db.query('SELECT IFNULL(count(CNIC),0) as count, Beneficiary.Gender, LUCs.UCName from Beneficiary \
-				LEFT JOIN LUCs on Beneficiary.UCID = LUCs.UCID \
-				WHERE Beneficiary.BenStatusID = 4 and Beneficiary.Gender = 0 \
-				GROUP BY Beneficiary.Gender, LUCs.UCID \
-				ORDER BY LUCs.UCName', null, callback)
-			},
-			VerifiedFemaleCountByUC: function (callback) {
-				db.query('SELECT IFNULL(count(CNIC),0) as count, Beneficiary.Gender, LUCs.UCName from Beneficiary \
-				LEFT JOIN LUCs on Beneficiary.UCID = LUCs.UCID \
-				WHERE Beneficiary.BenStatusID = 4 and Beneficiary.Gender = 1 \
-				GROUP BY Beneficiary.Gender, LUCs.UCID \
-				ORDER BY LUCs.UCName', null, callback)
-			},
-			BenStatusCount: function (callback) {
-				db.query('SELECT  LUCs.UCName, \
-				sum( if(Beneficiary.BenStatusID > 0, 1, 0)) as \'Total\',  \
-				sum( if(Beneficiary.BenStatusID = 1, 1, 0)) as \'Un-Verified\', \
-				sum( if(Beneficiary.BenStatusID = 2, 1, 0)) as \'Pending\',  \
-				sum( if(Beneficiary.BenStatusID = 3, 1, 0)) as \'Verified\', \
-				sum( if(Beneficiary.BenStatusID = 4, 1, 0)) as \'Approved\', \
-				sum( if(Beneficiary.BenStatusID = 5, 1, 0)) as \'Rejected\',  \
-				sum( if(Beneficiary.BenStatusID = 6, 1, 0)) as \'Dubious\',  \
-				sum( if(Beneficiary.BenStatusID = 7, 1, 0)) as \'Deceased\' \
-				FROM Beneficiary \
-				LEFT OUTER JOIN LUCs on Beneficiary.UCID = LUCs.UCID \
-				GROUP BY LUCs.UCName \
-				ORDER BY LUCs.UCName', null, callback)
-			},
-			TotalCountLevel1AcheivedByUC: function (callback) {
-				db.query('SELECT \
-				SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment1Awaran,\
-				SUM(CASE WHEN Beneficiary.UCID = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gishkore,\
-				SUM(CASE WHEN Beneficiary.UCID = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment1Teertaje,\
-				SUM(CASE WHEN Beneficiary.UCID = 6 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gajjar,\
-				SUM(CASE WHEN Beneficiary.UCID = 7 THEN 1 ELSE 0 END) AS TotalCountInstallment1Nokjo,\
-				SUM(CASE WHEN Beneficiary.UCID = 8 THEN 1 ELSE 0 END) AS TotalCountInstallment1Parwar,\
-				SUM(CASE WHEN Beneficiary.UCID = 9 THEN 1 ELSE 0 END) AS TotalCountInstallment1Dandar \
-				 FROM Monitoring \
-				 LEFT JOIN Beneficiary on Monitoring.CNIC = Beneficiary.CNIC \
-				 WHERE Monitoring.MonitoringLevel = 1 AND Monitoring.LevelStatus = 2', null, callback)
-			},
-			TotalCountInstallment1EncashedByUC: function (callback) {
-				db.query('SELECT \
-					SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment1Awaran,\
-					SUM(CASE WHEN Beneficiary.UCID = 2 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gishkore,\
-					SUM(CASE WHEN Beneficiary.UCID = 3 THEN 1 ELSE 0 END) AS TotalCountInstallment1Teertaje,\
-					SUM(CASE WHEN Beneficiary.UCID = 6 THEN 1 ELSE 0 END) AS TotalCountInstallment1Gajjar,\
-					SUM(CASE WHEN Beneficiary.UCID = 7 THEN 1 ELSE 0 END) AS TotalCountInstallment1Nokjo,\
-					SUM(CASE WHEN Beneficiary.UCID = 8 THEN 1 ELSE 0 END) AS TotalCountInstallment1Parwar,\
-					SUM(CASE WHEN Beneficiary.UCID = 9 THEN 1 ELSE 0 END) AS TotalCountInstallment1Dandar \
-					 FROM DistributedCheques \
-					 LEFT JOIN Beneficiary on DistributedCheques.CNIC = Beneficiary.CNIC \
-					 WHERE DistributedCheques.InstallmentType = 1', null, callback)
-			},
 			TotalCountLevel2AcheivedByUC: function (callback) {
 				db.query('SELECT \
 				SUM(CASE WHEN Beneficiary.UCID = 1 THEN 1 ELSE 0 END) AS TotalCountInstallment2Awaran,\
@@ -667,8 +607,9 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				console.log(err.message);
 				res.render('pages/page_not_found', { message: req.flash('message'), lang: req.session.lang });
 			}
-		
+
 			res.render('pages/index', {
+				title: "hc-dashboard",
 				TotalBeneficiaries: results.TotalBeneficiaries[0].count,
 				TotalUnverified: results.TotalUnverified[0].count,
 				TotalPending: results.TotalPending[0].count,
@@ -678,10 +619,6 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				TotalDubious: results.TotalDubious[0].count,
 				TotalSubstituted: results.TotalSubstituted[0].count,
 				TotalDeceased: results.TotalDeceased[0].count,
-				VerifiedCountByUC: results.VerifiedCountByUC,
-				VerifiedFemaleCountByUC: results.VerifiedFemaleCountByUC,
-				VerifiedMaleCountByUC: results.VerifiedMaleCountByUC,
-				BenStatusCount: results.BenStatusCount,
 				TotalLevel1Encashed: results.TotalLevel1Encashed[0].count,
 				TotalLevel2Encashed: results.TotalLevel2Encashed[0].count,
 				TotalLevel3Encashed: results.TotalLevel3Encashed[0].count,
@@ -718,8 +655,6 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				NotRecomendedPaymentL2: results.NotRecomendedPaymentL2[0].count,
 				NotRecomendedPaymentL3: results.NotRecomendedPaymentL3[0].count,
 				NotRecomendedPaymentL4: results.NotRecomendedPaymentL4[0].count,
-				TotalCountInstallment1EncashedByUC: results.TotalCountInstallment1EncashedByUC[0],
-				TotalCountLevel1AcheivedByUC: results.TotalCountLevel1AcheivedByUC[0],
 				TotalCountInstallment2EncashedByUC: results.TotalCountInstallment2EncashedByUC[0],
 				TotalCountLevel2AcheivedByUC: results.TotalCountLevel2AcheivedByUC[0],
 				TotalCountInstallment3EncashedByUC: results.TotalCountInstallment3EncashedByUC[0],
@@ -925,15 +860,15 @@ router.get('/levelAchieved', isAuthenticated, function(req, res) {
 	  res.render('pages/page_not_found', { message: req.flash('message') });
   } else {
 		async.parallel({
-			TotalCountEncashed: function (callback) {
-				db.query('SELECT count(DISTINCT(CNIC)) as count from DistributedCheques \
-				WHERE InstallmentType = 1 ', null, callback)
-			},
-			TotalCount: function (callback) {
-				db.query('SELECT \
-						count(DISTINCT(CNIC)) as count \
-				 		FROM Monitoring WHERE MonitoringLevel = 1 AND LevelStatus = 2 ', null, callback)
-			},
+			// TotalCountEncashed: function (callback) {
+			// 	db.query('SELECT count(DISTINCT(CNIC)) as count from DistributedCheques \
+			// 	WHERE InstallmentType = 1 ', null, callback)
+			// },
+			// TotalCount: function (callback) {
+			// 	db.query('SELECT \
+			// 			count(DISTINCT(CNIC)) as count \
+			// 	 		FROM Monitoring WHERE MonitoringLevel = 1 AND LevelStatus = 2 ', null, callback)
+			// },
 			
 			TotalCountLevelAcheivedByUC: function (callback) {
 				db.query('select Count, UCName ,	MonitoringLevel from (SELECT count(UCID) as Count, UCID, MonitoringLevel FROM Monitoring where LevelStatus=2  group by UCID, MonitoringLevel order by UCID, MonitoringLevel) as ll, LUCs where ll.UCID = LUCs.UCID', null, callback)
@@ -957,8 +892,8 @@ router.get('/levelAchieved', isAuthenticated, function(req, res) {
 						Permission: 1,
 						lang: req.session.lang,
 						User: req.user,
-						TotalCountEncashed: results.TotalCountEncashed[0].count,
-						TotalCount: results.TotalCount[0].count,
+						//TotalCountEncashed: results.TotalCountEncashed[0].count,
+						//TotalCount: results.TotalCount[0].count,
 						TotalCountLevelAcheivedByUC: results.TotalCountLevelAcheivedByUC,
 						TotalCountLevelAcheivedByMonth: results.TotalCountLevelAcheivedByMonth,
 						LastUpdatedOn: LastUpdatedOn,

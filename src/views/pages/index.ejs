@@ -207,7 +207,7 @@ color: orange;
                     <%= LastUpdatedOn %>
                 </b>
                 <br/>
-                Monitoring Data upto <b>March 30, 2024</b>
+                Monitoring Data upto <b><%= LastDataReceivedOn %></b>
             </div>
 
         </div>
@@ -590,7 +590,26 @@ color: orange;
 
 
 </div><!-- br-pagebody -->
-<% include ../partials/footer %>
+<style>
+    .footer-left {
+      padding-left: 16%;
+  }
+  </style>
+  <footer class="br-footer">
+    <div class="footer-left">
+        <% if (lang == 'en' ) { %>
+          <div>* as per project-account bank statement</div>
+          <div>‡ as per field data</div>
+          <div class="">Copyright &copy; 2024. Cyberstate Technologies. All Rights Reserved.</div>
+          <div>Attentively and carefully maintained by Cyberstate Technologies Pvt Ltd.</div>
+        <% } else { %>
+          <div class="">كافة حقوق الطبع والنشر محفوظة الى  © 2024. Cyberstate Technologies</div>
+          <div>تتم صيانتها بحرص و عناية من قبل Cyberstate Technologies Pvt Ltd</div>
+        <% } %>
+      
+    </div>
+    
+  </footer>
 </div><!-- br-mainpanel -->
 <!-- ########## END: MAIN PANEL ########## -->
 
@@ -668,171 +687,12 @@ color: orange;
         }
 
         var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
-        var VerifiedCountByUC = JSON.parse(htmlDecode("<%= JSON.stringify(VerifiedCountByUC) %>"));
-        var VerifiedMaleCountByUC = JSON.parse(htmlDecode("<%= JSON.stringify(VerifiedMaleCountByUC) %>"));
-        var VerifiedFemaleCountByUC = JSON.parse(htmlDecode("<%= JSON.stringify(VerifiedFemaleCountByUC) %>"));
-        var BenStatusCount = JSON.parse(htmlDecode("<%= JSON.stringify(BenStatusCount) %>"));
-        var TotalCountLevel1AcheivedByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountLevel1AcheivedByUC) %>"));
-        var TotalCountInstallment1EncashedByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment1EncashedByUC) %>"));
-        //var BenGenderChart = echarts.init(document.getElementById('pieGender'));
 
-        var BenGenderChartTitle = 'BENEFICIARIES GENDER COUNT';
-        var BenGenderChartSubText = 'UC WISE';
-        var name1 = 'male';
-        var name2 = 'female';
-        var titleX = "left";
-        if (lang == 'ar') {
-            BenGenderChartTitle = 'حساب المستفيدون حسب الجنس';
-            BenGenderChartSubText = 'حكيم UC';
-            name1 = 'الذكر';
-            name2 = 'إناثا';
-            titleX = "right";
-        }
-
-        options = {
-            title: {
-                text: BenGenderChartTitle,
-                subtext: BenGenderChartSubText,
-                x: titleX
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'shadow'
-                }
-            },
-            color: ['#064789', '#A5BE00'],
-            angleAxis: {
-                type: 'category',
-                data: [VerifiedMaleCountByUC[0].UCName, VerifiedMaleCountByUC[1].UCName, VerifiedMaleCountByUC[2].UCName, VerifiedMaleCountByUC[3].UCName, VerifiedMaleCountByUC[4].UCName, VerifiedMaleCountByUC[5].UCName, VerifiedMaleCountByUC[6].UCName],
-                z: 10
-            },
-            radiusAxis: {},
-            polar: {},
-            series: [{
-                type: 'bar',
-                data: [VerifiedMaleCountByUC[0].count, VerifiedMaleCountByUC[1].count, VerifiedMaleCountByUC[2].count, VerifiedMaleCountByUC[3].count, VerifiedMaleCountByUC[4].count, VerifiedMaleCountByUC[5].count, VerifiedMaleCountByUC[6].count],
-                coordinateSystem: 'polar',
-                name: name1,
-                stack: 'a'
-            }, {
-                type: 'bar',
-                data: [VerifiedFemaleCountByUC[0].count, VerifiedFemaleCountByUC[1].count, VerifiedFemaleCountByUC[2].count, VerifiedFemaleCountByUC[3].count, VerifiedFemaleCountByUC[4].count, VerifiedFemaleCountByUC[5].count, VerifiedFemaleCountByUC[6].count],
-                coordinateSystem: 'polar',
-                name: name2,
-                stack: 'a'
-            },],
-            legend: {
-                show: true,
-                data: [name1, name2],
-                y: 'bottom',
-            }
-        };
-        //BenGenderChart.setOption(options);
-
-        var BenUCChartTitle = 'APPROVED BENEFICIARIES';
-        var BenUCChartSubText = 'UC WISE';
         var radius = [25, 220];
         if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) ||
             /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) {
             radius = [10, 100];
         }
-        if (lang == 'ar') {
-            BenUCChartTitle = 'المستفيدون الذين تم التحقق منهم';
-            BenUCChartSubText = 'حكيم UC';
-            titleX = "right";
-
-        }
-        // var BenUCChart = echarts.init(document.getElementById('roseUC'));
-        option = {
-            title: {
-                text: BenUCChartTitle,
-                subtext: BenUCChartSubText,
-                x: titleX
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                x: 'center',
-                y: 'bottom',
-                type: 'scroll',
-                data: [VerifiedCountByUC[0].UCName, VerifiedCountByUC[1].UCName, VerifiedCountByUC[2].UCName, VerifiedCountByUC[3].UCName, VerifiedCountByUC[4].UCName, VerifiedCountByUC[5].UCName, VerifiedCountByUC[6].UCName]
-            },
-
-            calculable: true,
-            series: [{
-                name: '',
-                type: 'pie',
-                radius: radius,
-                center: ['50%', '50%'],
-                roseType: 'radius',
-                label: {
-                    normal: {
-                        formatter: '{b|{b}}\n{hr|}\n  {c}  {per|{d}%}  ',
-                        backgroundColor: '#eee',
-                        borderColor: '#aaa',
-                        borderWidth: 1,
-                        borderRadius: 4,
-                        rich: {
-                            a: {
-                                color: '#999',
-                                lineHeight: 22,
-                                align: 'center'
-                            },
-                            hr: {
-                                borderColor: '#aaa',
-                                width: '100%',
-                                borderWidth: 0.5,
-                                height: 0
-                            },
-                            b: {
-                                fontSize: 12,
-                                lineHeight: 15,
-                                align: 'center'
-                            },
-                            per: {
-                                color: '#eee',
-                                backgroundColor: '#334455',
-                                padding: [2, 4],
-                                borderRadius: 2
-                            }
-                        }
-                    }
-                },
-                data: [{
-                    value: VerifiedCountByUC[0].count,
-                    name: VerifiedCountByUC[0].UCName
-                },
-                    {
-                        value: VerifiedCountByUC[1].count,
-                        name: VerifiedCountByUC[1].UCName
-                    },
-                    {
-                        value: VerifiedCountByUC[2].count,
-                        name: VerifiedCountByUC[2].UCName
-                    },
-                    {
-                        value: VerifiedCountByUC[3].count,
-                        name: VerifiedCountByUC[3].UCName
-                    },
-                    {
-                        value: VerifiedCountByUC[4].count,
-                        name: VerifiedCountByUC[4].UCName
-                    },
-                    {
-                        value: VerifiedCountByUC[5].count,
-                        name: VerifiedCountByUC[5].UCName
-                    },
-                    {
-                        value: VerifiedCountByUC[6].count,
-                        name: VerifiedCountByUC[6].UCName
-                    },
-                ]
-            }]
-        };
-        // BenUCChart.setOption(option);
 
         var x = 'left';
         var legendX = 'right';

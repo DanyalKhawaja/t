@@ -37,8 +37,8 @@
       <i class="icon ion-ios-pulse"></i>
       <div>
         <% if (lang == 'en') { %>
-        <h4>Construction of 8000 Houses | Physical Progress</h4>
-        <p class="mg-b-0" id="labelRegion">LAST UPDATED ON: <%= LastUpdatedOn %></p>
+        <h4>Physical Progress</h4>
+        <p class="mg-b-0" id="labelRegion">Last Updated on: <%= LastDataReceivedOn %></p>
         <% } else { %>
         <h3> الشيكات المستنيرة من قبل المستفيدين | بناء 8000 منزل</h3>
         <p class="mg-b-0" id="labelRegion">وفقًا لتقرير تسوية البنك حتى 2019</p>
@@ -51,13 +51,13 @@
       <div class="row row-sm mg-t-20">
         <div class="col-lg-6">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h4 class="card-title tx-uppercase tx-12 tx-inverse">UC Wise</h4>
+            <h5 class="card-title tx-uppercase  tx-inverse">UC Wise</h5>
             <div id="LevelAchievedByUC" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
         <div class="col-lg-6">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h4 class="card-title tx-uppercase tx-12 tx-inverse">Overall</h4>
+            <h5 class="card-title tx-uppercase tx-inverse">Overall</h5>
             <div id="LevelAchievedAll" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
@@ -66,7 +66,7 @@
       <div class="row row-sm mg-t-20">
         <div class="col-lg-12">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h4 class="card-title tx-uppercase tx-12 tx-inverse">Month Wise</h4>
+            <h5 class="card-title tx-uppercase  tx-inverse">Month Wise</h5>
             <div id="LevelAchievedByMonthChart" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
@@ -184,7 +184,6 @@
       var TotalCountLevelAcheivedByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountLevelAcheivedByUC) %>"));
       var TotalCountLevelAcheivedByMonth = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountLevelAcheivedByMonth) %>"));
       var timeSeries = generateMonthYearSeries(new Date("2019-01-01"), new Date())
-
       const totalUCAchieved = TotalCountLevelAcheivedByUC.reduce((l, c) => {
         if (!l[c.UCName]) l[c.UCName] = {
           [c.MonitoringLevel]: c.Count
@@ -199,8 +198,6 @@
         else l[c.MonitoringLevel] += c.Count;
         return l;
       }, {})
-
-
 
       const totalAchieved = TotalCountLevelAcheivedByMonth.reduce((l, c) => {
         if (!l[c.CD]) l[c.CD] = {
@@ -375,7 +372,7 @@
             },
             magicType: {
               show: true,
-              type: ['line', 'bar', 'stack','tiled']
+              type: ['line', 'bar', 'stack', 'tiled']
             },
             restore: {
               show: true
@@ -437,18 +434,18 @@
           data: ['Level 1', 'Level 2', 'Level 3', 'Level 4']
         }
       };
-      
+
       chartByUC.setOption(optionByUC)
 
       let optionAll = {
-        tooltip: {
-          axisPointer: {
-            type: 'cross',
-            label: {
-              backgroundColor: '#6a7985'
-            }
-          }
-        },
+        // tooltip: {
+        //   axisPointer: {
+        //     type: 'cross',
+        //     label: {
+        //       backgroundColor: '#6a7985'
+        //     }
+        //   }
+        // },
         legend: {
           show: true
         },
@@ -474,6 +471,40 @@
           itemStyle: {
             borderRadius: 8
           },
+          label: {
+            formatter: ' {b|{b}：}{c} ',
+            backgroundColor: '#F6F8FC',
+            borderColor: '#8C8D8E',
+            padding: 2,
+            borderWidth: 1,
+            borderRadius: 4,
+            rich: {
+              a: {
+                color: '#6E7079',
+                lineHeight: 22,
+                align: 'center'
+              },
+              hr: {
+                borderColor: '#8C8D8E',
+                width: '100%',
+                borderWidth: 1,
+                height: 0
+              },
+              b: {
+                color: '#4C5058',
+                fontSize: 14,
+                fontWeight: 'bold',
+                lineHeight: 33
+              },
+              per: {
+
+
+                padding: [3, 4],
+                fontSize: 13,
+                borderRadius: 4
+              }
+            }
+          },
           data: [{
               value: totalLevelWiseAchieved[1],
               name: 'Level 1'
@@ -494,9 +525,8 @@
           ]
         }]
       };
-     
-      chartAll.setOption(optionAll);
 
+      chartAll.setOption(optionAll);
       let optionByMonth = {
         tooltip: {
           trigger: 'axis',
@@ -519,7 +549,7 @@
             },
             magicType: {
               show: true,
-              type: ['line', 'bar', 'stack','tiled']
+              type: ['line', 'bar', 'stack', 'tiled']
             },
             restore: {
               show: true
@@ -572,6 +602,7 @@
             emphasis: {
               focus: 'series'
             },
+
             data: levelValue[1]
           },
           {
