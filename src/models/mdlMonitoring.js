@@ -17,7 +17,7 @@ var mdlMonitoring = {
     },
     getAllByCNIC: function (req, res) {
         
-        db.query('SELECT * FROM Monitoring WHERE CNIC = ? ORDER BY CreateDate DESC', [req.CNIC], function (err, result) {
+        db.query('SELECT * FROM Monitoring WHERE year(CreateDate) > 2023 and CNIC = ? ORDER BY CreateDate DESC', [req.CNIC], function (err, result) {
             if (err) {
                 console.log(err.message);
             }

@@ -529,6 +529,9 @@ router.get('/disbursments', isAuthenticated, function (req, res) {
 		res.render('pages/page_not_found', { message: req.flash('message') });
 	} else {
 		async.parallel({
+			UCs: function (callback) {
+				db.query('select UCName FROM LUCs ', null, callback)
+			},
 			TotalCountInstallment_DisbursementByUC: function (callback) {
 				db.query('select Count, UCName , InstallmentType from (SELECT count(UCID) as Count, UCID, InstallmentType FROM (select dc.*, b.UCID from DistributedCheques dc left join Beneficiary b on dc.CNIC = b.CNIC) AS PP  group by UCID, InstallmentType HAVING UCID >0 order by UCID, InstallmentType) as ll, LUCs where ll.UCID = LUCs.UCID', null, callback)
 			},
@@ -558,7 +561,8 @@ router.get('/disbursments', isAuthenticated, function (req, res) {
 					User: req.user,
 					TotalCountInstallment_DisbursementByUC: results.TotalCountInstallment_DisbursementByUC,
 					TotalCountsInstallment_DisbursementByMonth: results.TotalCountsInstallment_DisbursementByMonth,
-					LastDisbursementOn: results.LastDisbursementOn[0].LD
+					LastDisbursementOn: results.LastDisbursementOn[0].LD,
+					UCs: results.UCs
 				});
 			}
 		});

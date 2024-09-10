@@ -863,7 +863,9 @@ router.get('/levelAchieved', isAuthenticated, function(req, res) {
 			// 			count(DISTINCT(CNIC)) as count \
 			// 	 		FROM Monitoring WHERE MonitoringLevel = 1 AND LevelStatus = 2 ', null, callback)
 			// },
-			
+			UCs: function (callback) {
+				db.query('select UCName FROM LUCs ', null, callback)
+			},
 			TotalCountLevelAcheivedByUC: function (callback) {
 				db.query('select Count, UCName ,	MonitoringLevel from (SELECT count(UCID) as Count, UCID, MonitoringLevel FROM Monitoring where LevelStatus=2  group by UCID, MonitoringLevel order by UCID, MonitoringLevel) as ll, LUCs where ll.UCID = LUCs.UCID', null, callback)
 			},
@@ -891,8 +893,8 @@ router.get('/levelAchieved', isAuthenticated, function(req, res) {
 						TotalCountLevelAcheivedByUC: results.TotalCountLevelAcheivedByUC,
 						TotalCountLevelAcheivedByMonth: results.TotalCountLevelAcheivedByMonth,
 						LastUpdatedOn: LastUpdatedOn,
-						LastDataReceivedOn: results.LastDataReceivedOn[0].LD
-						
+						LastDataReceivedOn: results.LastDataReceivedOn[0].LD,
+						UCs: results.UCs
 					});
 			}
 		});	

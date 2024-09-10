@@ -31,9 +31,20 @@
     .l-top {
       margin-top: 1em;
     }
+
     .top-row {
       margin-left: 0;
       margin-right: 0;
+    }
+
+    .virtualPlaceholder {
+      display: block;
+      height: 171px;
+      width: 141px;
+      background: #eee;
+    }
+    .dd {
+    padding-left: 1em;
     }
   </style>
 
@@ -46,9 +57,9 @@
   <!-- ########## START: MAIN PANEL ########## -->
   <div class="br-mainpanel">
     <div class="row top-row">
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="br-pagetitle">
-          <i class="icon ion-android-map"></i>
+          <!-- <i class="icon ion-android-map"></i> -->
           <div>
             <% if (lang == 'en') { %>
             <h3>GIS Dashboard </h3>
@@ -59,100 +70,124 @@
           </div>
         </div><!-- d-flex -->
       </div>
-     
-      <div class="col-md-9">
+
+      <div class="col-md-8">
         <div class="row">
-      <div class="col-md-2">
-        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
-          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
-            <% if (lang == 'en') { %>
-            APPROVED <br/>BENEFICIARIES
-            <% } else { %>
+          <div class="col-md-2">
+            <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+                <% if (lang == 'en') { %>
+                APPROVED <br />BENEFICIARIES
+                <% } else { %>
 
-            <% } %>
-          </p>
-          <p class="tx-20 tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelTotalCount">
-            <%= Beneficiaries.length  %> / 8000</p>
-        </div>
-      </div><!-- col-8 -->
-      <div class="col-md-2">
-        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
-          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center" >
-            <% if (lang == 'en') { %>
-            NOT <br/>STARTED
-            <% } else { %>
+                <% } %>
+              </p>
+              <p class="tx-20 tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelTotalCount">
+                <%= Beneficiaries.length  %> / 8000</p>
+            </div>
+          </div><!-- col-8 -->
+          <div class="col-md-2">
+            <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+                <% if (lang == 'en') { %>
+                NOT <br />STARTED
+                <% } else { %>
 
-            <% } %>
-          </p>
-          <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted" >
-            <%= Beneficiaries.length - CountLevel1InProgress  %>
-            / <%= Beneficiaries.length %></p>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
-          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center" >
-            <% if (lang == 'en') { %>
-              Funds Released <br/>  by SFD 
-                          <% } else { %>
+                <% } %>
+              </p>
+              <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted">
+                <%= Beneficiaries.length - CountLevel1InProgress  %>
+                / <%= Beneficiaries.length %></p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+                <% if (lang == 'en') { %>
+                Funds Released <br /> by SFD
+                <% } else { %>
 
-            <% } %>
-          </p>
-          <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted" >
-            Rs.
+                <% } %>
+              </p>
+              <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted">
+                Rs.
                 <%= (2079999200).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
-          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
-            <% if (lang == 'en') { %>
-              Funds Disbursed <br/> by HRA
-            <% } else { %>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+                <% if (lang == 'en') { %>
+                Funds Disbursed <br /> by HRA ( <%= (88).toLocaleString(undefined, {maximumFractionDigits:0}) %>%)
+                <% } else { %>
 
-            <% } %>
-          </p>
-          <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted">
-            Rs.
+                <% } %>
+              </p>
+              <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted">
+                Rs.
                 <%= (2079999200*0.88).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="l-top rounded overflow-hidden" style="background: #1D2939">
-          <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center" >
-            <% if (lang == 'en') { %>
-              Funds <br/> Untilized 
-            <% } else { %>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+                <% if (lang == 'en') { %>
+                Funds <br /> Un-Utilized (<%= (100-88).toLocaleString(undefined, {maximumFractionDigits:0}) %>%)
+                <% } else { %>
 
-            <% } %>
-          </p>
-          <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted" >
-            Rs.
+                <% } %>
+              </p>
+              <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted">
+                Rs.
                 <%= (2079999200*(1-0.88)).toLocaleString(undefined, {maximumFractionDigits:2}) %></p>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="l-top rounded overflow-hidden" style="background: #1D2939">
+              <p class="tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center">
+                <% if (lang == 'en') { %>
+                Level 4 <br /> Completed
+                <% } else { %>
+
+                <% } %>
+              </p>
+              <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted">
+                
+                <%= CountLevel4Achieved.toLocaleString(undefined, {maximumFractionDigits:0}) %></p>
+            </div>
+          </div>
+         
         </div>
       </div>
       <div class="col-md-2">
-        <div class="row no-gutters l-top" style="background: #1D2939">
-          <div class="form-group mg-md-l--1 bd-t-0-force">
-            <label class="form-control-label mg-b-10-force tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Union Council (UC):<span class="tx-danger">*</span></label>
-            <select id="select2-UC" class="form-control" data-placeholder="Select a UC" style="width:100%">
-              <option value="0">Select a UC</option>
-              <% UCs.forEach(function(uc) { %>
-              <option value="<%= uc.UCID %> "><%= uc.UCName %></option>
-              <% }) %>
-            </select>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row no-gutters l-top" style="background: #1D2939">
+              <div class="form-group mg-md-l--1 bd-t-0-force dd">
+                <label class="form-control-label mg-b-10-force tx-14 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Union Council (UC):<span class="tx-danger">*</span></label>
+                <select id="select2-UC" class="form-control" data-placeholder="Select a UC" style="width:100%">
+                  <option value="0">All UC</option>
+                  <% UCs.forEach(function(uc) { %>
+                  <option value="<%= uc.UCID %> "><%= uc.UCName %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
     </div>
     <div class="br-pagebody">
       <div class="br-section-wrapper">
 
         <div class="row row-sm">
           <div class="col-lg-12">
-            <div id="map" style="width:100%;height:80vh"></div>
+            <div id="map" style="width:100%;height:78vh"></div>
+          </div>
+        </div><!-- row -->
+        <div class="row row-sm">
+          <div id="legend" class="col-lg-12">
+
           </div>
         </div><!-- row -->
       </div>
@@ -195,13 +230,39 @@
         var selectedID = "";
         var zoomLevel = 9;
         var markers = [];
+        var markers_ucs = [];
         const ucColorPalette = ["#33a8c7", "#52e3e1", "#a0e426", "#fdf148", "#ffab00", "#f77976", "#f050ae", "#d883ff", "#9336fd"];
         const ucColorPalette2 = ["f77976", "f050ae", "d883ff", "9336fd", "33a8c7", "52e3e1", "a0e426", "fdf148", "ffab00"];
-
-        const getPin = function(monitoringLevel, levelStatus, ucId = 0) {
+        const legend = document.getElementById("legend");
+        let legendHTML = "<br/>";
+        let ucs = JSON.parse(htmlDecode("<%= JSON.stringify(UCs) %>")).reduce((p, c) => {
+          p[c.UCID] = c.UCName;
+          return p
+        }, {});
+        Object.keys(ucs).map((c, i) => {
+          legendHTML += `<i class="fa fa-circle fa-lg" style="color: ${ucColorPalette[c]}"></i> ${ucs[c]}&nbsp &nbsp`
+        })
+        legend.innerHTML = legendHTML;
+        const getPin = function({
+          MonitoringLevel: monitoringLevel,
+          LevelStatus: levelStatus,
+          InstallmentType: installment = null,
+          UCID: ucId = 0
+        }) {
           let pin = null;
 
-          if (monitoringLevel > 0 && levelStatus == 2) {
+          if (monitoringLevel > 0 && levelStatus == 2 && installment > monitoringLevel) {
+            // A marker using a Font Awesome icon for the glyph.
+            const icon = document.createElement('div');
+            icon.innerHTML = `<i class="fa fa-${monitoringLevel} fa-lg"><sup>!</sup></i>`;
+            pin = new google.maps.marker.PinElement({
+              glyph: icon,
+              glyphColor: 'black',
+              background: ucColorPalette[ucId],
+              borderColor: '#28231d',
+            }).element
+            //check if level-1 is achieved
+          } else if (monitoringLevel > 0 && levelStatus == 2) {
             // A marker using a Font Awesome icon for the glyph.
             const icon = document.createElement('div');
             icon.innerHTML = `<i class="fa fa-${monitoringLevel} fa-lg"></i>`;
@@ -228,205 +289,96 @@
 
         }
 
+        function load_content(marker, beneficiary) {
+          infowindow.setContent();
+          //infowindow.setHeaderContent('Loading...');
+
+
+          let temp = '<strong style="color:red;">NONE</strong><br>';
+          var progress1 = 'PROGRESS: <strong style="color:red;">' + '0' + '%</strong>';
+
+          if (beneficiary.InstallmentType == 1) {
+            temp = '<strong style="color:blue;">1st</strong>';
+
+          }
+          if (beneficiary.InstallmentType == 2) {
+            temp = '<strong style="color:blue;">2nd</strong>';
+          }
+          if (beneficiary.InstallmentType == 3) {
+            temp = '<strong style="color:blue;">3rd</strong>';
+          }
+          if (beneficiary.InstallmentType == 4) {
+            temp = '<strong style="color:blue;">4th</strong>';
+          }
+
+          if (beneficiary.MonitoringLevel == 1 && beneficiary.LevelStatus == 2) {
+            progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 ACHIEVED' + '</strong>';
+          } else if (beneficiary.MonitoringLevel == 1 && beneficiary.LevelStatus == 1) {
+            progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 IN-PROGRESS' + '</strong>';
+          } else if (beneficiary.MonitoringLevel == 2 && beneficiary.LevelStatus == 1) {
+            progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 IN-PROGRESS' + '</strong>';
+          } else if (beneficiary.MonitoringLevel == 2 && beneficiary.LevelStatus == 2) {
+            progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 ACHIEVED' + '</strong>';
+          } else if (beneficiary.MonitoringLevel == 3 && beneficiary.LevelStatus == 1) {
+            progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 IN-PROGRESS' + '</strong>';
+          } else if (beneficiary.MonitoringLevel == 3 && beneficiary.LevelStatus == 2) {
+            progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 ACHIEVED' + '</strong>';
+          } else if (beneficiary.MonitoringLevel == 4 && beneficiary.LevelStatus == 1) {
+            progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 IN-PROGRESS' + '</strong>';
+          } else if (beneficiary.MonitoringLevel == 4 && beneficiary.LevelStatus == 2) {
+            progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 ACHIEVED' + '</strong>';
+          }
+
+
+          const imgId = "i" + Date.now() + Math.floor(Math.random() * 100)
+          infowindow.setContent('<div id="iw-container">' +
+
+            '<div class="iw-content" style="max-height: none">' +
+
+            '<img class="virtualPlaceholder" id="' + imgId + '" src="">' +
+
+            '<p>UC :' + ucs[beneficiary.UCID] + '<br/>STATUS: <strong style="color:green;">APPROVED</strong><br>' +
+            'INSTALLMENT PAID: ' + temp + '<br>' + progress1 +
+            '<br>PHONE: ' + beneficiary.PhonePrimary +
+            '<a href="/beneficiary/detail?CNIC=' + beneficiary.CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
+            '</div>' +
+            '</div>');
+          const header = document.createElement("h3");
+          header.textContent = beneficiary.FirstName + ' ' + beneficiary.LastName;
+          infowindow.setHeaderContent(header);
+          infowindow.open(map, marker);
+
+
+
+
+          $.ajax({
+            url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + beneficiary.CNIC,
+            success: function(data) {
+              document.getElementById(imgId).src = data
+            }
+          });
+
+        }
+
 
 
         $('#select2-UC').on('select2:select', function(e) {
           var data = e.params.data;
-          selectedID = data.id;
-          if (selectedID == 0) {
-            return;
-          }
-
-          $.ajax({
-            url: '/beneficiary/getVillagesByUC?UCID=' + data.id,
-            type: 'GET',
-            success: function(Villages) { // A function to be called if request succeeds
-              console.log(Villages);
-
-              $("#select2-Village").prop("disabled", false);
-              $('#select2-Village').empty().trigger("change");
-              $('#select2-Village').select2({
-                data: [{
-                  id: 0,
-                  text: 'Select a Village'
-                }]
-              });
-              $('#select2-Village').select2({
-                data: Villages
-              });
-            },
-            error: function(data) {
-              console.log('Couldn\'t GET the Beneficiaries');
-            }
-          });
-          $.ajax({
-            url: '/beneficiary/getBeneficiaryByUC?UCID=' + data.id,
-            type: 'GET',
-            success: function(data) { // A function to be called if request succeeds
-              console.log(data.CountLevel1InProgress[0].count);
-              clearMarkers();
-              Beneficiaries = data.Beneficiary;
-              markers = [];
-
-              $("#labelBudgetAllocated").html("Rs. " + (data.Beneficiary.length * 260000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-              $("#labelBudgetDisbursed").html("Rs. " + (data.CountLevel1InProgress[0].count * 88000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-              $("#labelTotalCount").html(data.Beneficiary.length);
-              $("#labelNotStarted").html(data.Beneficiary.length - data.CountLevel1InProgress[0].count);
-              $("#labelInProgress").html(data.CountLevel1InProgress[0].count);
-              $("#labelCompleted").html(0);
-
-              for (let i = 0; i < Beneficiaries.length; i++) {
-                if (Beneficiaries[i].VHLatitude == 0 || !Beneficiaries[i].VHLatitude) {
-                  continue;
-                }
-                var infowindow = new google.maps.InfoWindow({
-                  content: Beneficiaries[i].FirstName
-                });
-                var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
-                bounds.extend(position);
-
-                var marker = new google.maps.marker.AdvancedMarkerElement({
-                  position: position,
-                  map: map,
-                  title: Beneficiaries[i].FirstName,
-                  content: getPin(Beneficiaries[i].MonitoringLevel, Beneficiaries[i].LevelStatus, Beneficiaries[i].UCID + 0)
-                });
-                markers.push(marker);
-                map.setZoom(11);
-                // Automatically center the map fitting all markers on the screen
-                map.fitBounds(bounds);
-                map.setCenter(marker.position);
-
-                function load_content(marker, CNIC) {
-                  infowindow.setContent();
-                  infowindow.setHeaderContent('Loading...');
-                  let temp = '<strong style="color:red;">NONE</strong><br>';
-                  if (Beneficiaries[i].InstallmentType == 1) {
-                    temp = '<strong style="color:blue;">1st</strong><br>'
-                  }
-                  $.ajax({
-                    url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
-                    success: function(data) {
-                      let temp = '<strong style="color:red;">NONE</strong><br>';
-                      var progress1 = 'PROGRESS: <strong style="color:red;">' + '0' + '%</strong>';
-
-                      if (Beneficiaries[i].InstallmentType == 1) {
-                        temp = '<strong style="color:blue;">1st</strong>';
-
-                      }
-                      if (Beneficiaries[i].InstallmentType == 2) {
-                        temp = '<strong style="color:blue;">2nd</strong>';
-                      }
-
-                      if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 2) {
-                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 ACHIEVED' + '</strong>';
-                      } else if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 1) {
-                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 IN-PROGRESS' + '</strong>';
-                      } else if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 1) {
-                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 IN-PROGRESS' + '</strong>';
-                      } else if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 2) {
-                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 ACHIEVED' + '</strong>';
-                      } else if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 1) {
-                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 IN-PROGRESS' + '</strong>';
-                      } else if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 2) {
-                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 ACHIEVED' + '</strong>';
-                      } else if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 1) {
-                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 IN-PROGRESS' + '</strong>';
-                      } else if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 2) {
-                        progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 ACHIEVED' + '</strong>';
-                      }
-                      infowindow.setContent('<div id="iw-container">' +
-                        '<div class="iw-content" style="max-height: none">' +
+          selectedID = Number(data.id);
 
 
-                        '<img src="' + data + '"  width="43%">' +
-                        '<div class="iw-subTitle">CNIC: ' + Beneficiaries[i].CNIC + '</div>' +
-                        '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>' +
-                        'INSTALLMENT PAID: ' + temp + '<br>' + progress1 +
-                        '<br>PHONE: ' + Beneficiaries[i].PhonePrimary +
-                        '<a href="/beneficiary/detail?CNIC=' + Beneficiaries[i].CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
-                        '</div>' +
-                        '</div>');
-                      const header = document.createElement("h3");
-                      header.textContent = Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName;
-                      infowindow.setHeaderContent(header);
-                      infowindow.open(map, marker);
-                    }
-                  });
-                }
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                  return function() {
-                    load_content(marker, Beneficiaries[i].CNIC);
-                    infowindow.open(map, marker);
-                  }
-                })(marker, i));
-              }
-            },
-            error: function(data) {
-              console.log('Couldn\'t GET the Beneficiaries');
-            }
-          });
+
+          markers.forEach(marker => {
+            if (selectedID != 0 && marker["ucid"] != selectedID)
+              marker.map = null;
+            else
+              marker.map = map;
+          })
+
+
+
+
         });
-
-        $('#select2-Village').on('select2:select', function(e) {
-          var data = e.params.data;
-          if (data.id == 0) {
-            console.log(selectedID);
-            $("#select2-UC").select2("trigger", "select", {
-              data: {
-                id: selectedID
-              }
-            });
-            return;
-          }
-          $.ajax({
-            url: '/beneficiary/getBeneficiaryByVillage?VillageID=' + data.id,
-            type: 'GET',
-            success: function(data) { // A function to be called if request succeeds
-              console.log(data.length);
-              clearMarkers();
-              Beneficiaries = data;
-              markers = [];
-              $("#labelBudgetAllocated").html("Rs. " + (data.length * 260000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-              $("#labelBudgetDisbursed").html("Rs. " + 0);
-              $("#labelTotalCount").html(data.length);
-              $("#labelNotStarted").html(data.length);
-              $("#labelInProgress").html(0);
-              $("#labelCompleted").html(0);
-
-
-              for (let i = 0; i < Beneficiaries.length; i++) {
-
-                var infowindow = new google.maps.InfoWindow({
-                  content: Beneficiaries[i].FirstName
-                });
-                var position = new google.maps.LatLng(Beneficiaries[i].VHLatitude, Beneficiaries[i].VHLongitude);
-                bounds.extend(position);
-
-                var marker = new google.maps.marker.AdvancedMarkerElement({
-                  position: position,
-                  map: map,
-                  title: Beneficiaries[i].FirstName
-                });
-                markers.push(marker);
-                // Automatically center the map fitting all markers on the screen
-                map.fitBounds(bounds);
-                map.setCenter(marker.position);
-
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                  return function() {
-                    infowindow.setContent(Beneficiaries[i].CNIC);
-                    infowindow.open(map, marker);
-                  }
-                })(marker, i));
-              }
-            },
-            error: function(data) {
-              console.log('Couldn\'t GET the Beneficiaries');
-            }
-          });
-        });
-
         var map;
 
         document.getElementById("li-beneficiary").classList.add('active');
@@ -509,79 +461,18 @@
           var marker = new google.maps.marker.AdvancedMarkerElement({
             position: position,
             map: map,
-            title: Beneficiaries[i].FirstName,
-            content: getPin(Beneficiaries[i].MonitoringLevel, Beneficiaries[i].LevelStatus, Beneficiaries[i].UCID + 0)
+            title: Beneficiaries[i].FirstName + " - " + ucs[Beneficiaries[i].UCID],
+            content: getPin(Beneficiaries[i])
           });
+          marker["ucid"] = Beneficiaries[i].UCID;
           markers.push(marker);
           // Automatically center the map fitting all markers on the screen
           map.fitBounds(bounds);
           map.setCenter(marker.position);
 
-          function load_content(marker, CNIC) {
-            infowindow.setContent();
-            infowindow.setHeaderContent('Loading...');
-            $.ajax({
-              url: '/beneficiary/getBeneficiaryPhotoByCNIC?CNIC=' + CNIC,
-              success: function(data) {
-                let temp = '<strong style="color:red;">NONE</strong><br>';
-                var progress1 = 'PROGRESS: <strong style="color:red;">' + '0' + '%</strong>';
-
-                if (Beneficiaries[i].InstallmentType == 1) {
-                  temp = '<strong style="color:blue;">1st</strong>';
-
-                }
-                if (Beneficiaries[i].InstallmentType == 2) {
-                  temp = '<strong style="color:blue;">2nd</strong>';
-                }
-                if (Beneficiaries[i].InstallmentType == 3) {
-                  temp = '<strong style="color:blue;">3rd</strong>';
-                }
-                if (Beneficiaries[i].InstallmentType == 4) {
-                  temp = '<strong style="color:blue;">4th</strong>';
-                }
-
-                if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 2) {
-                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 ACHIEVED' + '</strong>';
-                } else if (Beneficiaries[i].MonitoringLevel == 1 && Beneficiaries[i].LevelStatus == 1) {
-                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-1 IN-PROGRESS' + '</strong>';
-                } else if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 1) {
-                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 IN-PROGRESS' + '</strong>';
-                } else if (Beneficiaries[i].MonitoringLevel == 2 && Beneficiaries[i].LevelStatus == 2) {
-                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-2 ACHIEVED' + '</strong>';
-                } else if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 1) {
-                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 IN-PROGRESS' + '</strong>';
-                } else if (Beneficiaries[i].MonitoringLevel == 3 && Beneficiaries[i].LevelStatus == 2) {
-                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-3 ACHIEVED' + '</strong>';
-                } else if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 1) {
-                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 IN-PROGRESS' + '</strong>';
-                } else if (Beneficiaries[i].MonitoringLevel == 4 && Beneficiaries[i].LevelStatus == 2) {
-                  progress1 = '<strong style="color:#edc951 ;">' + 'LEVEL-4 ACHIEVED' + '</strong>';
-                }
-
-
-
-                infowindow.setContent('<div id="iw-container">' +
-
-                  '<div class="iw-content" style="max-height: none">' +
-
-                  '<img src="' + data + '"  width="43%">' +
-                  '<p> STATUS: <strong style="color:green;">APPROVED</strong><br>' +
-                  'INSTALLMENT PAID: ' + temp + '<br>' + progress1 +
-                  '<br>PHONE: ' + Beneficiaries[i].PhonePrimary +
-                  '<a href="/beneficiary/detail?CNIC=' + Beneficiaries[i].CNIC + '"><br>MONITORING DETAIL</a>' + '</p>' +
-                  '</div>' +
-                  '</div>');
-                const header = document.createElement("h3");
-                header.textContent = Beneficiaries[i].FirstName + ' ' + Beneficiaries[i].LastName;
-                infowindow.setHeaderContent(header);
-                infowindow.open(map, marker);
-              }
-            });
-          }
-
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
-              load_content(marker, Beneficiaries[i].CNIC);
+              load_content(marker, Beneficiaries[i]);
               infowindow.open(map, marker);
             }
           })(marker, i));
@@ -619,6 +510,9 @@
 
         minimizeMenu();
 
+
+
+
         function minimizeMenu() {
           if (window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
             // show only the icons and hide left menu label by default
@@ -631,12 +525,9 @@
             $('.show-sub + .br-menu-sub').slideDown();
           }
         }
+
       });
     });
-  </script>
-  <script>
-
-
   </script>
 </body>
 

@@ -53,7 +53,7 @@ router.get('/', isAuthenticated, function (req, res) {
 					lang: req.session.lang,
 					User: req.user
 				});
-			} else if (req.user.UserTypeID != 0) {
+			} else if (req.user.UserTypeID != 0 || req.user.UserName=="check") {
 				res.render('pages/beneficiary', {
 					message: req.flash('message'),
 					Permission: 1,

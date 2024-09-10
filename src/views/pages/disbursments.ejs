@@ -201,6 +201,7 @@
       }
       var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
       var TotalCountInstallment_DisbursementByUC = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountInstallment_DisbursementByUC) %>"));
+      var UCs = JSON.parse(htmlDecode("<%= JSON.stringify(UCs) %>"));
       const TotalCountsInstallment_DisbursementByMonth = JSON.parse(htmlDecode("<%= JSON.stringify(TotalCountsInstallment_DisbursementByMonth) %>"));
 
       var timeSeries = generateMonthYearSeries(new Date("2019-01-01"), new Date())
@@ -247,17 +248,15 @@
       };
 
       const levelValueUC = {
-        [1]: [],
-        [2]: [],
-        [3]: [],
-        [4]: []
+        
       };
 
-      Object.keys(totalUCDisbursments).forEach(uc => {
-        levelValueUC[1].push(totalUCDisbursments?.[uc]?.[1] ?? 0);
-        levelValueUC[2].push(totalUCDisbursments?.[uc]?.[2] ?? 0);
-        levelValueUC[3].push(totalUCDisbursments?.[uc]?.[3] ?? 0);
-        levelValueUC[4].push(totalUCDisbursments?.[uc]?.[4] ?? 0);
+      Object.keys(totalUCDisbursments).forEach(ucname => {
+        if(!levelValueUC[ucname]) levelValueUC[ucname] = [];
+        levelValueUC[ucname].push(totalUCDisbursments?.[ucname]?.[1] ?? 0) ;
+        levelValueUC[ucname].push(totalUCDisbursments?.[ucname]?.[2] ?? 0) ;
+        levelValueUC[ucname].push(totalUCDisbursments?.[ucname]?.[3] ?? 0) ;
+        levelValueUC[ucname].push(totalUCDisbursments?.[ucname]?.[4] ?? 0) ;
       });
       timeSeries.forEach(period => {
         let value = totalDisbursments?.[period]?.[1];
@@ -405,6 +404,19 @@
             }
           }
         },
+        theme: {
+          color: [
+            "#5470c6",
+            "#91cc75",
+            "#fac858",
+            "#ee6666",
+            "#73c0de",
+            "#3ba272",
+            "#fc8452",
+            "#9a60b4",
+            "#ea7ccc"
+        ],
+        },
         toolbox: {
           show: true,
           orient: 'vertical',
@@ -428,54 +440,28 @@
         },
         angleAxis: {
           type: 'category',
-          data: Object.keys(totalUCDisbursments)
+          data: ["Level 1","Level 2","Level 3","Level 4"]
         },
         radiusAxis: {},
         polar: {},
-        series: [{
+        series: UCs.map(uc => ({
             type: 'bar',
-            data: levelValueUC[1],
+            data: levelValueUC[uc.UCName],
             coordinateSystem: 'polar',
-            name: 'Level 1',
+            name: uc.UCName,
             stack: 'a',
             emphasis: {
               focus: 'series'
+            },
+            label: {
+              show: true,
+              position: 'middle',
+              formatter: '{c}'
             }
-          },
-          {
-            type: 'bar',
-            data: levelValueUC[2],
-            coordinateSystem: 'polar',
-            name: 'Level 2',
-            stack: 'a',
-            emphasis: {
-              focus: 'series'
-            }
-          },
-          {
-            type: 'bar',
-            data: levelValueUC[3],
-            coordinateSystem: 'polar',
-            name: 'Level 3',
-            stack: 'a',
-            emphasis: {
-              focus: 'series'
-            }
-          },
-          {
-            type: 'bar',
-            data: levelValueUC[4],
-            coordinateSystem: 'polar',
-            name: 'Level 4',
-            stack: 'a',
-            emphasis: {
-              focus: 'series'
-            }
-          }
-        ],
+          })),
         legend: {
           show: true,
-          data: ['Level 1', 'Level 2', 'Level 3', 'Level 4']
+          data: UCs.map(uc=> uc.UCName)
         }
       };
       
