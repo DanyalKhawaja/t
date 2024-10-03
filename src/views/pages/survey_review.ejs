@@ -178,21 +178,21 @@
               { "data": "FrontImage", "title": columns[2] ,  render : function ( data, type, row, meta ) {
               return type === 'display'  ?
                 ` <img src="/images/monitoring-01/${row.FrontImage.split("\/").pop()}"
-                              style="max-width: 60%;"" />` :
+                              style="max-width: 70%;"" />` :
                 data;
             } },
 
             { "data": "SideImage", "title": columns[3] ,  render : function ( data, type, row, meta ) {
               return type === 'display'  ?
                 ` <img src="/images/monitoring-01/${row.SideImage.split("\/").pop()}"
-                              style="max-width: 60%;" />` :
+                              style="max-width: 70%;" />` :
                 data;
             } },
 
             { "data": "OtherImage", "title": columns[4] ,  render : function ( data, type, row, meta ) {
               return type === 'display'  ?
                 ` <img src="/images/monitoring-01/${row.OtherImage.split("\/").pop()}"
-                              style="max-width: 60%;" />` :
+                              style="max-width: 70%;" />` :
                 data;
             } }
 
