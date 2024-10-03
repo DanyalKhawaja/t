@@ -448,6 +448,13 @@ router.get('/get', isAuthenticated, function (req, res) {
 			res.json(result);
 		});
 });
+
+/* GET all beneficiaires */
+router.get('/getimages', isAuthenticated, function (req, res) {
+	db.query('select CNIC,  MonitoringLevel, FrontImage, SideImage, OtherImage from Monitoring m where Month(CreateDate)>5 and Year(CreateDate)=2024', null, function (err, result) {
+			res.json(result);
+		});
+});
 /* GET verfied beneficiaires */
 router.get('/getVerified', isAuthenticated, function (req, res) {
 	db.query('SELECT Beneficiary.*, concat(Beneficiary.FirstName, " ", Beneficiary.LastName) as BeneficiaryName, \

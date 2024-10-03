@@ -31,25 +31,14 @@ var mdlBeneficiary = {
     db.query('SELECT \
     Beneficiary.CNIC, Beneficiary.FirstName, Beneficiary.LastName, Beneficiary.PhonePrimary, Beneficiary.PhoneSecondary,\
       Beneficiary.VHLatitude, Beneficiary.VHLongitude, Beneficiary.BenStatusID, Beneficiary.UCID, \
-      m3.MonitoringLevel, m3.LevelStatus, InstallmentType \
-    FROM \
-	Beneficiary \
+      	left(m3.MS,1) MonitoringLevel,right(m3.MS,1) LevelStatus, InstallmentType \
+    FROM Beneficiary \
 	LEFT JOIN( \
-        SELECT \
-			m1.* \
+        SELECT CNIC, \
+			MAX(CONCAT(MonitoringLevel,LevelStatus)) AS MS \
         FROM \
 			Monitoring m1 \
-			JOIN( \
-          SELECT \
-					CNIC,\
-          MAX(CreateDate) AS CreateDate \
-				FROM \
-					Monitoring \
-				GROUP BY \
-					CNIC \
-        ) m2 ON m1.CNIC = m2.CNIC \
-			AND m1.CreateDate = m2.CreateDate \
-      ) m3 ON Beneficiary.CNIC = m3.CNIC \
+      GROUP BY CNIC) m3 ON Beneficiary.CNIC = m3.CNIC \
 	LEFT JOIN( \
         SELECT \
 			CNIC, \
@@ -59,12 +48,11 @@ var mdlBeneficiary = {
 		GROUP BY \
 			CNIC \
       ) DistributedCheques ON Beneficiary.CNIC = DistributedCheques.CNIC \
-WHERE \
-	BenStatusID = 4 \
+        WHERE BenStatusID = 4 \
 GROUP BY \
 	Beneficiary.CNIC, Beneficiary.FirstName, Beneficiary.LastName, Beneficiary.PhonePrimary, Beneficiary.PhoneSecondary,\
   Beneficiary.VHLatitude, Beneficiary.VHLongitude, Beneficiary.BenStatusID, Beneficiary.UCID, \
-  m3.MonitoringLevel, m3.LevelStatus, InstallmentType', [req.UCID], function (err, result) {
+  m3.MS, InstallmentType', [req.UCID], function (err, result) {
       if (err) {
         console.log(err.message);
       }
@@ -73,7 +61,7 @@ GROUP BY \
   },
 
   getTotalCount: function (req, res) {
-    db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary', null, function (err, result) {
+    db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary where  BenStatusID=4', null, function (err, result) {
       if (err) {
         console.log(err.message);
       }

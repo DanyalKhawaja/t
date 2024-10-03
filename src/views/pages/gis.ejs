@@ -96,7 +96,7 @@
                 <% } %>
               </p>
               <p class="tx-20  tx-white tx-lato tx-bold mg-b-10 lh-1 tx-center" id="labelNotStarted">
-                <%= Beneficiaries.length - CountLevel1InProgress  %>
+                <%= CountNotStarted  %>
                 / <%= Beneficiaries.length %></p>
             </div>
           </div>
@@ -392,13 +392,6 @@
         var lang = JSON.parse(htmlDecode("<%= JSON.stringify(lang) %>"));
 
         var Beneficiaries = JSON.parse('<%- JSON.stringify(Beneficiaries) %>');
-        var CountLevel1InProgress = JSON.parse('<%- JSON.stringify(CountLevel1InProgress) %>');
-        var CountLevel1Achieved = JSON.parse('<%- JSON.stringify(CountLevel1Achieved) %>');
-        var CountLevel2InProgress = JSON.parse('<%- JSON.stringify(CountLevel2InProgress) %>');
-        var CountLevel2Achieved = JSON.parse('<%- JSON.stringify(CountLevel2Achieved) %>');
-        var CountLevel3InProgress = JSON.parse('<%- JSON.stringify(CountLevel3InProgress) %>');
-        var CountLevel3Achieved = JSON.parse('<%- JSON.stringify(CountLevel3Achieved) %>');
-        var CountLevel4InProgress = JSON.parse('<%- JSON.stringify(CountLevel4InProgress) %>');
         var CountLevel4Achieved = JSON.parse('<%- JSON.stringify(CountLevel4Achieved) %>');
 
         var myLatLng = new google.maps.LatLng(Beneficiaries[0].VHLatitude, Beneficiaries[0].VHLongitude);

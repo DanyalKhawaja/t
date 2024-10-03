@@ -149,6 +149,15 @@ router.get('/survey', isAuthenticated, function (req, res) {
 	}
 });
 
+router.get('/surveyreview', isAuthenticated, function (req, res) {
+	// Display the Login page with any flash message, if any
+	//console.log(req.flash);
+	if (req.user.UserTypeID == 4 || req.user.UserTypeID == 6  || req.user.UserTypeID == 7) {
+		res.render('pages/page_not_found', { message: req.flash('message') });
+	} else {
+		res.render('pages/survey_review', { message: req.flash('message'), lang: req.session.lang, User: req.user });
+	}
+});
 router.get('/reports', isAuthenticated, function (req, res) {
 	// Display the Login page with any flash message, if any
 	//console.log(req.flash);
@@ -708,28 +717,8 @@ router.get('/gis', isAuthenticated, function (req, res) {
 			Villages: function (callback) {
 				mdlVillages.getAll(req, callback)
 			},
-			CountLevel1InProgress: function (callback) {
-				db.query('SELECT count(CNIC) as count from DistributedCheques where InstallmentType = 1', null, callback)
-			},
-			CountLevel2InProgress: function (callback) {
-				db.query('SELECT count(CNIC) as count from DistributedCheques where InstallmentType = 2', null, callback)
-			},
-			CountLevel3InProgress: function (callback) {
-				db.query('SELECT count(CNIC) as count from DistributedCheques where InstallmentType = 3', null, callback)
-			},
-			CountLevel4InProgress: function (callback) {
-				db.query('SELECT count(CNIC) as count from DistributedCheques where InstallmentType = 4', null, callback)
-			},
-			CountLevel1Achieved: function (callback) {
-				db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
-				WHERE MonitoringLevel = 1 AND LevelStatus = 2 ', null, callback)
-			},
-			CountLevel2Achieved: function (callback) {
-				db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
-				WHERE MonitoringLevel = 2 AND LevelStatus = 2 ', null, callback)
-			},
-			CountLevel3Achieved: function (callback) {
-				db.query('SELECT count(CNIC) as count from Monitoring where MonitoringLevel = 3 AND LevelStatus = 2', null, callback)
+			CountNotStarted: function (callback) {
+				db.query('SELECT count(CNIC) as count from Beneficiary where BenStatusID=4 and  CNIC not in (select distinct CNIC from Monitoring)', null, callback)
 			},
 			CountLevel4Achieved: function (callback) {
 				db.query('SELECT count(CNIC) as count from Monitoring where MonitoringLevel = 4 AND LevelStatus = 2', null, callback)
@@ -744,13 +733,7 @@ router.get('/gis', isAuthenticated, function (req, res) {
 				res.render('pages/gis', {
 					Beneficiaries: results.Beneficiaries,
 					TotalBeneficiaries: results.TotalBeneficiaries[0].count,
-					CountLevel1InProgress: results.CountLevel1InProgress[0].count,
-					CountLevel2InProgress: results.CountLevel2InProgress[0].count,
-					CountLevel3InProgress: results.CountLevel3InProgress[0].count,
-					CountLevel4InProgress: results.CountLevel4InProgress[0].count,
-					CountLevel1Achieved: results.CountLevel1Achieved[0].count,
-					CountLevel2Achieved: results.CountLevel2Achieved[0].count,
-					CountLevel3Achieved: results.CountLevel3Achieved[0].count,
+					CountNotStarted: results.CountNotStarted[0].count,
 					CountLevel4Achieved: results.CountLevel4Achieved[0].count,
 					UCs: results.Lookups.lookups.LUCs,
 					Villages: results.Villages,
