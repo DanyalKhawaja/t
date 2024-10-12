@@ -82,7 +82,7 @@
         <i class="icon icon ion-ios-bookmarks-outline"></i>
         <div>
           <% if (lang == 'en') { %>
-            <h4>New Survey Review</h4>
+            <h4>New Monitorings Discripencies - Level 4 </h4>
             <p class="mg-b-0">View survey images</p>
           <% } else { %>
             <h4>إدارة المستفيدين</h4>
@@ -178,21 +178,21 @@
               { "data": "FrontImage", "title": columns[2] ,  render : function ( data, type, row, meta ) {
               return type === 'display'  ?
                 ` <img src="/images/monitoring-01/${row.FrontImage.split("\/").pop()}"
-                              style="max-width: 70%;"" />` :
+                              style="max-width: 90%;" />` :
                 data;
             } },
 
             { "data": "SideImage", "title": columns[3] ,  render : function ( data, type, row, meta ) {
               return type === 'display'  ?
                 ` <img src="/images/monitoring-01/${row.SideImage.split("\/").pop()}"
-                              style="max-width: 70%;" />` :
+                              style="max-width: 90%;" />` :
                 data;
             } },
 
             { "data": "OtherImage", "title": columns[4] ,  render : function ( data, type, row, meta ) {
               return type === 'display'  ?
                 ` <img src="/images/monitoring-01/${row.OtherImage.split("\/").pop()}"
-                              style="max-width: 70%;" />` :
+                              style="max-width: 90%;" />` :
                 data;
             } }
 

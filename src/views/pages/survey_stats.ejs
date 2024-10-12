@@ -146,7 +146,7 @@
 
     const months = ["MAR-2018","APR-2018","MAY-2018","JUN-2018","JUL-2018","AUG-2018","SEP-2018","OCT-2018","NOV-2018","DEC-2018","JAN-2019","FEB-2019","MAR-2019","APR-2019","MAY-2019","JUN-2019","JUL-2019","AUG-2019","SEP-2019","OCT-2019","NOV-2019","DEC-2019","JAN-2020","FEB-2020","MAR-2020","APR-2020","MAY-2020","JUN-2020","JUL-2020","AUG-2020","SEP-2020","OCT-2020","NOV-2020","DEC-2020","JAN-2021","FEB-2021","MAR-2021","APR-2021","MAY-2021","JUN-2021","JUL-2021","AUG-2021","SEP-2021","OCT-2021","NOV-2021","DEC-2021","JAN-2022","FEB-2022","MAR-2022","APR-2022","MAY-2022","JUN-2022","JUL-2022","AUG-2022","SEP-2022","OCT-2022","NOV-2022","DEC-2022","JAN-2023","FEB-2023","MAR-2023","APR-2023","MAY-2023","JUN-2023","JUL-2023","AUG-2023","SEP-2023","OCT-2023","NOV-2023","DEC-2023","JAN-2024","FEB-2024","MAR-2024","APR-2024","MAY-2024","JUN-2024","JUL-2024","AUG-2024","SEP-2024","OCT-2024","NOV-2024","DEC-2024","JAN-2025","FEB-2025"];
     const cd = new Date();
-    const min = new Date(cd.getFullYear(),cd.getMonth()-3,cd.getDate()).toLocaleString('default', { month: 'long' }).toUpperCase().substring(0,3) + "-" + cd.getFullYear();
+    const min = new Date(cd.getFullYear(),cd.getMonth()-5,cd.getDate()).toLocaleString('default', { month: 'long' }).toUpperCase().substring(0,3) + "-" + cd.getFullYear();
     const max = new Date(cd.getFullYear(),cd.getMonth(),cd.getDate()).toLocaleString('default', { month: 'long' }).toUpperCase().substring(0,3) + "-" + cd.getFullYear();
     if (lang == 'ar') {
         title = 'مؤامرة القيمة المكتسبة | S-Curve';
@@ -223,7 +223,7 @@
         type: 'value',
         name: 'UC-Wise Monitorings',
         nameLocation: 'middle',
-        nameGap: 35,
+        nameGap: 0,
         nameTextStyle: {
           fontSize: 18,
           fontWeight: 500
@@ -257,7 +257,14 @@
       show: true
     }
   },
-      dataZoom: {show: true}
+  grid: {
+        top: '10%',
+        "containLabel": false
+      },
+      dataZoom: {
+        type: 'slider', 
+        show: true
+      }
     };
     BudgetVsSpending.setOption(options);
   })(document, window, jQuery);
