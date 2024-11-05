@@ -6,7 +6,7 @@ var mdlBeneficiary = {
   getAll: function (req, res) {
     var lastSyncDate = "1970-05-01";
     if (req.headers.lastsyncdate) {
-      lastSyncDate = new Date(req.headers.lastsyncdate);
+      lastSyncDate = new Date(req.headers.lastsyncdate);``
     }
     db.query('SELECT * FROM Beneficiary WHERE CreateDate > ? OR UpdateDate > ?', [lastSyncDate, lastSyncDate], function (err, result) {
       if (err) {
@@ -61,7 +61,7 @@ GROUP BY \
   },
 
   getTotalCount: function (req, res) {
-    db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary where  BenStatusID=4', null, function (err, result) {
+    db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary where  BenStatusID=4 OR BenStatusID=3', null, function (err, result) {
       if (err) {
         console.log(err.message);
       }

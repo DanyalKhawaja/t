@@ -444,6 +444,9 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 			TotalUnverified: function (callback) {
 				db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary where BenStatusID = 1', null, callback)
 			},
+			TotalNomads: function (callback) {
+				db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary where BenStatusID = 1 and DistrictID = 0', null, callback)
+			},
 			TotalPending: function (callback) {
 				db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary WHERE BenStatusID = 2', null, callback)
 			},
@@ -621,6 +624,7 @@ router.get('/hc-dashboard', isAuthenticated, function (req, res) {
 				title: "hc-dashboard",
 				TotalBeneficiaries: results.TotalBeneficiaries[0].count,
 				TotalUnverified: results.TotalUnverified[0].count,
+				TotalNomads: results.TotalNomads[0].count,
 				TotalPending: results.TotalPending[0].count,
 				TotalApproved: results.TotalApproved[0].count,
 				TotalVerified: results.TotalVerified[0].count,
@@ -754,7 +758,7 @@ router.get('/getIndicatorsByTehsil', isAuthenticated, function (req, res) {
 
 	async.series({
 		TotalBeneficiaries: function (callback) {
-			db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary where TehsilID = ?', [TehsilID], callback)
+			db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary where (BenStatusID=4 or BenStatusID=3) and  TehsilID = ?', [TehsilID], callback)
 		},
 		TotalUnverified: function (callback) {
 			db.query('SELECT IFNULL(count(CNIC),0) as count from Beneficiary \
@@ -819,6 +823,22 @@ router.get('/getIndicatorsByTehsil', isAuthenticated, function (req, res) {
 		TotalLevel4Achieved: function (callback){
 			db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
 			WHERE MonitoringLevel = 4 AND LevelStatus = 2 AND TehsilID = ? ', [TehsilID], callback)
+		},
+		TotalLevel1InProgress: function (callback){
+			db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
+			WHERE MonitoringLevel = 1 AND LevelStatus = 1 AND TehsilID = ? ', [TehsilID], callback)
+		},
+		TotalLevel2InProgress: function (callback){
+			db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
+			WHERE MonitoringLevel = 2 AND LevelStatus = 1 AND TehsilID = ? ', [TehsilID], callback)
+		},
+		TotalLevel3InProgress: function (callback){
+			db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
+			WHERE MonitoringLevel = 3 AND LevelStatus = 1 AND TehsilID = ? ', [TehsilID], callback)
+		},
+		TotalLevel4InProgress: function (callback){
+			db.query('SELECT count(distinct(CNIC)) as count FROM Monitoring \
+			WHERE MonitoringLevel = 4 AND LevelStatus = 1 AND TehsilID = ? ', [TehsilID], callback)
 		},
 	}, function (err, results) {
 		if (err) {

@@ -50,13 +50,14 @@
         outline: solid #1f293842 thin
     }
 
+
     .headg {
         color:  black !important;
         padding-bottom:1em;
     }
 
     .cardg{
-        height:63vh;
+        height:67vh;
         width:100%;
         background: #97e3c142;
         outline: solid #1f293842 thin
@@ -81,6 +82,21 @@
         
     }
 
+    .cardf
+    {
+        box-shadow: rgb(32 41 57) 2px 2px 6px 1px;
+        color: white;
+        font-size: 1.5em;
+        font-weight: 250;
+        background: #a2c1a6;
+        margin-bottom: 2em;
+        width: 80%;
+        padding-top:9%;
+        
+    }
+.pp {
+    margin-left: 6px;
+}
     .cardc
     {
         box-shadow: rgb(32 41 57) 2px 2px 6px 1px;
@@ -123,7 +139,7 @@
     }
 
     .mapw {
-        width:68%;
+        width:58%;
     }
 
     #inprogress {
@@ -155,6 +171,10 @@ color: orange;
     color: lightcyan;
     text-shadow: 2px 2px 0px black; 
     /* z-index: 10; */
+}
+
+.cardf  .perc {
+    left: 14%;
 }
 
 .percr {
@@ -247,9 +267,9 @@ color: orange;
                         </div>
                     </div>
                     <div class=" rounded overflow-hidden  carda">
-                        <p class="tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center ">
+                        <p id="nomads" class="tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center ">
                             <% if (lang == 'en' ) { %>
-                                UN-VERIFIED <i class="ion ion-search tx-18 lh-0 tx-white op-7"></i>
+                                UN-VERIFIED/NOMADS <i class="ion ion-alert tx-18 lh-0 tx-white op-7"></i>
                             <% } else { %>
                                 إلغاء التحقق
                             <% } %>
@@ -257,7 +277,7 @@ color: orange;
 
                         <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
                             <p class="tx-40  font-weight-normal tx-center mg-b-0 lh-1"  id="labelUnverifiedCount">
-                                <%= TotalUnverified.toLocaleString() %>
+                                <%= TotalUnverified.toLocaleString() %> (<%= TotalNomads.toLocaleString() %>)
                             </p>
                         </div>
                     </div>
@@ -286,10 +306,10 @@ color: orange;
                         <div class="row row-sm  d-flex align-items-center justify-content-center">
                                 <p class="headg tx-20 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
                                     <% if (lang == 'en' ) { %>
-                                        Financial Progress
+                                        Financial Progress <sup>*</sup><br/><sub>as per bank statement</sub>
                                     <% } else { %>
                                             Financial Progress
-                                    <% } %><sup>*</sup>
+                                    <% } %>
                                 </p>
                             <div class="rounded overflow-hidden  cardb" >
                                 <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
@@ -307,7 +327,7 @@ color: orange;
                                         </p>
                                     </div>
                                 </a>
-                                <div class="progress">
+                                <div id="p1e" class="progress">
                                     <div class="perc">99%</div>
                                     <div class="progress-bar" role="progressbar" style="width: 99%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -328,7 +348,7 @@ color: orange;
                                         </p>
                                     </div>
                                 </a>
-                                <div class="progress">
+                                <div id="p2e" class="progress">
                                     <div class="perc">93%</div>
                                     <div class="progress-bar" role="progressbar" style="width: 93%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -350,7 +370,7 @@ color: orange;
                                     </div>
 
                                 </a>
-                                <div class="progress">
+                                <div id="p3e" class="progress">
                                     <div class="perc">85%</div>
                                     <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -374,7 +394,105 @@ color: orange;
                                     </div>
 
                                 </a>
-                                <div class="progress">
+                                <div id="p4e" class="progress">
+                                    <div class="perc">63%</div>
+                                    <div class="progress-bar" role="progressbar" style="width: 63%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col10p shadow-base pp">
+                        <div class="row row-sm  d-flex align-items-center justify-content-center">
+                                <p class="headg tx-20 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
+                                    <% if (lang == 'en' ) { %>
+                                        Financial Progress <br/><sub>based on field data received</sub>
+                                    <% } else { %>
+                                            Financial Progress
+                                    <% } %>
+                                </p>
+                            <div class="rounded overflow-hidden  cardf" >
+                                <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
+                                    <% if (lang == 'en' ) { %>
+                                        Level-1
+                                    <% } else { %>
+                                        تبديل
+                                    <% } %>
+                                </p>
+                                <a href="/hc-financials/first_installment">
+                                    <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
+                                        <p class="tx-white tx-40 font-weight-normal tx-center mg-b-0 lh-1" id="labelLevel1FD">                                  
+                                            7,868
+                                        </p>
+                                    </div>
+                                </a>
+                                <div id="p1e" class="progress">
+                                    <div class="perc">99%</div>
+                                    <div class="progress-bar" role="progressbar" style="width: 99%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="rounded overflow-hidden  cardf" >
+                                <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
+                                    <% if (lang == 'en' ) { %>
+                                        Level-2
+                                    <% } else { %>
+                                        تبديل
+                                    <% } %>
+                                </p>
+                                <a href="/hc-financials/second_installment">
+                                    <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
+                                        <p class="tx-white tx-40 font-weight-normal tx-center mg-b-0 lh-1" id="labelLevel2FD">
+                                          
+                                            7,624 
+                                        </p>
+                                    </div>
+                                </a>
+                                <div id="p2e" class="progress">
+                                    <div class="perc">93%</div>
+                                    <div class="progress-bar" role="progressbar" style="width: 93%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="rounded overflow-hidden  cardf" >
+                                <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
+                                    <% if (lang == 'en' ) { %>
+                                        Level-3
+                                    <% } else { %>
+                                        تبديل
+                                    <% } %>
+                                </p>
+                                <a href="/hc-financials/third_installment">
+                                    <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
+                                        <p class="tx-white tx-40 font-weight-normal tx-center mg-b-0 lh-1" id="labelLevel3FD">
+                                          
+                                            7,163
+                                        </p>
+                                    </div>
+
+                                </a>
+                                <div id="p3e" class="progress">
+                                    <div class="perc">85%</div>
+                                    <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <div class="rounded overflow-hidden  cardf" >
+                                <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
+                                    <% if (lang == 'en' ) { %>
+                                        Level-4
+                                    <% } else { %>
+                                        تبديل
+                                    <% } %>
+                                </p>
+                                <a href="#">
+
+
+                                    <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
+                                        <p class="tx-white tx-40 font-weight-normal tx-center mg-b-0 lh-1" id="labelLevel4FD">
+                                          
+                                            5,724
+                                        </p>
+                                    </div>
+
+                                </a>
+                                <div id="p4e" class="progress">
                                     <div class="perc">63%</div>
                                     <div class="progress-bar" role="progressbar" style="width: 63%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -390,10 +508,10 @@ color: orange;
                         <div class="row row-sm  d-flex align-items-center justify-content-center">
                             <p class="headg tx-20 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
                                 <% if (lang == 'en' ) { %>
-                                    Work Commenced
+                                    <!-- Work Commenced --> Work Completed <sup>‡</sup> <br/><sub>based on field data received</sub>
                                 <% } else { %>
                                     Work Commenced
-                                <% } %><sup>‡</sup>
+                                <% } %>
                             </p>
                             <div class="rounded overflow-hidden  cardp" >
                                 <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
@@ -407,14 +525,15 @@ color: orange;
 
                                     <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
                                         <p class="tx-white tx-40 font-weight-normal tx-center mg-b-0 lh-1" id="labelLevel1InProgress">
-                                            <%= TotalLevel1InProgress.toLocaleString() %>
+                                            <!-- <%= TotalLevel1InProgress.toLocaleString() %> -->
+                                             7,543 
                                         </p>
                                     </div>
 
                                 </a>
-                                <div class="progress">
+                                <div id="p1i" class="progress">
                                     <div class="percrip"><%= TotalLevel1InProgressp.toFixed(1) %>%</div>
-                                    <div class="progress-bar" role="progressbar" style="width: <%= TotalLevel1InProgressp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"  style="width: <%= TotalLevel1InProgressp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div class="rounded overflow-hidden  cardp" >
@@ -430,14 +549,16 @@ color: orange;
 
                                     <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
                                         <p class="tx-white tx-40 font-weight-normal tx-center mg-b-0 lh-1" id="labelLevel2InProgress">
-                                            <%= TotalLevel2InProgress.toLocaleString() %>
+                                            <!-- <%= TotalLevel2InProgress.toLocaleString() %> -->
+                                             7,360 
                                         </p>
                                     </div>
 
                                 </a>
-                                <div class="progress">
+                                <div id="p2i" class="progress">
+                                  
                                     <div class="percrip"><%= TotalLevel2InProgressp.toFixed(1) %>%</div>
-                                    <div class="progress-bar" role="progressbar" style="width: <%= TotalLevel2InProgressp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"  style="width: <%= TotalLevel2InProgressp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div class="rounded overflow-hidden  cardp" >
@@ -451,14 +572,16 @@ color: orange;
                                 <a href="/level3">
                                     <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
                                         <p class="tx-white tx-40 font-weight-normal tx-center mg-b-0 lh-1" id="labelLevel3InProgress">
-                                            <%= TotalLevel3InProgress.toLocaleString() %>
+                                            <!-- <%= TotalLevel3InProgress.toLocaleString() %> -->
+                                             6,598
                                         </p>
                                     </div>
 
                                 </a>
-                                <div class="progress">
+                                <div id="p3i" class="progress">
+                                   
                                     <div class="percrip"><%= TotalLevel3InProgressp.toFixed(1) %>%</div>
-                                    <div class="progress-bar" role="progressbar" style="width: <%= TotalLevel3InProgressp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"  style="width: <%= TotalLevel3InProgressp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div class="rounded overflow-hidden  cardp" >
@@ -472,13 +595,15 @@ color: orange;
                                 <a href="/level4">
                                     <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
                                         <p class="tx-white tx-40 font-weight-normal tx-center mg-b-0 lh-1" id="labelLevel4InProgress">
-                                            <%= TotalLevel4InProgress.toLocaleString() %>
+                                            <!-- <%= TotalLevel4InProgress.toLocaleString() %> -->
+                                             5,662
                                         </p>
                                     </div>
                                 </a>
-                                <div class="progress">
+                                <div id="p4i" class="progress">
+                                   
                                     <div class="percrip"><%= TotalLevel4InProgressp.toFixed(1) %>%</div>
-                                    <div class="progress-bar" role="progressbar" style="width: <%= TotalLevel4InProgressp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"  style="width: <%= TotalLevel4InProgressp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -487,10 +612,10 @@ color: orange;
                         <div class="row row-sm  d-flex align-items-center justify-content-center">
                             <p class="headg tx-20 tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
                                 <% if (lang == 'en' ) { %>
-                                    Work Completed
+                                    Work Completed <sup>‡</sup> <br/> <sub>as per monitoring</sub>
                                 <% } else { %>
                                     Work Completed
-                                <% } %><sup>‡</sup>
+                                <% } %>
                             </p>
                             <div class="rounded overflow-hidden  cardc" >
                                 <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
@@ -509,9 +634,9 @@ color: orange;
                                     </div>
 
                                 </a>
-                                <div class="progress">
+                                <div id="p1a" class="progress">
                                     <div class="percr"><%= TotalLevel1Achievedp.toFixed(1) %>%</div>
-                                    <div class="progress-bar" role="progressbar" style="width: <%= TotalLevel1Achievedp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"  style="width: <%= TotalLevel1Achievedp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div class="rounded overflow-hidden  cardc" >
@@ -532,9 +657,9 @@ color: orange;
                                     </div>
 
                                 </a>
-                                <div class="progress">
+                                <div id="p2a" class="progress">
                                     <div class="percr"><%= TotalLevel2Achievedp.toFixed(1) %>%</div>
-                                    <div class="progress-bar" role="progressbar" style="width: <%= TotalLevel2Achievedp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar" role="progressbar"  style="width: <%= TotalLevel2Achievedp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <div class="rounded overflow-hidden  cardc" >
@@ -553,7 +678,7 @@ color: orange;
                                     </div>
 
                                 </a>
-                                <div class="progress">
+                                <div id="p3a" class="progress">
                                     <div class="percr"><%= TotalLevel3Achievedp.toFixed(1) %>%</div>
                                     <div class="progress-bar" role="progressbar" style="width: <%= TotalLevel3Achievedp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -573,7 +698,7 @@ color: orange;
                                         </p>
                                     </div>
                                 </a>
-                                <div class="progress">
+                                <div id="p4a" class="progress">
                                     <div class="percr"><%= TotalLevel4Achievedp.toFixed(1) %>%</div>
                                     <div class="progress-bar" role="progressbar" style="width: <%= TotalLevel4Achievedp %>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -593,12 +718,13 @@ color: orange;
 <style>
     .footer-left {
       padding-left: 16%;
+      font-size: 1.15em;
   }
   </style>
   <footer class="br-footer">
     <div class="footer-left">
         <% if (lang == 'en' ) { %>
-          <div>* as per project-account bank statement</div>
+          <div>* as per project-account bank statement (June 2024) and payment data provided by HRA (July 22, 2024)  </div>
           <div>‡ as per field data</div>
           <div class="">Copyright &copy; 2024. Cyberstate Technologies. All Rights Reserved.</div>
           <div>Attentively and carefully maintained by Cyberstate Technologies Pvt Ltd.</div>
@@ -678,6 +804,118 @@ color: orange;
 </script>
 <script>
     (function (document, window, $) {
+                    const TotalLevel1InProgressp= <%= TotalLevel1InProgressp %>;
+                    const TotalLevel2InProgressp= <%= TotalLevel2InProgressp %>;
+                    const TotalLevel3InProgressp= <%= TotalLevel3InProgressp %>;
+                    const TotalLevel4InProgressp= <%= TotalLevel4InProgressp %>;
+                    const TotalLevel1Achievedp  = <%= TotalLevel1Achievedp %>;
+                    const TotalLevel2Achievedp  = <%= TotalLevel2Achievedp %>;
+                    const TotalLevel3Achievedp  = <%= TotalLevel3Achievedp %>;
+                    const TotalLevel4Achievedp  = <%= TotalLevel4Achievedp %>;
+                    const TotalLevel1Encashedp  = <%= TotalLevel1Encashedp %>;
+                    const TotalLevel2Encashedp  = <%= TotalLevel2Encashedp %>;
+                    const TotalLevel3Encashedp  = <%= TotalLevel3Encashedp %>;
+                    const TotalLevel4Encashedp  = <%= TotalLevel4Encashedp %>;
+        function renderAllRegion() {
+                    $("#labelRegion").html("All Regions");
+                    $("#labelTotalCount").html("<%= TotalBeneficiaries.toLocaleString() %>");
+                    $("#labelUnverifiedCount").html("<%= TotalUnverified.toLocaleString() %> (<%= TotalNomads.toLocaleString() %>)");
+                    $("#labelVerifiedCount").html("<%= TotalVerified.toLocaleString() %>");
+                    $("#labelPendingCount").html("<%= TotalPending.toLocaleString() %>");
+                    $("#labelRejectedCount").html("<%= TotalRejected.toLocaleString() %>");
+                    $("#labelDubiousCount").html("<%= TotalDubious.toLocaleString() %>");
+                    $("#labelApprovedCount").html("<%= TotalApproved.toLocaleString() %>");
+                    $("#labelLevel1Achieved").html("<%= TotalLevel1Achieved.toLocaleString() %>");
+                    $("#labelLevel1Encashed").html("<%= TotalLevel1Encashed.toLocaleString() %>");
+                    $("#labelLevel2Achieved").html("<%= TotalLevel2Achieved.toLocaleString() %>");
+                    $("#labelLevel2Encashed").html("<%= TotalLevel2Encashed.toLocaleString() %>");
+                    $("#labelLevel3Achieved").html("<%= TotalLevel3Achieved.toLocaleString() %>");
+                    $("#labelLevel3Encashed").html("<%= TotalLevel3Encashed.toLocaleString() %>");
+                    $("#labelLevel4Achieved").html("<%= TotalLevel4Achieved.toLocaleString() %>");
+                    $("#labelLevel4Encashed").html("<%= TotalLevel4Encashed.toLocaleString() %>");
+
+
+                      // to be removed 
+                $("#labelLevel1FD").html("7,868");
+                $("#labelLevel2FD").html("7,542");
+                $("#labelLevel3FD").html("7,163");
+                $("#labelLevel4FD").html("5,724");
+
+                     // deferred in favor of below
+                    // $("#labelLevel1InProgress").html("<%= TotalLevel1InProgress.toLocaleString() %>");
+                    // $("#labelLevel2InProgress").html("<%= TotalLevel2InProgress.toLocaleString() %>");
+                    // $("#labelLevel3InProgress").html("<%= TotalLevel3InProgress.toLocaleString() %>");
+                    // $("#labelLevel4InProgress").html("<%= TotalLevel4InProgress.toLocaleString() %>");
+                    const ttlApproved = 8000;
+                         
+                    $("#labelLevel1InProgress").html("7,543");
+                    $("#labelLevel2InProgress").html("7,360");
+                    $("#labelLevel3InProgress").html("6,598");
+                    $("#labelLevel4InProgress").html("5,662");
+
+                // $("#p1i").children().eq(0).text((TotalLevel1InProgressp).toFixed(2)+"%");
+                // $("#p1i").children().eq(1).width(TotalLevel1InProgressp);
+                // $("#p2i").children().eq(0).text((TotalLevel2InProgressp).toFixed(2)+"%");
+                // $("#p2i").children().eq(1).width(TotalLevel2InProgressp);
+                // $("#p3i").children().eq(0).text((TotalLevel3InProgressp).toFixed(2)+"%");
+                // $("#p3i").children().eq(1).width(TotalLevel3InProgressp);
+                // $("#p4i").children().eq(0).text((TotalLevel4InProgressp).toFixed(2)+"%");
+                // $("#p4i").children().eq(1).width(TotalLevel4InProgressp);
+
+
+                $("#p1i").children().eq(0).text((7543/ttlApproved*100).toFixed(2)+"%");
+                $("#p1i").children().eq(1).width(7543/ttlApproved*100);
+                $("#p2i").children().eq(0).text((7360/ttlApproved*100).toFixed(2)+"%");
+                $("#p2i").children().eq(1).width(7360/ttlApproved*100);
+                $("#p3i").children().eq(0).text((6598/ttlApproved*100).toFixed(2)+"%");
+                $("#p3i").children().eq(1).width(6598/ttlApproved*100);
+                $("#p4i").children().eq(0).text((5662/ttlApproved*100).toFixed(2)+"%");
+                $("#p4i").children().eq(1).width(5662/ttlApproved*100);
+
+
+
+
+
+               
+                // $(".cardf > #p1i").children().eq(0).text((7868/ttlApproved).toFixed(2)+"%");
+                // $(".cardf > #p1i").children().eq(1).width(7868/ttlApproved);
+                // $(".cardf > #p2i").children().eq(0).text((7624/ttlApproved).toFixed(2)+"%");
+                // $(".cardf > #p2i").children().eq(1).width(7624/ttlApproved);
+                // $(".cardf > #p3i").children().eq(0).text((7163/ttlApproved).toFixed(2)+"%");
+                // $(".cardf > #p3i").children().eq(1).width(7163/ttlApproved);
+                // $(".cardf > #p4i").children().eq(0).text((5724/ttlApproved).toFixed(2)+"%");
+                // $(".cardf > #p4i").children().eq(1).width(5724/ttlApproved);
+
+
+                  $("#p1a").children().eq(0).text((TotalLevel1Achievedp).toFixed(2)+"%");
+                  $("#p1a").children().eq(1).width(TotalLevel1Achievedp);
+                  $("#p2a").children().eq(0).text((TotalLevel2Achievedp).toFixed(2)+"%");
+                  $("#p2a").children().eq(1).width(TotalLevel2Achievedp);
+                  $("#p3a").children().eq(0).text((TotalLevel3Achievedp).toFixed(2)+"%");
+                  $("#p3a").children().eq(1).width(TotalLevel3Achievedp);
+                  $("#p4a").children().eq(0).text((TotalLevel4Achievedp).toFixed(2)+"%");
+                  $("#p4a").children().eq(1).width(TotalLevel4Achievedp);
+                  $("#p1e").children().eq(0).text((TotalLevel1Encashedp).toFixed(2)+"%");
+                  $("#p1e").children().eq(1).width(TotalLevel1Encashedp);
+                  $("#p2e").children().eq(0).text((TotalLevel2Encashedp).toFixed(2)+"%");
+                  $("#p2e").children().eq(1).width(TotalLevel2Encashedp);
+                  $("#p3e").children().eq(0).text((TotalLevel3Encashedp).toFixed(2)+"%");
+                  $("#p3e").children().eq(1).width(TotalLevel3Encashedp);
+                  $("#p4e").children().eq(0).text((TotalLevel4Encashedp).toFixed(2)+"%");
+                  $("#p4e").children().eq(1).width(TotalLevel4Encashedp);
+
+                     // to be removed in future addition column of fd data
+                $(".cardf > #p1e").children().eq(0).text((7868/ttlApproved*100).toFixed(2)+"%");
+                $(".cardf > #p1e").children().eq(1).width(7868/ttlApproved*100);
+                $(".cardf > #p2e").children().eq(0).text((7624/ttlApproved*100).toFixed(2)+"%");
+                $(".cardf > #p2e").children().eq(1).width(7624/ttlApproved*100);
+                $(".cardf > #p3e").children().eq(0).text((7163/ttlApproved*100).toFixed(2)+"%");
+                $(".cardf > #p3e").children().eq(1).width(7163/ttlApproved*100);
+                $(".cardf > #p4e").children().eq(0).text((5724/ttlApproved*100).toFixed(2)+"%");
+                $(".cardf > #p4e").children().eq(1).width(5724/ttlApproved*100);
+
+        }
+        renderAllRegion();
         document.getElementById("li-dashboard").classList.add('active');
 
         function htmlDecode(input) {
@@ -782,25 +1020,24 @@ color: orange;
 
 
         addmouseover(MashkaiBorder, 2);
-
         addmouseover(GishkoreBorder, 4);
         addmouseover(AwaranBorder, 5);
         addmouseover(KechBorder, 6);
 
 
-        google.maps.event.addListener(MashkaiBorder, "click", function () {
-            regionClick('2');
-        });
+        // google.maps.event.addListener(MashkaiBorder, "click", function () {
+        //     regionClick('2');
+        // });
 
-        google.maps.event.addListener(GishkoreBorder, "click", function () {
-            regionClick('4');
-        });
-        google.maps.event.addListener(AwaranBorder, "click", function () {
-            regionClick('5');
-        });
-        google.maps.event.addListener(KechBorder, "click", function () {
-            regionClick('6');
-        });
+        // google.maps.event.addListener(GishkoreBorder, "click", function () {
+        //     regionClick('4');
+        // });
+        // google.maps.event.addListener(AwaranBorder, "click", function () {
+        //     regionClick('5');
+        // });
+        // google.maps.event.addListener(KechBorder, "click", function () {
+        //     regionClick('6');
+        // });
 
         // google.maps.event.addListener(DistrictAwaranBorder, "click", function () {
         //     regionClick('9');
@@ -818,6 +1055,8 @@ color: orange;
                 label: 'string'
             });
         }
+      
+        const regionHover = regionHoverMemoized();
 
         function addmouseover(item, id) {
 
@@ -827,6 +1066,10 @@ color: orange;
                     strokeWeight: 2,
                     strokeColor: "#340058"
                 });
+
+            });
+
+            google.maps.event.addListener(item, "click", function () {
                 if (id > 0) {
                     regionHover(id);
                 }
@@ -838,76 +1081,151 @@ color: orange;
                     strokeColor: fillcolors[id-1],
                     strokeWeight: 1
                 });
-                $("#labelRegion").html("All Regions");
-                $("#labelTotalCount").html("<%= TotalBeneficiaries.toLocaleString() %>");
-                $("#labelUnverifiedCount").html("<%= TotalUnverified.toLocaleString() %>");
-                $("#labelVerifiedCount").html("<%= TotalVerified.toLocaleString() %>");
-                $("#labelPendingCount").html("<%= TotalPending.toLocaleString() %>");
-                $("#labelRejectedCount").html("<%= TotalRejected.toLocaleString() %>");
-                $("#labelDubiousCount").html("<%= TotalDubious.toLocaleString() %>");
-                $("#labelApprovedCount").html("<%= TotalApproved.toLocaleString() %>");
-                $("#labelLevel1Achieved").html("<%= TotalLevel1Achieved.toLocaleString() %>");
-                $("#labelLevel1Encashed").html("<%= TotalLevel1Encashed.toLocaleString() %>");
-                $("#labelLevel2Achieved").html("<%= TotalLevel2Achieved.toLocaleString() %>");
-                $("#labelLevel2Encashed").html("<%= TotalLevel2Encashed.toLocaleString() %>");
-                $("#labelLevel3Achieved").html("<%= TotalLevel3Achieved.toLocaleString() %>");
-                $("#labelLevel3Encashed").html("<%= TotalLevel3Encashed.toLocaleString() %>");
-                $("#labelLevel4Achieved").html("<%= TotalLevel4Achieved.toLocaleString() %>");
-                $("#labelLevel4Encashed").html("<%= TotalLevel4Encashed.toLocaleString() %>");
+                renderAllRegion();
             });
         }
 
-        function regionHover(Region) {
-            var regions = ["JhalJaoSub", "Mashkai", "JhalJao", "Gishkore", "Awaran", "Hoshab"];
+        var regions = ["JhalJaoSub", "Mashkai", "JhalJao", "Gishkore", "Awaran", "Hoshab"];
+        const tehsilPayments = [[],[3204,	3162,	2971,	2282],[],[850,	815,	770,	559],[3171,	3027,	2850,	2405],[643,	620,	572,	478]];
+        const tehsilCompletions = [[],[3167,	3119,	2806,	2288],[],[810,	793,	679,	559],[2934,	2834,	2562,	2302],[632,	614,	551,	513]];
+
+         function regionHoverMemoized() {
+            const cache = new Map();
+            let Region = null;
+            const success = function (response, Region) {
+            
             $("#labelTehsil").html("Tehsil: " + regions[Region - 1]);
+           
+            //console.log(response.count);
+            if (response != 0) {
+                $("#labelRegion").html("Tehsil: " + regions[Region - 1]);
+                $("#labelTotalCount").html(response.TotalBeneficiaries[0].count);
+                $("#labelUnverifiedCount").html(response.TotalUnverified[0].count);
+                $("#labelVerifiedCount").html(response.TotalVerified[0].count);
+                $("#labelPendingCount").html(response.TotalPending[0].count);
+                $("#labelRejectedCount").html(response.TotalRejected[0].count);
+                $("#labelDubiousCount").html(response.TotalDubious[0].count);
+                $("#labelApprovedCount").html(response.TotalApproved[0].count);
+                $("#labelLevel1Achieved").html(response.TotalLevel1Achieved[0].count);
+                $("#labelLevel1Encashed").html(response.TotalLevel1Encashed[0].count);
+                $("#labelLevel2Achieved").html(response.TotalLevel2Achieved[0].count);
+                $("#labelLevel2Encashed").html(response.TotalLevel2Encashed[0].count);
+                $("#labelLevel3Achieved").html(response.TotalLevel3Achieved[0].count);
+                $("#labelLevel3Encashed").html(response.TotalLevel3Encashed[0].count);
+                $("#labelLevel4Achieved").html(response.TotalLevel4Achieved[0].count);
+                $("#labelLevel4Encashed").html(response.TotalLevel4Encashed[0].count);
 
-            $.ajax({
-                url: "/getIndicatorsByTehsil",
-                type: "get", //send it through get method
-                data: {
-                    Tehsil: regions[Region - 1]
-                },
-                success: function (response) {
-                    //console.log(response.count);
-                    if (response == 0) {
 
-                        $("#labelRegion").html("AllRegions");
-                        $("#labelTotalCount").html(0);
-                        $("#labelUnverifiedCount").html(0);
-                        $("#labelVerifiedCount").html(0);
-                        $("#labelPendingCount").html(0);
-                        $("#labelRejectedCount").html(0);
-                        $("#labelDubiousCount").html(0);
-                        $("#labelApprovedCount").html(0);
-                        $("#labelLevel1Achieved").html(0);
-                        $("#labelLevel1Encashed").html(0);
+                // to be removed 
+                $("#labelLevel1FD").html(tehsilPayments[Region - 1][0]);
+                $("#labelLevel2FD").html(tehsilPayments[Region - 1][1]);
+                $("#labelLevel3FD").html(tehsilPayments[Region - 1][2]);
+                $("#labelLevel4FD").html(tehsilPayments[Region - 1][3]);
 
-                    } else {
 
-                        $("#labelRegion").html("Tehsil: " + regions[Region - 1]);
-                        $("#labelTotalCount").html(response.TotalBeneficiaries[0].count);
-                        $("#labelUnverifiedCount").html(response.TotalUnverified[0].count);
-                        $("#labelVerifiedCount").html(response.TotalVerified[0].count);
-                        $("#labelPendingCount").html(response.TotalPending[0].count);
-                        $("#labelRejectedCount").html(response.TotalRejected[0].count);
-                        $("#labelDubiousCount").html(response.TotalDubious[0].count);
-                        $("#labelApprovedCount").html(response.TotalApproved[0].count);
-                        $("#labelLevel1Achieved").html(response.TotalLevel1Achieved[0].count);
-                        $("#labelLevel1Encashed").html(response.TotalLevel1Encashed[0].count);
-                        $("#labelLevel2Achieved").html(response.TotalLevel2Achieved[0].count);
-                        $("#labelLevel2Encashed").html(response.TotalLevel2Encashed[0].count);
-                        $("#labelLevel3Achieved").html(response.TotalLevel3Achieved[0].count);
-                        $("#labelLevel3Encashed").html(response.TotalLevel3Encashed[0].count);
-                        $("#labelLevel4Achieved").html(response.TotalLevel4Achieved[0].count);
-                        $("#labelLevel4Encashed").html(response.TotalLevel4Encashed[0].count);
 
-                    }
-                },
-                error: function (xhr) {
-                    //alert(xhr);
-                }
-            });
+
+
+                // deferred in favor of below
+                // $("#labelLevel1InProgress").html(response.TotalLevel1InProgress[0].count);
+                // $("#labelLevel2InProgress").html(response.TotalLevel2InProgress[0].count);
+                // $("#labelLevel3InProgress").html(response.TotalLevel3InProgress[0].count);
+                // $("#labelLevel4InProgress").html(response.TotalLevel4InProgress[0].count);
+
+
+                $("#labelLevel1InProgress").html(tehsilCompletions[Region - 1][0]);
+                $("#labelLevel2InProgress").html(tehsilCompletions[Region - 1][1]);
+                $("#labelLevel3InProgress").html(tehsilCompletions[Region - 1][2]);
+                $("#labelLevel4InProgress").html(tehsilCompletions[Region - 1][3]);
+
+
+
+                const tehsilBeneficiariesCount = response.TotalBeneficiaries[0].count;
+
+                // defrered in favour of below
+                // $("#p1i").children().eq(0).text((response.TotalLevel1InProgress[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                // $("#p1i").children().eq(1).width(response.TotalLevel1InProgress[0].count/tehsilBeneficiariesCount*100);
+                // $("#p2i").children().eq(0).text((response.TotalLevel2InProgress[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                // $("#p2i").children().eq(1).width(response.TotalLevel2InProgress[0].count/tehsilBeneficiariesCount*100);
+                // $("#p3i").children().eq(0).text((response.TotalLevel3InProgress[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                // $("#p3i").children().eq(1).width(response.TotalLevel3InProgress[0].count/tehsilBeneficiariesCount*100);
+                // $("#p4i").children().eq(0).text((response.TotalLevel4InProgress[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                // $("#p4i").children().eq(1).width(response.TotalLevel4InProgress[0].count/tehsilBeneficiariesCount*100);
+
+                // to be removed
+                $("#p1i").children().eq(0).text((tehsilCompletions[Region - 1][0]/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p1i").children().eq(1).width(tehsilCompletions[Region - 1][0]/tehsilBeneficiariesCount*100);
+                $("#p2i").children().eq(0).text((tehsilCompletions[Region - 1][1]/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p2i").children().eq(1).width(tehsilCompletions[Region - 1][1]/tehsilBeneficiariesCount*100);
+                $("#p3i").children().eq(0).text((tehsilCompletions[Region - 1][2]/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p3i").children().eq(1).width(tehsilCompletions[Region - 1][2]/tehsilBeneficiariesCount*100);
+                $("#p4i").children().eq(0).text((tehsilCompletions[Region - 1][3]/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p4i").children().eq(1).width(tehsilCompletions[Region - 1][3]/tehsilBeneficiariesCount*100);
+
+
+
+                $("#p1a").children().eq(0).text((response.TotalLevel1Achieved[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p1a").children().eq(1).width(response.TotalLevel1Achieved[0].count/tehsilBeneficiariesCount*100);
+                $("#p2a").children().eq(0).text((response.TotalLevel2Achieved[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p2a").children().eq(1).width(response.TotalLevel2Achieved[0].count/tehsilBeneficiariesCount*100);
+                $("#p3a").children().eq(0).text((response.TotalLevel3Achieved[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p3a").children().eq(1).width(response.TotalLevel3Achieved[0].count/tehsilBeneficiariesCount*100);
+                $("#p4a").children().eq(0).text((response.TotalLevel4Achieved[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p4a").children().eq(1).width(response.TotalLevel4Achieved[0].count/tehsilBeneficiariesCount*100);
+
+
+                $("#p1e").children().eq(0).text((response.TotalLevel1Encashed[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p1e").children().eq(1).width(response.TotalLevel1Encashed[0].count/tehsilBeneficiariesCount*100);
+                $("#p2e").children().eq(0).text((response.TotalLevel2Encashed[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p2e").children().eq(1).width(response.TotalLevel2Encashed[0].count/tehsilBeneficiariesCount*100);
+                $("#p3e").children().eq(0).text((response.TotalLevel3Encashed[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p3e").children().eq(1).width(response.TotalLevel3Encashed[0].count/tehsilBeneficiariesCount*100);
+                $("#p4e").children().eq(0).text((response.TotalLevel4Encashed[0].count/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $("#p4e").children().eq(1).width(response.TotalLevel4Encashed[0].count/tehsilBeneficiariesCount*100);
+
+
+
+                // to be removed in future addition column of fd data
+                $(".cardf > #p1e").children().eq(0).text((tehsilPayments[Region - 1][0]/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $(".cardf > #p1e").children().eq(1).width(tehsilPayments[Region - 1][0]/tehsilBeneficiariesCount*100);
+                $(".cardf > #p2e").children().eq(0).text((tehsilPayments[Region - 1][1]/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $(".cardf > #p2e").children().eq(1).width(tehsilPayments[Region - 1][1]/tehsilBeneficiariesCount*100);
+                $(".cardf > #p3e").children().eq(0).text((tehsilPayments[Region - 1][2]/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $(".cardf > #p3e").children().eq(1).width(tehsilPayments[Region - 1][2]/tehsilBeneficiariesCount*100);
+                $(".cardf > #p4e").children().eq(0).text((tehsilPayments[Region - 1][3]/tehsilBeneficiariesCount*100).toFixed(2)+"%");
+                $(".cardf > #p4e").children().eq(1).width(tehsilPayments[Region - 1][3]/tehsilBeneficiariesCount*100);
+
+
+            }
         }
+
+
+            return function(Region) {
+               
+                if(cache.has(Region) && typeof cache.get(Region) != "string"){
+                    success(cache.get(Region),Region);
+                } else {
+                       if(cache.has(Region) && typeof cache.get(Region) == "string") return;
+                       cache.set(Region,"pending");
+                        $.ajax({
+                        url: "/getIndicatorsByTehsil",
+                        type: "get", //send it through get method
+                        data: {
+                            Tehsil: regions[Region - 1]
+                        },
+                        success: function(response){
+                            cache.set(Region, response);
+                            success(response, Region)
+                        },
+                        error: function (xhr) {
+                            //alert(xhr);
+                        }
+                    });
+                }
+            }
+        }
+        
+        
     })(document, window, jQuery);
 </script>
 </body>

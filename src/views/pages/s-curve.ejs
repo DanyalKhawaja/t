@@ -140,10 +140,11 @@
     var title = 'S-Curve';
     var subtext = 'MONTH WISE';
     var x = 'left';
-    var data = ['Funds Released by SFD','Funds Disbursed by HRA', 'Level-4 Commpletion by Beneficiary'];
+    var data = ['Funds Released by SFD','Funds Disbursed by HRA', 'Level-4 Completion by Beneficiary ( as per Monitoring)', 'Level-4 Completion by Beneficiary (as per field data)'];
     var name1 = data[0];
     var name2 = data[1];
     var name3 = data[2];
+    var name4 = data[3];
     var x_inverse = false;
     var y_position = 'left';
 
@@ -215,7 +216,7 @@
     }
   },
       dataZoom: {show: true},
-    color: ['blue', 'red','green', '#AABD8C', '#9B1D20', '#E45A19', '#80AA2B'],
+    color: ['blue', 'red','green', 'brown', '#9B1D20', '#E45A19', '#80AA2B'],
     legend: {
         data: data,
         x: 'center'
@@ -274,6 +275,14 @@
             smooth: true,
             
             data: _earnedv
+        },
+        {
+            name:name4,
+            type:'line',
+            symbolSize: 15,
+            symbol: 'diamond',
+            smooth: true,
+            data: months.map(_ => { if(_== "NOV-2024") { return Number(.7).toFixed(2) } else { return null; } })
         },
       ]
     };
