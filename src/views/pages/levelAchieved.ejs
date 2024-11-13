@@ -51,13 +51,13 @@
       <div class="row row-sm mg-t-20">
         <div class="col-lg-6">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h5 class="card-title tx-uppercase  tx-inverse">UC Wise</h5>
+            <h5 class="card-title tx-uppercase  tx-inverse">UC Wise (as per Field Data)</h5>
             <div id="LevelAchievedByUC" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
         <div class="col-lg-6">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h5 class="card-title tx-uppercase tx-inverse">Overall</h5>
+            <h5 class="card-title tx-uppercase tx-inverse">Overall (as per Field Data)</h5>
             <div id="LevelAchievedAll" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
@@ -66,7 +66,7 @@
       <div class="row row-sm mg-t-20">
         <div class="col-lg-12">
           <div class="card shadow-base bd-0 pd-10 mg-t-5">
-            <h5 class="card-title tx-uppercase  tx-inverse">Month Wise</h5>
+            <h5 class="card-title tx-uppercase  tx-inverse">Month Wise (as per Monitoring)</h5>
             <div id="LevelAchievedByMonthChart" style="width: 100%;height:65vh;"></div>
           </div>
         </div><!-- col-8 -->
@@ -194,11 +194,13 @@
       }, {})
 
 
-      const totalLevelWiseAchieved = TotalCountLevelAcheivedByUC.reduce((l, c) => {
-        if (!l[c.MonitoringLevel]) l[c.MonitoringLevel] = c.Count;
-        else l[c.MonitoringLevel] += c.Count;
-        return l;
-      }, {})
+      // const totalLevelWiseAchieved = TotalCountLevelAcheivedByUC.reduce((l, c) => {
+      //   if (!l[c.MonitoringLevel]) l[c.MonitoringLevel] = c.Count;
+      //   else l[c.MonitoringLevel] += c.Count;
+      //   return l;
+      // }, {})
+      // hard coded above
+      const totalLevelWiseAchieved =[0,7543,7360,6598,5662];
 
       const totalAchieved = TotalCountLevelAcheivedByMonth.reduce((l, c) => {
         if (!l[c.CD]) l[c.CD] = {
@@ -321,6 +323,16 @@
         levelValue[3].push(totalAchieved?.[period]?.[3] ?? 0);
         levelValue[4].push(totalAchieved?.[period]?.[4] ?? 0);
       })
+      
+      /// hardcode will  be removed 
+
+      totalUCAchieved["Awaran"] = [0,1638,	1550,	1360,	1283];
+      totalUCAchieved["Dandar"] = [0,	633,	615,	552,	514];
+      totalUCAchieved["Gajjar"] = [0,	636	,623	,520,	419];
+      totalUCAchieved["Gishkore"] = [0,	811	,794	,680,	560];
+      totalUCAchieved["Nok Jo"] = [	0,1563,	1539	,1382	,1150];
+      totalUCAchieved["Parwar"] = [	0,968,	957	,903,	718];
+      totalUCAchieved["Teertaje"] = [0,	1293,	1281	,1200	,1017];
 
       Object.keys(totalUCAchieved).forEach(ucname => {
         if(!levelValueUC[ucname]) levelValueUC[ucname] = [];

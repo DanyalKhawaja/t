@@ -43,6 +43,18 @@
         width: 23%;
     }
 
+    .cardno
+    {
+        box-shadow: rgb(32 41 57) 2px 2px 6px 1px;
+        color: white;
+        font-size: 1.5em;
+        margin: auto;
+        font-weight: 250;
+        background: #ff8e6ce0;
+        margin-top: 0.25em;
+        width: 23%;
+    }
+
     .col10p {
         width: 10%;
         padding-top:1%;
@@ -252,37 +264,6 @@ color: orange;
                     </div>
                     <div class=" rounded overflow-hidden  carda" >
                         <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
-
-                            <% if (lang == 'en' ) { %>
-                                VERIFIED <i class="ion ion-checkmark tx-18 lh-0 tx-white op-7"></i>
-                            <% } else { %>
-                                التحقق
-                            <% } %>
-                        </p>
-
-                        <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
-                            <p class="tx-40  font-weight-normal tx-center mg-b-0 lh-1"  id="labelVerifiedCount">
-                                <%= TotalVerified.toLocaleString() %>
-                            </p>
-                        </div>
-                    </div>
-                    <div class=" rounded overflow-hidden  carda">
-                        <p id="nomads" class="tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center ">
-                            <% if (lang == 'en' ) { %>
-                                UN-VERIFIED/NOMADS <i class="ion ion-alert tx-18 lh-0 tx-white op-7"></i>
-                            <% } else { %>
-                                إلغاء التحقق
-                            <% } %>
-                        </p>
-
-                        <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
-                            <p class="tx-40  font-weight-normal tx-center mg-b-0 lh-1"  id="labelUnverifiedCount">
-                                <%= TotalUnverified.toLocaleString() %> (<%= TotalNomads.toLocaleString() %>)
-                            </p>
-                        </div>
-                    </div>
-                    <div class=" rounded overflow-hidden  carda" >
-                        <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
                             <% if (lang == 'en' ) { %>
                                 APPROVED <i class="ion ion-android-checkmark-circle tx-18 lh-0 tx-white op-7"></i>
                             <% } else { %>
@@ -298,6 +279,39 @@ color: orange;
                         </div>
 
 
+                    </div>
+                    <div class=" rounded overflow-hidden  carda" >
+                        <p class="tx-center tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 ">
+
+                            <% if (lang == 'en' ) { %>
+                                VERIFIED <i class="ion ion-checkmark tx-18 lh-0 tx-white op-7"></i>
+                            <% } else { %>
+                                التحقق
+                            <% } %>
+                        </p>
+
+                        <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
+                            <p class="tx-40  font-weight-normal tx-center mg-b-0 lh-1"  id="labelVerifiedCount">
+                                <%= TotalVerified.toLocaleString() %>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class=" rounded overflow-hidden  cardno">
+                        <p id="nomads" class="tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10 tx-center ">
+                            <% if (lang == 'en' ) { %>
+                                UN-VERIFIED/NOMADS <i class="ion ion-alert tx-18 lh-0 tx-white op-7"></i>
+                            <% } else { %>
+                                إلغاء التحقق
+                            <% } %>
+                        </p>
+
+                        <div class=<%= (lang == "en") ? "mg-l-20" : "mg-r-20" %>>
+                            <p class="tx-40  font-weight-normal tx-center mg-b-0 lh-1"  id="labelUnverifiedCount">
+                                <%= TotalUnverified.toLocaleString() %> (<%= TotalNomads.toLocaleString() %>)
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -727,10 +741,10 @@ color: orange;
           <div>* as per project-account bank statement (June 2024) and payment data provided by HRA (July 22, 2024)  </div>
           <div>‡ as per field data</div>
           <div class="">Copyright &copy; 2024. Cyberstate Technologies. All Rights Reserved.</div>
-          <div>Attentively and carefully maintained by Cyberstate Technologies Pvt Ltd.</div>
+          <div>Attentively and carefully maintained by Cyberstate Technologies</div>
         <% } else { %>
           <div class="">كافة حقوق الطبع والنشر محفوظة الى  © 2024. Cyberstate Technologies</div>
-          <div>تتم صيانتها بحرص و عناية من قبل Cyberstate Technologies Pvt Ltd</div>
+          <div>تتم صيانتها بحرص و عناية من قبل Cyberstate Technologies</div>
         <% } %>
       
     </div>
@@ -1087,7 +1101,7 @@ color: orange;
 
         var regions = ["JhalJaoSub", "Mashkai", "JhalJao", "Gishkore", "Awaran", "Hoshab"];
         const tehsilPayments = [[],[3204,	3162,	2971,	2282],[],[850,	815,	770,	559],[3171,	3027,	2850,	2405],[643,	620,	572,	478]];
-        const tehsilCompletions = [[],[3167,	3119,	2806,	2288],[],[810,	793,	679,	559],[2934,	2834,	2562,	2302],[632,	614,	551,	513]];
+        const tehsilCompletions = [[],[3167,	3119,	2805,	2287],[],[812,	795,	681,	561],[2931,	2831,	2560,	2300],[633,	615,	552,	514]];
 
          function regionHoverMemoized() {
             const cache = new Map();
